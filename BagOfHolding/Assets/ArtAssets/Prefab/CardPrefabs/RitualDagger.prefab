@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6769539307150020741}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.5, z: 0}
+  m_LocalPosition: {x: 0, y: 5.99, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8276301315056459865}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 5997868922875039659}
   - component: {fileID: 4941519587660741654}
   m_Layer: 0
-  m_Name: SacrificialDagger
+  m_Name: RitualDagger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58,7 +58,7 @@ Transform:
   m_GameObject: {fileID: 8276301315056459867}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.5209, y: -2.763, z: 0}
-  m_LocalScale: {x: 0.13, y: 0.13, z: 1}
+  m_LocalScale: {x: 0.08, y: 0.08, z: 1}
   m_Children:
   - {fileID: 1837780061097419376}
   m_Father: {fileID: 0}
@@ -104,7 +104,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 4cc18c0c55c85c64b8e60a782e1b8e05, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2182349ae59f51643abf9e0d96120a6c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -137,7 +137,6 @@ MonoBehaviour:
     m_Bits: 64
   itemType: Weapon
   inspectionCardPrefab: {fileID: 4147756814098119524, guid: be420d091ebf42b4cafbb608761088d3, type: 3}
-  inspectionCardInstantiation: {fileID: 0}
   itemEquipped: 0
   slotsToEquipStrings: 010000010000000000
   equippedSlots:
@@ -167,7 +166,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.95, y: 14.35}
+    oldSize: {x: 12, y: 24}
     newSize: {x: 2.95, y: 14.35}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

@@ -162,6 +162,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   itemType: Helmet
+  inspectionCardPrefab: {fileID: 5585794765664284238, guid: 63f8f07d343250d40ba3a26994431de0, type: 3}
   itemEquipped: 0
   slotsToEquipStrings: 010000000000000000
   equippedSlots:

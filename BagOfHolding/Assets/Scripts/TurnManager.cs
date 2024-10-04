@@ -29,6 +29,9 @@ public class TurnManager : MonoBehaviour
     private bool temp;
 
 
+    //status effects
+    private int nextTurnCritical;
+    private int currentCritical;
 
     
     // Start is called before the first frame update
@@ -175,6 +178,30 @@ public class TurnManager : MonoBehaviour
         {
             damage += 5;
         }
+        if (card.name == "RitualDagger(Clone)")
+        {
+            playerManager.playerTakesDamage(5);
+            damage += 5;
+        }
+        if (card.name == "WingedDaggers(Clone)")
+        {
+            numAttacks += 5;
+            damage = 1;
+        }
+        if (card.name == "BirdskullWhistle(Clone)")
+        {
+            postProcessCards(card);
+        }
+    }
+
+    // processes cards that have an effect on next turn
+
+    private void postProcessCards(GameObject card)
+    {
+        if (card.name == "BirdskullWhistle(Clone)")
+        {
+            nextTurnCritical = 3;
+        }
     }
 
 
@@ -192,7 +219,7 @@ public class TurnManager : MonoBehaviour
             //if player hits multiple enemies
             foreach (var enemy in targettedEnemies)
             {
-                enemy.GetComponent<EnemyManager>().enemyTakesDamage(Mathf.FloorToInt(damage * damageMult));
+                enemy.GetComponent<EnemyManager>().enemyTakesDamage(Mathf.FloorToInt(damage * currentCritical * damageMult));
                 enemy.GetComponent<EnemyManager>().setBleed(inflictBleed);
 
             }
@@ -201,6 +228,14 @@ public class TurnManager : MonoBehaviour
         damage = 0;
         numAttacks = 1;
         inflictBleed = 0;
+        currentCritical = 1;
+        damageMult = 1;
+
+        if (nextTurnCritical != 1)
+        {
+            currentCritical = nextTurnCritical;
+            nextTurnCritical = 1;
+        }
     }
 
     private void initiateEnemyTurn()

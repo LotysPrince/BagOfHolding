@@ -42,43 +42,6 @@ public class DeckManager : MonoBehaviour
 
     private void addMercenaryStarterCards()
     {
-        addCardToLibrary(spear);
-        addCardToLibrary(spear);
-        addCardToLibrary(hiddenDagger);
-        addCardToLibrary(hiddenDagger);
-        addCardToLibrary(helmet);
-        addCardToLibrary(helmet);
-        addCardToLibrary(sacrificalDagger);
-        addCardToLibrary(sacrificalDagger);
-        addCardToLibrary(sacrificalDagger);
-        addCardToLibrary(sacrificalDagger);
-        addCardToLibrary(sacrificalDagger);
-        addCardToLibrary(sacrificalDagger);
-
-
-        /*addCardToLibrary(Saber);
-        addCardToLibrary(Saber);
-        addCardToLibrary(Saber);
-        addCardToLibrary(Saber);
-        addCardToLibrary(HealingPotion);
-        addCardToLibrary(HealingPotion);
-        addCardToLibrary(HealingPotion);
-        addCardToLibrary(HealingPotion);
-        addCardToLibrary(SwiftCape);
-        addCardToLibrary(SwiftCape);
-        addCardToLibrary(BladedBoots);
-        addCardToLibrary(CloakOfBlood);
-        addCardToLibrary(CrimsonLily);
-        addCardToLibrary(HelmOfCerberus);
-        addCardToLibrary(HelmOfCerberus);
-        addCardToLibrary(HelmOfCerberus);
-        addCardToLibrary(HelmOfCerberus);
-        addCardToLibrary(HelmOfCerberus);
-        addCardToLibrary(HelmOfCerberus);
-        addCardToLibrary(HelmOfCerberus);
-        addCardToLibrary(HelmOfCerberus);
-        addCardToLibrary(HelmOfCerberus);*/
-
 
     }
 

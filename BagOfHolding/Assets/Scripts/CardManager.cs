@@ -94,7 +94,8 @@ public class CardManager : MonoBehaviour
     private void OnMouseEnter()
     {
         currPos = upPos;
-        inspectionCardInstantiation = Instantiate(inspectionCardPrefab, new Vector3(gameObject.transform.position.x + 1.5f, gameObject.transform.position.y + 1.5f, -5), Quaternion.identity);
+        mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        inspectionCardInstantiation = Instantiate(inspectionCardPrefab, new Vector3(mousePosition.x + 1.5f, mousePosition.y + 1.5f, -5), Quaternion.identity);
 
 
     }
