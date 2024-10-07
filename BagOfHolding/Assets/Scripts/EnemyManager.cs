@@ -12,6 +12,20 @@ public class EnemyManager : MonoBehaviour
     public int currPower;
     public int currBleed;
 
+    //variables for taking damage over time
+    private bool coroutineRunning;
+    public int timesHit;
+    private int currentTimesHit;
+    public List<int> damageHits = new List<int>();
+
+    //variables for damage animation
+    private float originalXPosition;
+    private float xMoveSpeed = .1f;
+    private bool reachedLeftPoint;
+    private bool reachedRightPoint;
+    private bool animationDone;
+
+
     private GameObject myHealthBar;
     public GameObject healthBarObject;
 
@@ -30,6 +44,7 @@ public class EnemyManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        originalXPosition = gameObject.transform.position.x;
         turnManager = GameObject.Find("Scripts").GetComponent<TurnManager>();
         playerManager = GameObject.Find("Scripts").GetComponent<PlayerManager>();
 
@@ -56,19 +71,34 @@ public class EnemyManager : MonoBehaviour
 
     }
 
-    public void enemyTakesDamage(int damage)
+    public void enemyTakesDamage()
     {
-        currentHealth -= damage;
-        currentHealth -= currBleed;
-
-
-
-        myHealthBar.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = currentHealth.ToString();
-
-        if (currentHealth <= 0)
+        Debug.Log("ya");
+        Debug.Log(coroutineRunning);
+        Debug.Log(damageHits.Count);
+        Debug.Log(damageHits[0]);
+        if (coroutineRunning == false && damageHits.Count != 0 && damageHits[0] != 0)
         {
-            killEnemy();
+            Debug.Log("yayayayaya");
+            coroutineRunning = true;
+            animationDone = true;
+            StartCoroutine(DamageAnimation(damageHits[0]));
         }
+        else
+        {
+            damageHits.Clear();
+        }
+        //currentHealth -= damage;
+        //currentHealth -= currBleed;
+
+
+
+        //myHealthBar.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = currentHealth.ToString();
+
+       // if (currentHealth <= 0)
+        //{
+        //    killEnemy();
+        //}
     }
 
     public void enemyDealsDamage()
@@ -119,6 +149,95 @@ public class EnemyManager : MonoBehaviour
         turnManager.enemySelector(gameObject);
     }
 
+    private IEnumerator DamageAnimation(int damage)
+    {
+        //reduces health
+        if (animationDone == true && damageHits.Count != 0)
+        {
+            currentHealth -= damage;
+
+
+            myHealthBar.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = currentHealth.ToString();
+            damageHits.RemoveAt(0);
+
+            animationDone = false;
+        }
+
+        //StartCoroutine(damageMovement());
+
+        //moving animation
+        else if(!animationDone)
+        {
+            if (!reachedLeftPoint)
+            {
+                gameObject.transform.position = new Vector3(gameObject.transform.position.x - xMoveSpeed, gameObject.transform.position.y, gameObject.transform.position.z);
+                if (gameObject.transform.position.x <= originalXPosition - .2f)
+                {
+                    reachedLeftPoint = true;
+                }
+            }
+            else if (reachedLeftPoint && !reachedRightPoint)
+            {
+                gameObject.transform.position = new Vector3(gameObject.transform.position.x + xMoveSpeed, gameObject.transform.position.y, gameObject.transform.position.z);
+                if (gameObject.transform.position.x >= originalXPosition + .2f)
+                {
+                    reachedRightPoint = true;
+                }
+            }
+            else if (reachedLeftPoint && reachedRightPoint)
+            {
+                gameObject.transform.position = new Vector3(gameObject.transform.position.x - xMoveSpeed, gameObject.transform.position.y, gameObject.transform.position.z);
+                if (gameObject.transform.position.x >= originalXPosition - .2f && gameObject.transform.position.x <= originalXPosition + .2f)
+                {
+                    reachedLeftPoint = false;
+                    reachedRightPoint = false;
+                    animationDone = true;
+                    gameObject.transform.position = new Vector3(originalXPosition, gameObject.transform.position.y, gameObject.transform.position.z);
+
+
+                }
+            }
+        }
+
+
+
+
+
+
+        if (currentHealth <= 0)
+        {
+            killEnemy();
+            StopAllCoroutines();
+        }
+
+
+
+        yield return new WaitForSecondsRealtime(0.01f);
+
+
+        //if animation and attacking is done
+        if (damageHits.Count == 0 && animationDone)
+        {
+            reachedLeftPoint = false;
+            reachedRightPoint = false;
+            coroutineRunning = false;
+            damageHits.Clear();
+            StopAllCoroutines();
+        }
+        // if attacking is done but animation is still going
+        else if (damageHits.Count == 0 && !animationDone)
+        {
+            StartCoroutine(DamageAnimation(0));
+
+        }
+        //continues normally
+        else
+        {
+            StartCoroutine(DamageAnimation(damageHits[0]));
+        }
+
+        
+    }
 
 
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TurnManager : MonoBehaviour
 {
-    public int maxTargets = 1;
+    public int maxTargets;
     public float damage = 0f;
     public float damageMult = 1f;
     public int healing = 0;
@@ -30,8 +30,8 @@ public class TurnManager : MonoBehaviour
 
 
     //status effects
-    private int nextTurnCritical;
-    private int currentCritical;
+    private float nextTurnCritical;
+    private float currentCritical = 1;
 
     
     // Start is called before the first frame update
@@ -54,7 +54,7 @@ public class TurnManager : MonoBehaviour
     {
         var xCounter = 1f;
         var yCounter = 2f;
-        for (int i = 0; i <= numberEnemies; i++)
+        for (int i = 0; i < numberEnemies; i++)
         {
 
             var spawnedEnemy = Instantiate(spawnableEnemies[Random.Range(0, spawnableEnemies.Count)], new Vector3(xCounter, yCounter, -1), Quaternion.identity);
@@ -111,6 +111,10 @@ public class TurnManager : MonoBehaviour
                 inventoryManager.InventoryItems.Add(helm2, null);
             }*/
         }
+        if (card.name == "Spear(Clone)")
+        {
+            maxTargets += 1;
+        }
     }
 
     public void preProcessRemove(GameObject card)
@@ -147,6 +151,17 @@ public class TurnManager : MonoBehaviour
             //helm2 = Instantiate(inventoryManager.helmPrefab, new Vector3(inventoryManager.Helmet.transform.position.x - 1.5f, inventoryManager.Helmet.transform.position.y, inventoryManager.Helmet.transform.position.z), Quaternion.identity);
             //inventoryManager.InventoryItems.Add(helm1, null);
             //inventoryManager.InventoryItems.Add(helm2, null);
+        }
+        if (card.name == "Spear(Clone)")
+        {
+            maxTargets -= 1;
+            if (targettedEnemies.Count > maxTargets)
+            {
+                var oldSelected = targettedEnemies[targettedEnemies.Count - 1];
+                oldSelected.GetComponent<EnemyManager>().isTargetted = false;
+                targettedEnemies.Remove(oldSelected);
+                oldSelected.transform.GetChild(0).gameObject.SetActive(false);
+            }
         }
 
 
@@ -185,12 +200,21 @@ public class TurnManager : MonoBehaviour
         }
         if (card.name == "WingedDaggers(Clone)")
         {
-            numAttacks += 5;
+            numAttacks = 5;
             damage = 1;
         }
         if (card.name == "BirdskullWhistle(Clone)")
         {
             postProcessCards(card);
+        }
+        if (card.name == "HiddenDagger(Clone)")
+        {
+            damage += 1;
+        }
+        if (card.name == "Spear(Clone)")
+        {
+            damage += 3;
+            maxTargets += 1;
         }
     }
 
@@ -213,17 +237,32 @@ public class TurnManager : MonoBehaviour
 
     private void processDamage()
     {
+        var minDamage = 1;
         //player attacks multiple times
         for (int i = 1; i <= numAttacks; i++)
         {
             //if player hits multiple enemies
             foreach (var enemy in targettedEnemies)
             {
-                enemy.GetComponent<EnemyManager>().enemyTakesDamage(Mathf.FloorToInt(damage * currentCritical * damageMult));
+                enemy.GetComponent<EnemyManager>().timesHit = numAttacks;
+                //Debug.Log("This shit is adding: " + Mathf.RoundToInt(damage * currentCritical * damageMult));
+                minDamage = Mathf.RoundToInt(damage * currentCritical * damageMult);
+                if (damage > 0 && minDamage == 0)
+                {
+                    minDamage = 1;
+                }
+                enemy.GetComponent<EnemyManager>().damageHits.Add(minDamage);
+                //enemy.GetComponent<EnemyManager>().enemyTakesDamage(Mathf.FloorToInt(damage * currentCritical * damageMult));
                 enemy.GetComponent<EnemyManager>().setBleed(inflictBleed);
 
             }
         }
+        foreach (var enemy in targettedEnemies)
+        {
+            enemy.GetComponent<EnemyManager>().enemyTakesDamage();
+
+        }
+        
 
         damage = 0;
         numAttacks = 1;

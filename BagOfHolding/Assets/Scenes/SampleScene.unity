@@ -1977,7 +1977,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -17, z: -30}
+  m_LocalPosition: {x: 0, y: 0, z: -30}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2344,6 +2344,10 @@ MonoBehaviour:
   - {fileID: 3868683343625716476, guid: 58ebcfd407fb90341815ac95eb23383e, type: 3}
   - {fileID: 1626228311821106007, guid: 7956a15a7bcde4c45af867ae1a9a063f, type: 3}
   - {fileID: 4932109222252323856, guid: 69e86fae0ead68f4c956e4885b8f2ac5, type: 3}
+  - {fileID: 4882315233779221136, guid: f614e7160cfb593499bbe07699fafd14, type: 3}
+  - {fileID: 4882315233779221136, guid: f614e7160cfb593499bbe07699fafd14, type: 3}
+  - {fileID: 4882315233779221136, guid: f614e7160cfb593499bbe07699fafd14, type: 3}
+  - {fileID: 4882315233779221136, guid: f614e7160cfb593499bbe07699fafd14, type: 3}
   - {fileID: 4882315233779221136, guid: f614e7160cfb593499bbe07699fafd14, type: 3}
   currentGraveyard: []
   currentHand: []
@@ -6415,6 +6419,8 @@ MonoBehaviour:
   maxPower: 2
   currPower: 0
   currBleed: 0
+  timesHit: 0
+  damageHits: 
   healthBarObject: {fileID: 1811562856879660120, guid: 5ad949d2fc3eb51428669abd923fb618, type: 3}
   attackBarObject: {fileID: 6442413071662131823, guid: b2668453638f6ae41abfcdb83beaf56d, type: 3}
   bleedObject: {fileID: 5100642449393973324, guid: a1c8ff37eeadaef488e38336c60ead55, type: 3}

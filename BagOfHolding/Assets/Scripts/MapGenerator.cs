@@ -520,7 +520,7 @@ public class MapGenerator : MonoBehaviour
             exitsLeft += spawnedRooms[i].GetComponent<MapSegmentControl>().numExitsLeft;
 
         }
-        Debug.Log(exitsLeft);
+        //Debug.Log(exitsLeft);
 
     }
 
