@@ -111,6 +111,7 @@ MonoBehaviour:
   itemEquipped: 0
   slotsToEquipStrings: 010101000000000000
   equippedSlots: []
+  carryingWeight: 1
 --- !u!61 &1355472176
 BoxCollider2D:
   m_ObjectHideFlags: 0

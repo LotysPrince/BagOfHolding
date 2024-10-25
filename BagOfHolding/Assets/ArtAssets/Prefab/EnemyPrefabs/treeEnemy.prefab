@@ -107,12 +107,15 @@ MonoBehaviour:
   maxPower: 2
   currPower: 0
   currBleed: 0
+  timesHit: 0
+  damageHits: 
   healthBarObject: {fileID: 1811562856879660120, guid: 5ad949d2fc3eb51428669abd923fb618, type: 3}
   attackBarObject: {fileID: 6442413071662131823, guid: b2668453638f6ae41abfcdb83beaf56d, type: 3}
   bleedObject: {fileID: 5100642449393973324, guid: a1c8ff37eeadaef488e38336c60ead55, type: 3}
   myBleedNum: {fileID: 0}
   isTargetted: 0
   playerObject: {fileID: 0}
+  clawMarkPNG: {fileID: 4723180004437423414, guid: 67a713142deb0ac4fa6b986dcb025a9a, type: 3}
 --- !u!61 &5395299132288188995
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -33,6 +33,9 @@ public class CardManager : MonoBehaviour
     public bool[,] slotsToEquip = new bool[3, 3];
     public bool[] slotsToEquipStrings = new bool[9];
     public List<GameObject> equippedSlots = new List<GameObject>();
+
+    public int carryingWeight;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -153,7 +156,7 @@ public class CardManager : MonoBehaviour
             {
                 
                 //removes item thats equipped, reseting its speed and transparency, returns it to deck
-                inventoryManager.unsetInventory(gameObject);
+                //inventoryManager.unsetInventory(gameObject);
                 cardClicked = false;
                 speed = 60;
                 //cardFrame.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
@@ -164,8 +167,8 @@ public class CardManager : MonoBehaviour
                 inventoryManager.carryingCard.GetComponent<CardManager>().cardClicked = false;
                 inventoryManager.carryingCard.GetComponent<CardManager>().itemEquipped = true;
                 inventoryManager.carryingCard.GetComponent<CardManager>().speed = 60;
-                inventoryManager.carryingCard.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
-                inventoryManager.carryingCard.transform.GetChild(0).gameObject.transform.GetChild(2).gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+                //inventoryManager.carryingCard.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+                //inventoryManager.carryingCard.transform.GetChild(0).gameObject.transform.GetChild(2).gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
                 inventoryManager.carryingCard = null;
             }
 
@@ -181,7 +184,6 @@ public class CardManager : MonoBehaviour
             transform.localScale = originalCardSize;
             //cardFrame.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
             //cardImage.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
-
 
             //if clicked on a inventory slot though, it equips it to the slot
             checkIfSetInInventory(gameObject);

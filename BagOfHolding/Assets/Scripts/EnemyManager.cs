@@ -41,6 +41,8 @@ public class EnemyManager : MonoBehaviour
 
     private PlayerManager playerManager;
 
+    public GameObject clawMarkPNG;
+    public GameObject tempClawMarkPNG;
     // Start is called before the first frame update
     void Start()
     {
@@ -136,7 +138,7 @@ public class EnemyManager : MonoBehaviour
 
     public void killEnemy()
     {
-        turnManager.spawnedEnemies.RemoveAt(0);
+        turnManager.spawnedEnemies.Remove(gameObject);
         Destroy(myHealthBar);
         Destroy(myAttackBar);
         Destroy(myBleedNum);
@@ -168,6 +170,10 @@ public class EnemyManager : MonoBehaviour
         //moving animation
         else if(!animationDone)
         {
+            if (tempClawMarkPNG == null)
+            {
+                tempClawMarkPNG = Instantiate(clawMarkPNG, gameObject.transform.position, Quaternion.Euler(new Vector3(0, 0, Random.Range(clawMarkPNG.transform.rotation.z - 30f, clawMarkPNG.transform.rotation.z + 30f))));
+            }
             if (!reachedLeftPoint)
             {
                 gameObject.transform.position = new Vector3(gameObject.transform.position.x - xMoveSpeed, gameObject.transform.position.y, gameObject.transform.position.z);
@@ -189,6 +195,8 @@ public class EnemyManager : MonoBehaviour
                 gameObject.transform.position = new Vector3(gameObject.transform.position.x - xMoveSpeed, gameObject.transform.position.y, gameObject.transform.position.z);
                 if (gameObject.transform.position.x >= originalXPosition - .2f && gameObject.transform.position.x <= originalXPosition + .2f)
                 {
+                    Destroy(tempClawMarkPNG);
+                    tempClawMarkPNG = null;
                     reachedLeftPoint = false;
                     reachedRightPoint = false;
                     animationDone = true;
@@ -211,8 +219,14 @@ public class EnemyManager : MonoBehaviour
         }
 
 
-
-        yield return new WaitForSecondsRealtime(0.01f);
+        if (animationDone && damageHits.Count != 0)
+        {
+            yield return new WaitForSecondsRealtime(0.1f);
+        }
+        else
+        {
+            yield return new WaitForSecondsRealtime(0.01f);
+        }
 
 
         //if animation and attacking is done

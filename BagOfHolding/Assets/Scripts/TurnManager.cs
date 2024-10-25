@@ -28,10 +28,10 @@ public class TurnManager : MonoBehaviour
 
     private bool temp;
 
-
+    public GameObject carryingWeightObject;
     //status effects
     private float nextTurnCritical;
-    private float currentCritical = 1;
+    public float currentCritical = 1;
 
     
     // Start is called before the first frame update
@@ -213,7 +213,7 @@ public class TurnManager : MonoBehaviour
         }
         if (card.name == "Spear(Clone)")
         {
-            damage += 3;
+            damage += 2;
             maxTargets += 1;
         }
     }
@@ -303,6 +303,8 @@ public class TurnManager : MonoBehaviour
 
     private void initiatePlayerTurn()
     {
+        carryingWeightObject.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "5";
+
         deckManager.drawCards();
 
         foreach (var enemy in targettedEnemies)

@@ -30,8 +30,10 @@ public class InventoryManager : MonoBehaviour
     
     public LayerMask IgnoreCards;
     public LayerMask inventorySlotsMask;
-    public int Mana;
-    public int maxMana;
+
+
+    public int carryingCapacity;
+    public GameObject carryingCapacityObject;
 
     public GameObject carryingCard;
     private bool dontUnequip;
@@ -53,8 +55,7 @@ public class InventoryManager : MonoBehaviour
         InventoryItems.Add(Potion2, null);
         //InventoryItems.Add(Potion3, null);
 
-        Mana = 3;
-        maxMana = 3;
+        carryingCapacity = 5;
 
         
     }
@@ -98,6 +99,8 @@ public class InventoryManager : MonoBehaviour
 
     public void InvManagement(GameObject item, GameObject targetSlot)
     {
+        int currCarryingCapacity = int.Parse(carryingCapacityObject.GetComponentInChildren<TMPro.TextMeshProUGUI>().text);
+        int itemCarryingWeight = item.GetComponent<CardManager>().carryingWeight;
         var itemType = item.GetComponent<CardManager>().itemType;
         var itemEquipped = item.GetComponent<CardManager>().itemEquipped;
         var slotType = targetSlot.tag;
@@ -114,12 +117,14 @@ public class InventoryManager : MonoBehaviour
         if (itemType == slotType)
         {
             //if inventory slot is not already occupied
-            if (InventoryItems[targetSlot] == null)
+            if (InventoryItems[targetSlot] == null && itemCarryingWeight <= currCarryingCapacity)
             {
                 //if not equipped in another slot yet
                 if (!itemEquipped)
                 {
+                    //currCarryingCapacity -= itemCarryingWeight;
                     setInventory(item, targetSlot);
+                    
                 }
                 //if item is equipped in another slot, unequips it from that one and equips it to new one
                 else if (itemEquipped)
@@ -129,15 +134,22 @@ public class InventoryManager : MonoBehaviour
                     setInventory(item, targetSlot);
                 }
             }
-            //if inventory slot is already occupied
-            else if (InventoryItems[targetSlot] != null)
+            //if inventory slot is already occupied                             checks weight against if the item already equipped is then unequipped, adding its weight to the pool before checking.
+            else if (InventoryItems[targetSlot] != null && itemCarryingWeight <= currCarryingCapacity + InventoryItems[targetSlot].GetComponent<CardManager>().carryingWeight)
             {
                 //unequips inventory first
-                unsetInventory(InventoryItems[targetSlot]);
+                Debug.Log("Help");
+                //Debug.Log(InventoryItems[targetSlot].GetComponent<CardManager>().carryingWeight);
+                //currCarryingCapacity += InventoryItems[targetSlot].GetComponent<CardManager>().carryingWeight;
 
+                if (InventoryItems[targetSlot] != item)
+                {
+                    unsetInventory(InventoryItems[targetSlot]);
+                }
                 //if not equipped in another slot yet
                 if (!itemEquipped)
                 {
+                    //currCarryingCapacity -= itemCarryingWeight;
                     setInventory(item, targetSlot);
                 }
                 //if item is equipped in another slot, unequips it from that one and equips it to new one
@@ -149,6 +161,7 @@ public class InventoryManager : MonoBehaviour
                 }
 
             }
+            //carryingCapacityObject.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = currCarryingCapacity.ToString();
             
         }
 
@@ -162,10 +175,10 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        foreach (var items in InventoryItems)
-        {
-            print("Slot: " + items.Key + " is equipped with: " + items.Value);
-        }
+        //foreach (var items in InventoryItems)
+        //{
+            //print("Slot: " + items.Key + " is equipped with: " + items.Value);
+        //}
         //updateInventory();
     }
 
@@ -197,6 +210,10 @@ public class InventoryManager : MonoBehaviour
         //sets mana from card value
         //Mana -= cardMana;
         //GameObject.Find("manaAmount").GetComponent<TMPro.TextMeshPro>().text = Mana.ToString();
+        int currCarryingCapacity = int.Parse(carryingCapacityObject.GetComponentInChildren<TMPro.TextMeshProUGUI>().text);
+        int itemCarryingWeight = item.GetComponent<CardManager>().carryingWeight;
+        currCarryingCapacity -= itemCarryingWeight;
+        carryingCapacityObject.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = currCarryingCapacity.ToString();
 
         //gives the card the same position
         item.transform.position = new Vector3(targetSlot.transform.position.x, targetSlot.transform.position.y, targetSlot.transform.position.z - 5f);
@@ -228,6 +245,12 @@ public class InventoryManager : MonoBehaviour
         }
         //item.transform.GetChild(0).gameObject.SetActive(true);
         //item.transform.GetChild(1).gameObject.SetActive(false);
+
+        int currCarryingCapacity = int.Parse(carryingCapacityObject.GetComponentInChildren<TMPro.TextMeshProUGUI>().text);
+        int itemCarryingWeight = item.GetComponent<CardManager>().carryingWeight;
+        currCarryingCapacity += itemCarryingWeight;
+        carryingCapacityObject.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = currCarryingCapacity.ToString();
+
 
         item.GetComponent<CardManager>().itemEquipped = false;
         item.transform.localScale = item.GetComponent<CardManager>().originalCardSize;

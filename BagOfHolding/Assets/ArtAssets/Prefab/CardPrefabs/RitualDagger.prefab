@@ -149,6 +149,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  carryingWeight: 1
 --- !u!61 &4941519587660741654
 BoxCollider2D:
   m_ObjectHideFlags: 0
