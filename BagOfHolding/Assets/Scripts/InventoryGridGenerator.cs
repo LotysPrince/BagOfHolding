@@ -35,6 +35,8 @@ public class InventoryGridGenerator : MonoBehaviour
     public List<GameObject> itemsSpawned = new List<GameObject>();
     public DeckManager deckManager;
 
+    private GameObject itemToSpawn;
+    private GameObject newItem;
 
     // Start is called before the first frame update
     void Start()
@@ -69,16 +71,23 @@ public class InventoryGridGenerator : MonoBehaviour
 
     public void GenerateInventory() {
 
+        bool itemCantBePlaced = true;
         foreach (var inventorySlot in Inventory)
         {
-            if (inventorySlot.GetComponent<InventorySlotManager>().slotIsEquipped == false && currentInventory.Count > 0)
+            if (inventorySlot.GetComponent<InventorySlotManager>().slotIsEquipped == false && currentInventory.Count > 0 && itemsSpawned.Count < deckManager.handSize)
             {
-                var itemToSpawn = currentInventory[0];
-                currentInventory.Remove(itemToSpawn);
+                bool itemDeleted = false;
+                itemToSpawn = currentInventory[0];
+                newItem = Instantiate(itemToSpawn, new Vector3(-20, -50, 0), Quaternion.identity);
+                //itemToSpawn = currentInventory[0];
+                //Debug.Log(itemToSpawn.transform.name);
+                //currentInventory.Remove(itemToSpawn);
 
                 //spawns the item
-                var newItem = Instantiate(itemToSpawn, new Vector3(inventorySlot.transform.position.x, inventorySlot.transform.position.y, inventorySlot.transform.position.z - 1f),
-                    Quaternion.Euler(new Vector3(itemToSpawn.transform.rotation.x, itemToSpawn.transform.rotation.y, itemToSpawn.transform.rotation.z)));
+                newItem.transform.position = new Vector3(inventorySlot.transform.position.x, inventorySlot.transform.position.y, inventorySlot.transform.position.z - 1f);
+                newItem.transform.rotation = Quaternion.Euler(new Vector3(itemToSpawn.transform.rotation.x, itemToSpawn.transform.rotation.y, itemToSpawn.transform.rotation.z));
+                //var newItem = Instantiate(itemToSpawn, new Vector3(inventorySlot.transform.position.x, inventorySlot.transform.position.y, inventorySlot.transform.position.z - 1f),
+                    //Quaternion.Euler(new Vector3(itemToSpawn.transform.rotation.x, itemToSpawn.transform.rotation.y, itemToSpawn.transform.rotation.z)));
 
                 //moves the item to where the spawn point is, using the offest of where the spawn point originally was
                 var newItemPos = newItem.transform.position;
@@ -100,7 +109,9 @@ public class InventoryGridGenerator : MonoBehaviour
                         Inventory[arrayXPos + xCounter, arrayYPos + yCounter].GetComponent<InventorySlotManager>().slotIsEquipped = true;
                         Inventory[arrayXPos + xCounter, arrayYPos + yCounter].GetComponent<InventorySlotManager>().equippedItem = newItem;
                         newItem.GetComponent<CardManager>().equippedSlots.Add(Inventory[arrayXPos + xCounter, arrayYPos + yCounter]);
-                        itemsSpawned.Add(newItem);
+                        //itemsSpawned.Add(newItem);
+                        //currentInventory.Remove(itemToSpawn);
+
                     }
 
                     //if slot is out of range but doesnt need to be equipped, continue
@@ -130,6 +141,7 @@ public class InventoryGridGenerator : MonoBehaviour
                                 slotToUnequip.GetComponent<InventorySlotManager>().equippedItem = null;
                             }
                         }
+                        itemDeleted = true;
                         Destroy(newItem);
                         break;
                     }
@@ -159,6 +171,7 @@ public class InventoryGridGenerator : MonoBehaviour
                                 slotToUnequip.GetComponent<InventorySlotManager>().equippedItem = null;
                             }
                         }
+                        itemDeleted = true;
                         Destroy(newItem);
                         break;
                     }
@@ -172,8 +185,28 @@ public class InventoryGridGenerator : MonoBehaviour
                     }
 
                 }
+                // if the item was placed successfully, removes it from inventory pool and adds to itemSpawns pool
+                if (itemDeleted == false)
+                {
+                    //Debug.Log("item placed");
+                    itemCantBePlaced = false;
+                    currentInventory.Remove(itemToSpawn);
+                    itemsSpawned.Add(newItem);
+                    break;
+                }
+
 
             }
+        }
+        //if the item iterated through the entire grid and couldnt be placed, removes it from inventory
+        if (itemCantBePlaced== true)
+        {
+            currentInventory.Remove(itemToSpawn);
+        }
+        //if more items to spawn, continue iterating
+        if (currentInventory.Count > 0 && itemsSpawned.Count < deckManager.handSize)
+        {
+            GenerateInventory();
         }
     }
 

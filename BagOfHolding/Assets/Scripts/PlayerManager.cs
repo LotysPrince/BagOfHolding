@@ -13,6 +13,8 @@ public class PlayerManager : MonoBehaviour
 
     private GameObject myCritObject;
     public GameObject CritObject;
+
+    public int playerArmor;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +26,7 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        currentCrit = turnManager.currentCritical;
+        currentCrit = turnManager.criticalAttacks;
         if(currentCrit <= 1)
         {
             myCritObject.SetActive(false);
@@ -39,6 +41,20 @@ public class PlayerManager : MonoBehaviour
 
     public void playerTakesDamage(int damage)
     {
+        if (playerArmor != 0)
+        {
+            if (playerArmor >= damage)
+            {
+                playerArmor -= damage;
+                damage = 0;
+            }
+            else if (playerArmor < damage)
+            {
+                damage -= playerArmor;
+                playerArmor = 0;
+            }
+        }
+        
         currentHealth -= damage;
         playerHealthBar.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = currentHealth.ToString();
     }

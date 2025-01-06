@@ -56,15 +56,26 @@ MonoBehaviour:
   maxPower: 5
   currPower: 0
   currBleed: 0
+  currPoison: 0
+  currHemmorhage: 0
   timesHit: 0
   damageHits: 
   healthBarObject: {fileID: 1811562856879660120, guid: 5ad949d2fc3eb51428669abd923fb618, type: 3}
   attackBarObject: {fileID: 6442413071662131823, guid: b2668453638f6ae41abfcdb83beaf56d, type: 3}
   bleedObject: {fileID: 5100642449393973324, guid: a1c8ff37eeadaef488e38336c60ead55, type: 3}
   myBleedNum: {fileID: 0}
+  poisonObject: {fileID: 5744851881668292759, guid: b4afb3e9a54a4e244aba0dbd736330d5, type: 3}
+  myPoisonNum: {fileID: 0}
+  hemmorhageObject: {fileID: 450850757539247135, guid: 8872f263372438245a1c29009d89df95, type: 3}
+  myHemmorhageNum: {fileID: 0}
   isTargetted: 0
   playerObject: {fileID: 0}
   clawMarkPNG: {fileID: 4723180004437423414, guid: 67a713142deb0ac4fa6b986dcb025a9a, type: 3}
+  tempClawMarkPNG: {fileID: 0}
+  playerClawMarkPNG: {fileID: 999966041617105269, guid: 359824baa9d24764e8e85a3a1eef9b02, type: 3}
+  tempPlayerClawPNG: {fileID: 0}
+  isStunned: 0
+  attackAnimationDone: 0
 --- !u!61 &2515889448582301770
 BoxCollider2D:
   m_ObjectHideFlags: 0

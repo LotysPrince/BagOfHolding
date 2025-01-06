@@ -131,7 +131,7 @@ MonoBehaviour:
   clickInventory:
     serializedVersion: 2
     m_Bits: 64
-  itemType: Weapon
+  itemType: Anywhere
   inspectionCardPrefab: {fileID: 2766261018484639732, guid: be9b5ca0359675549aceef756018e61b, type: 3}
   itemEquipped: 0
   slotsToEquipStrings: 010000000000000000
@@ -145,6 +145,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  carryingWeight: 0
 --- !u!1 &8854959148594735275
 GameObject:
   m_ObjectHideFlags: 0

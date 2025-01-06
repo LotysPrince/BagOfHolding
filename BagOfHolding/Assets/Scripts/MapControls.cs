@@ -6,6 +6,7 @@ public class MapControls : MonoBehaviour
 {
 
     public MapGenerator mapManager;
+    public TurnManager turnManager;
     public GameObject playerSprite;
     private GameObject currRoom;
     private int[] playerArrayPos;
@@ -74,6 +75,7 @@ public class MapControls : MonoBehaviour
                 switchScreenScript.changeScreen("Battle");
                 Destroy(currRoom.GetComponent<MapSegmentControl>().currentInhabitant);
                 currRoom.GetComponent<MapSegmentControl>().roomInhabitedBy = "Player";
+                turnManager.spawnEnemies();
             }
             else if(currRoom.GetComponent<MapSegmentControl>().roomInhabitedBy == "Shop")
             {

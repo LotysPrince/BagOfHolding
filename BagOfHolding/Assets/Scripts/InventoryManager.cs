@@ -43,11 +43,11 @@ public class InventoryManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        InventoryItems.Add(Weapon, null);
         InventoryItems.Add(Helmet, null);
         InventoryItems.Add(Torso, null);
         InventoryItems.Add(Shoulder, null);
         InventoryItems.Add(Cape, null);
-        InventoryItems.Add(Weapon, null);
         //InventoryItems.Add(Weapon2, null);
         InventoryItems.Add(Pants, null);
         InventoryItems.Add(Boots, null);
@@ -114,7 +114,7 @@ public class InventoryManager : MonoBehaviour
 
 
         //if right inventory type
-        if (itemType == slotType)
+        if (itemType == slotType || itemType == "Anywhere")
         {
             //if inventory slot is not already occupied
             if (InventoryItems[targetSlot] == null && itemCarryingWeight <= currCarryingCapacity)
@@ -167,7 +167,7 @@ public class InventoryManager : MonoBehaviour
 
 
         // if not right inventory slot
-        if(itemType != slotType)
+        if(itemType != slotType && itemType != "Anywhere")
         {
             if (itemEquipped)
             {
