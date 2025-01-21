@@ -124,14 +124,14 @@ public class TurnManager : MonoBehaviour
         for (int i = 0; i < numberEnemies; i++)
         {
 
-            var spawnedEnemy = Instantiate(spawnableEnemies[Random.Range(0, spawnableEnemies.Count)], new Vector3(xCounter, yCounter, -1), Quaternion.identity);
+            var spawnedEnemy = Instantiate(spawnableEnemies[Random.Range(0, spawnableEnemies.Count)], new Vector3(xCounter, yCounter -1, -1), Quaternion.identity);
             spawnedEnemies.Add(spawnedEnemy);
             xCounter += 3;
             if(yCounter == 2f)
             {
-                yCounter = 0;
+                yCounter = 1.5f;
             }
-            else if(yCounter == 0)
+            else if(yCounter == 1.5f)
             {
                 yCounter = 2f;
             }
@@ -295,7 +295,7 @@ public class TurnManager : MonoBehaviour
         }
         if (card.name == "WingedDaggers(Clone)")
         {
-            numAttacks = 5;
+            numAttacks += 4;
             damage += 1;
         }
         if (card.name == "BirdskullWhistle(Clone)")
@@ -313,7 +313,7 @@ public class TurnManager : MonoBehaviour
         }
         if (card.name == "BriarWhip(Clone)")
         {
-            damage = 9;
+            damage += 9;
             damageDivider = spawnedEnemies.Count;
             maxTargets = 3;
             foreach(var enemy in spawnedEnemies)
@@ -594,6 +594,8 @@ public class TurnManager : MonoBehaviour
         {
             switchScreen.currentScreen = "Map";
             switchScreen.changeScreen("Map");
+            targettedEnemies.Clear();
+            spawnedEnemies.Clear();
             mapControls.inBattle = false;
 
 

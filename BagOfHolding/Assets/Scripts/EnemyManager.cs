@@ -273,6 +273,8 @@ public class EnemyManager : MonoBehaviour
         Destroy(myHealthBar);
         Destroy(myAttackBar);
         Destroy(myBleedNum);
+        Destroy(myPoisonNum);
+        Destroy(myHemmorhageNum);
         Destroy(gameObject);
 
     }
@@ -353,18 +355,6 @@ public class EnemyManager : MonoBehaviour
         }
 
 
-
-
-
-
-        if (currentHealth <= 0)
-        {
-            turnManager.trackEnemyAttackFinishes();
-            StopCoroutine(DamageAnimation(0));
-            killEnemy();
-        }
-
-
         if (animationDone && damageHits.Count != 0)
         {
             yield return new WaitForSecondsRealtime(0.1f);
@@ -391,6 +381,13 @@ public class EnemyManager : MonoBehaviour
             else
             {
                 damagedByTrap = false;
+            }
+
+            if (currentHealth <= 0)
+            {
+                turnManager.trackEnemyAttackFinishes();
+                StopCoroutine(DamageAnimation(0));
+                killEnemy();
             }
             StopCoroutine(DamageAnimation(0));
         }

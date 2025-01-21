@@ -36,6 +36,11 @@ public class SwitchScreen : MonoBehaviour
             cam.transform.position = new Vector3(0, -34f, -10);
             currentScreen = "Shop";
         }
+        else if (newScreen == "Event")
+        {
+            cam.transform.position = new Vector3(0, -51f, -10);
+            currentScreen = "Event";
+        }
     }
 
     public void returnToMap()
@@ -51,6 +56,11 @@ public class SwitchScreen : MonoBehaviour
             currentScreen = "Map";
         }
         else if (currentScreen == "Shop")
+        {
+            cam.transform.position = new Vector3(0, -17f, -10);
+            currentScreen = "Map";
+        }
+        else if (currentScreen == "Event")
         {
             cam.transform.position = new Vector3(0, -17f, -10);
             currentScreen = "Map";

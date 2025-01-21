@@ -55,6 +55,7 @@ public class DeckManager : MonoBehaviour
         //duplicates library into deck
         foreach (var card in currentLibrary)
         {
+
             currentDeck.Add(card);
         }
 
@@ -120,11 +121,12 @@ public class DeckManager : MonoBehaviour
 
     public void emptyHand()
     {
-        foreach (var card in currentHand)
+        foreach (var card in gridGenerator.itemsSpawned)
         {
             Destroy(card);
             currentGraveyard.Add(card);
         }
         currentHand.Clear();
+        gridGenerator.itemsSpawned.Clear();
     }
 }

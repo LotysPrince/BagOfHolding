@@ -7,21 +7,21 @@ public class MapControls : MonoBehaviour
 
     public MapGenerator mapManager;
     public TurnManager turnManager;
+    public DeckManager deckManager;
+    public RandomEventManager eventManager;
     public GameObject playerSprite;
-    private GameObject currRoom;
-    private int[] playerArrayPos;
+    public GameObject currRoom;
+    public int[] playerArrayPos = new int[2];
     public SwitchScreen switchScreenScript;
     public bool inBattle;
     // Start is called before the first frame update
     void Awake()
     {
         inBattle = false;
-        currRoom = mapManager.spawnedRooms[mapManager.spawnedRooms.Count - 1];
-        currRoom.GetComponent<MapSegmentControl>().roomInhabitedBy = "Player";
-        currRoom.GetComponent<MapSegmentControl>().currentInhabitant = playerSprite;
-        playerArrayPos = mapManager.findInRoomArray(currRoom);
-        playerSprite.transform.position = currRoom.transform.position + new Vector3(0, 0, -1);
+        //spawnPlayer();
     }
+
+
 
     // Update is called once per frame
     void Update()
@@ -75,6 +75,10 @@ public class MapControls : MonoBehaviour
                 switchScreenScript.changeScreen("Battle");
                 Destroy(currRoom.GetComponent<MapSegmentControl>().currentInhabitant);
                 currRoom.GetComponent<MapSegmentControl>().roomInhabitedBy = "Player";
+                deckManager.currentHand.Clear();
+                deckManager.currentDeck.Clear();
+                deckManager.createDeckFromLibrary();
+                deckManager.drawCards();
                 turnManager.spawnEnemies();
             }
             else if(currRoom.GetComponent<MapSegmentControl>().roomInhabitedBy == "Shop")
@@ -84,6 +88,27 @@ public class MapControls : MonoBehaviour
                 Destroy(currRoom.GetComponent<MapSegmentControl>().currentInhabitant);
                 currRoom.GetComponent<MapSegmentControl>().roomInhabitedBy = "Player";
             }
+            else if (currRoom.GetComponent<MapSegmentControl>().roomInhabitedBy == "Stairs")
+            {
+                mapManager.deleteMap();
+            }
+            else if (currRoom.GetComponent<MapSegmentControl>().roomInhabitedBy == "Event")
+            {
+                switchScreenScript.currentScreen = "Event";
+                switchScreenScript.changeScreen("Event");
+                eventManager.generateRandomEvent();
+                Destroy(currRoom.GetComponent<MapSegmentControl>().currentInhabitant);
+                currRoom.GetComponent<MapSegmentControl>().roomInhabitedBy = "Player";
+            }
         }
+    }
+
+    public void spawnPlayer()
+    {
+        currRoom = mapManager.spawnedRooms[mapManager.spawnedRooms.Count - 1];
+        currRoom.GetComponent<MapSegmentControl>().roomInhabitedBy = "Player";
+        currRoom.GetComponent<MapSegmentControl>().currentInhabitant = playerSprite;
+        playerArrayPos = mapManager.findInRoomArray(currRoom);
+        playerSprite.transform.position = currRoom.transform.position + new Vector3(0, 0, -1);
     }
 }

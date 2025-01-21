@@ -42,20 +42,20 @@ public class MapGenerator : MonoBehaviour
     private MapSegmentControl currPieceScript;
     private bool noRoomsAdded = false;
 
+    public EnemyMapBehavior enemyMapBehavior;
+    public MapControls mapControls;
 
 
 
 
+    private bool generationDone;
 
 
     public float maxRoomAmount;
-    private float minRoomAmount;
+    public float minRoomAmount;
     public int currentRoomAmount = 0;
 
     public GameObject[,] spawnedRoomsArray = new GameObject[9,5];
-
-    private bool createOnce = false;
-
 
     /*GameObject[] list1 = new GameObject[9] { null, null, null, null, null, null, null, null, null};
     GameObject[] list2 = new GameObject[9] { null, null, null, null, null, null, null, null, null};
@@ -123,7 +123,7 @@ public class MapGenerator : MonoBehaviour
         leftExitPieces.Add(TLRmap);
 
 
-        minRoomAmount = Mathf.Floor(maxRoomAmount * 0.75f);
+        
 
         //generateFullMap();
 
@@ -135,6 +135,11 @@ public class MapGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (currentRoomAmount < minRoomAmount && generationDone)
+        {
+            generationDone = false;
+            deleteMap();
+        }
         //if (!createOnce)
         //{
          //   randomizeMap();
@@ -635,5 +640,78 @@ public class MapGenerator : MonoBehaviour
                 }
             }
        }
+
+        mapControls.spawnPlayer();
+        enemyMapBehavior.spawnStairs();
+
+        enemyMapBehavior.spawnEnemies();
+        enemyMapBehavior.spawnShop();
+        enemyMapBehavior.spawnEvent();
+        generationDone = true;
+
+    }
+
+    public void deleteMap()
+    {
+        exitsLeft = 0;
+        noRoomsAdded = false;
+        currentRoomAmount = 0;
+        arrayXPos = 0;
+        arrayYPos = 0;
+        exitsLeft = 0;
+
+        for (var i = 0; i < spawnedRooms.Count; i++)
+        {
+            if (spawnedRooms[i].GetComponent<MapSegmentControl>().currentInhabitant != null)
+            {
+                if (spawnedRooms[i].GetComponent<MapSegmentControl>().roomInhabitedBy != "Player")
+                {
+                    Destroy(spawnedRooms[i].GetComponent<MapSegmentControl>().currentInhabitant.gameObject);
+                }
+                spawnedRooms[i].GetComponent<MapSegmentControl>().roomInhabitedBy = null;
+
+            }
+            Destroy(spawnedRooms[i]);
+        }
+
+        GameObject[] icons = GameObject.FindGameObjectsWithTag("ShopIcon");
+        foreach (GameObject go in icons)
+        {
+            Destroy(go);
+        }
+        icons = GameObject.FindGameObjectsWithTag("EnemyIcon");
+        foreach (GameObject go in icons)
+        {
+            Destroy(go);
+        }
+        icons = GameObject.FindGameObjectsWithTag("StairsIcon");
+        foreach (GameObject go in icons)
+        {
+            Destroy(go);
+        }
+
+        for (int i = 0; i < 9; i++)
+        {
+            for (int j = 0; j < 5; j++)
+            {
+                if (spawnedRoomsArray[i, j] != null)
+                {
+                    spawnedRoomsArray[i, j] = null;
+                }
+
+
+            }
+        }
+
+
+
+        spawnedRooms.Clear();
+
+        randomizeMap();
+
+
+
+
+
     }
 }

@@ -15,6 +15,9 @@ TagManager:
   - Enemy
   - WorldCanvas
   - Inventory
+  - ShopIcon
+  - EnemyIcon
+  - StairsIcon
   layers:
   - Default
   - TransparentFX

@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.010099996, y: -1.2628002}
-  m_SizeDelta: {x: 2.4017, y: 1.0091}
+  m_AnchoredPosition: {x: 0.0319, y: -1.3837}
+  m_SizeDelta: {x: 3.1017, y: 1.2511}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &2766261016713831059
 MeshRenderer:
@@ -98,7 +98,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Deals 1 dmg, equippable in any slot.
+  m_text: '(Currently deals 100 dmg for funsies ) Deals 1 dmg, equippable in any
+    slot.
 
 '
   m_isRightToLeft: 0
