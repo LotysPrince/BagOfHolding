@@ -27,11 +27,17 @@ public class EnemyMapBehavior : MonoBehaviour
     public GameObject eventSprite;
     private int[] eventArrayPos = new int[2];
 
+
+
+
     // Start is called before the first frame update
     void Start()
     {
         //spawnEnemies();
         //spawnShop();
+
+
+
     }
 
 
@@ -87,7 +93,7 @@ public class EnemyMapBehavior : MonoBehaviour
         eventSprite = Instantiate(eventPrefab, new Vector3(currRoom.transform.position.x, currRoom.transform.position.y, -1), Quaternion.identity);
         currRoom.GetComponent<MapSegmentControl>().currentInhabitant = eventSprite;
         eventArrayPos = mapManager.findInRoomArray(currRoom);
-        eventSprite.transform.position = currRoom.transform.position + new Vector3(-.2f, 0, -1);
+        eventSprite.transform.position = currRoom.transform.position + new Vector3(0, 0, -1);
 
     }
 
@@ -115,7 +121,7 @@ public class EnemyMapBehavior : MonoBehaviour
                             currRoom.GetComponent<MapSegmentControl>().currentInhabitant = stairsSprite;
                             stairsArrayPos[0] = i;
                             stairsArrayPos[1] = j;
-                            stairsSprite.transform.position = currRoom.transform.position + new Vector3(-.2f, 0, -1);
+                            stairsSprite.transform.position = currRoom.transform.position + new Vector3(0, 0, -1);
                             return;
                             
                         }
@@ -143,7 +149,7 @@ public class EnemyMapBehavior : MonoBehaviour
                             currRoom.GetComponent<MapSegmentControl>().currentInhabitant = stairsSprite;
                             stairsArrayPos[0] = i;
                             stairsArrayPos[1] = j;
-                            stairsSprite.transform.position = currRoom.transform.position + new Vector3(-.2f, 0, -1);
+                            stairsSprite.transform.position = currRoom.transform.position + new Vector3(0, 0, -1);
                             return;
                         }
 
@@ -173,7 +179,7 @@ public class EnemyMapBehavior : MonoBehaviour
                             currRoom.GetComponent<MapSegmentControl>().currentInhabitant = stairsSprite;
                             stairsArrayPos[0] = i;
                             stairsArrayPos[1] = j;
-                            stairsSprite.transform.position = currRoom.transform.position + new Vector3(-.2f, 0, -1);
+                            stairsSprite.transform.position = currRoom.transform.position + new Vector3(0, 0, -1);
                             return;
                         }
 
@@ -199,7 +205,7 @@ public class EnemyMapBehavior : MonoBehaviour
                             currRoom.GetComponent<MapSegmentControl>().currentInhabitant = stairsSprite;
                             stairsArrayPos[0] = i;
                             stairsArrayPos[1] = j;
-                            stairsSprite.transform.position = currRoom.transform.position + new Vector3(-.2f, 0, -1);
+                            stairsSprite.transform.position = currRoom.transform.position + new Vector3(0, 0, -1);
                             return;
                         }
 

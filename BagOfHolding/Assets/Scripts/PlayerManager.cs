@@ -15,9 +15,22 @@ public class PlayerManager : MonoBehaviour
     public GameObject CritObject;
 
     public int playerArmor;
+
+    public int playerLevel;
+    public int playerExp;
+    public int playerMaxExp;
+
+    public int playerGold;
+
+    public GameObject playerLevelUI;
+    public GameObject playerExpUI;
+    public GameObject playerGoldUI;
+
     // Start is called before the first frame update
     void Start()
     {
+        playerGold = 10;
+        playerMaxExp = 20;
         playerHealthBar.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = currentHealth.ToString();
         myCritObject = Instantiate(CritObject, transform.position + new Vector3(-3f, 2.5f, 0), Quaternion.identity, GameObject.FindGameObjectWithTag("WorldCanvas").transform);
         currentCrit = turnManager.currentCritical;
@@ -70,6 +83,77 @@ public class PlayerManager : MonoBehaviour
         playerHealthBar.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = currentHealth.ToString();
 
     }
+
+    public void playerGoldChange(int gold)
+    {
+        playerGold += gold;
+        playerGoldUI.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = playerGold.ToString();
+
+    }
+
+
+    public void playerExpGain(int exp)
+    {
+        playerExp += exp;
+        playerExpUI.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = playerExp + "/" + playerMaxExp;
+        if (playerExp >= playerMaxExp)
+        {
+            int expOverflow = playerExp - playerMaxExp;
+            playerLevel += 1;
+            playerExp = expOverflow;
+            playerLevelUI.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Lvl " + playerLevel.ToString();
+
+
+            if (playerLevel == 1)
+            {
+                playerMaxExp = 35;
+            }
+            if (playerLevel == 2)
+            {
+                playerMaxExp = 50;
+            }
+            if (playerLevel == 3)
+            {
+                playerMaxExp = 125;
+            }
+            if (playerLevel == 4)
+            {
+                playerMaxExp = 313;
+            }
+            if (playerLevel == 5)
+            {
+                playerMaxExp = 783;
+            }
+            if (playerLevel == 6)
+            {
+                playerMaxExp = 1957;
+            }
+            if (playerLevel == 7)
+            {
+                playerMaxExp = 4893;
+            }
+            if (playerLevel == 8)
+            {
+                playerMaxExp = 12232;
+            }
+            if (playerLevel == 9)
+            {
+                playerMaxExp = 30580;
+            }
+            if (playerLevel == 10)
+            {
+                playerMaxExp = 100000000;
+            }
+            playerExpUI.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = playerExp + "/" + playerMaxExp;
+
+            if (playerLevel == 10)
+            {
+                playerExpUI.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = playerExp + "/" + "Inf";
+            }
+
+        }
+    }
+
 
     public void killPlayer()
     {

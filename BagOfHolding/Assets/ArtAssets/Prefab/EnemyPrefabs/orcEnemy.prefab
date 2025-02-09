@@ -156,7 +156,15 @@ MonoBehaviour:
   playerClawMarkPNG: {fileID: 999966041617105269, guid: 359824baa9d24764e8e85a3a1eef9b02, type: 3}
   tempPlayerClawPNG: {fileID: 0}
   isStunned: 0
+  damagedByTrap: 0
+  statusDamage: 0
   attackAnimationDone: 0
+  goldDrop: 0
+  goldDropMin: 5
+  goldDropMax: 10
+  expDrop: 0
+  expDropMin: 5
+  expDropMax: 10
 --- !u!61 &683775072694073221
 BoxCollider2D:
   m_ObjectHideFlags: 0

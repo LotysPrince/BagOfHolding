@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 465814383116867237}
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 3.49, y: 0.42, z: 0.100000024}
+  m_LocalPosition: {x: 3.65, y: -0.05, z: 0.100000024}
   m_LocalScale: {x: 0.49314576, y: 0.19220485, z: 1}
   m_Children: []
   m_Father: {fileID: 3365881079736599456}
@@ -107,7 +107,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3641044791691630036}
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -3.64, y: 0.42, z: 0.100000024}
+  m_LocalPosition: {x: -3.75, y: -0.02, z: 0.100000024}
   m_LocalScale: {x: 0.49314576, y: 0.19220485, z: 1}
   m_Children: []
   m_Father: {fileID: 3365881079736599456}
@@ -189,7 +189,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4798559791123760837}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.02, y: 6.7, z: 0.1}
+  m_LocalPosition: {x: -0.02, y: 6.63, z: 0.1}
   m_LocalScale: {x: 0.267, y: 0.355, z: 1}
   m_Children: []
   m_Father: {fileID: 3365881079736599456}
@@ -356,3 +356,5 @@ MonoBehaviour:
   xArrayPos: 0
   yArrayPos: 0
   numExitsLeft: 3
+  roomInhabitedBy: 
+  currentInhabitant: {fileID: 0}

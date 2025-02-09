@@ -64,9 +64,20 @@ public class EnemyManager : MonoBehaviour
     private bool reachedAttackRightPoint;
     public bool attackAnimationDone;
 
+    public int goldDrop;
+    public int goldDropMin;
+    public int goldDropMax;
+
+    public int expDrop;
+    public int expDropMin;
+    public int expDropMax;
+
     // Start is called before the first frame update
     void Start()
     {
+        goldDrop = Random.Range(goldDropMin, goldDropMax);
+        expDrop = Random.Range(expDropMin, expDropMax);
+
         originalXPosition = gameObject.transform.position.x;
         turnManager = GameObject.Find("Scripts").GetComponent<TurnManager>();
         playerManager = GameObject.Find("Scripts").GetComponent<PlayerManager>();
@@ -99,12 +110,12 @@ public class EnemyManager : MonoBehaviour
     public void enemyTakesDamage()
     {
         //Debug.Log("ya");
-        Debug.Log("coroutineRunning: " + coroutineRunning);
-        Debug.Log("Damage hits count :" + damageHits.Count);
-        Debug.Log("First damage: " + damageHits[0]);
+        //Debug.Log("coroutineRunning: " + coroutineRunning);
+        //Debug.Log("Damage hits count :" + damageHits.Count);
+        //Debug.Log("First damage: " + damageHits[0]);
         if (coroutineRunning == false && damageHits.Count != 0 && damageHits[0] != 0)
         {
-            Debug.Log("Enemy begins taking damage animation");
+           // Debug.Log("Enemy begins taking damage animation");
             coroutineRunning = true;
             animationDone = true;
             StartCoroutine(DamageAnimation(damageHits[0]));
@@ -178,7 +189,7 @@ public class EnemyManager : MonoBehaviour
 
         if (coroutineRunning == false && damageHits.Count != 0 && damageHits[0] != 0)
         {
-            Debug.Log("Start damage for status");
+            //Debug.Log("Start damage for status");
             coroutineRunning = true;
             animationDone = true;
             StartCoroutine(DamageAnimation(damageHits[0]));
@@ -270,6 +281,8 @@ public class EnemyManager : MonoBehaviour
             turnManager.tempList.Remove(gameObject);
             turnManager.targettedEnemies = turnManager.tempList;
         }
+        playerManager.playerExpGain(expDrop);
+        playerManager.playerGoldChange(goldDrop);
         Destroy(myHealthBar);
         Destroy(myAttackBar);
         Destroy(myBleedNum);
@@ -286,11 +299,11 @@ public class EnemyManager : MonoBehaviour
 
     private IEnumerator DamageAnimation(int damage)
     {
-        Debug.Log(damage);
+        //Debug.Log(damage);
         //reduces health
         if (animationDone == true && damageHits.Count != 0)
         {
-            Debug.Log("damage Dealt");
+            //Debug.Log("damage Dealt");
             currentHealth -= damage;
 
 

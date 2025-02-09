@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5851640337281760352}
   - component: {fileID: 3680375983213154772}
-  - component: {fileID: 7334489256175407035}
   - component: {fileID: 6394891285767373452}
+  - component: {fileID: 7334489256175407035}
   m_Layer: 0
   m_Name: BasiliskEye
   m_TagString: Untagged
@@ -85,6 +85,41 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6394891285767373452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1239386241377425603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb142226984f98048a351ae61e9f9bfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dnPos: {x: 1.0416666, y: -4.75, z: -2.1}
+  upPos: {x: 1.0416666, y: -2.75, z: -3.1}
+  currPos: {x: 1.0416666, y: -4.75, z: -2.1}
+  cardClicked: 0
+  originalCardSize: {x: 0, y: 0, z: 0}
+  clickInventory:
+    serializedVersion: 2
+    m_Bits: 64
+  itemType: Potion
+  inspectionCardPrefab: {fileID: 341539075686305812, guid: 51d7477306d222b4abd7859cd961e515, type: 3}
+  itemEquipped: 0
+  slotsToEquipStrings: 010000000000000000
+  equippedSlots:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  carryingWeight: 1
 --- !u!61 &7334489256175407035
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -111,41 +146,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 12, y: 12}
   m_EdgeRadius: 0
---- !u!114 &6394891285767373452
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1239386241377425603}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb142226984f98048a351ae61e9f9bfe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dnPos: {x: 0, y: 0, z: 0}
-  upPos: {x: 0, y: 0, z: 0}
-  currPos: {x: 0, y: 0, z: 0}
-  cardClicked: 0
-  originalCardSize: {x: 0, y: 0, z: 0}
-  clickInventory:
-    serializedVersion: 2
-    m_Bits: 64
-  itemType: Potion
-  inspectionCardPrefab: {fileID: 341539075686305812, guid: 51d7477306d222b4abd7859cd961e515, type: 3}
-  itemEquipped: 0
-  slotsToEquipStrings: 010000000000000000
-  equippedSlots:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  carryingWeight: 1
 --- !u!1 &3432396449044518008
 GameObject:
   m_ObjectHideFlags: 0

@@ -55,6 +55,8 @@ public class MapGenerator : MonoBehaviour
     public float minRoomAmount;
     public int currentRoomAmount = 0;
 
+    public float spawnRoomPosIncrement;
+
     public GameObject[,] spawnedRoomsArray = new GameObject[9,5];
 
     /*GameObject[] list1 = new GameObject[9] { null, null, null, null, null, null, null, null, null};
@@ -139,6 +141,11 @@ public class MapGenerator : MonoBehaviour
         {
             generationDone = false;
             deleteMap();
+        }
+        else if (currentRoomAmount >= minRoomAmount && generationDone)
+        {
+            generationDone = false;
+            spawnMapIcons();
         }
         //if (!createOnce)
         //{
@@ -280,7 +287,7 @@ public class MapGenerator : MonoBehaviour
 
         var randomRange = Random.Range(0, potentialRooms.Count);
         var randomNum = potentialRooms[randomRange];
-        var newLeftPiece = Instantiate(randomNum, new Vector3(currPiecePos.x - 2f, currPiecePos.y, -1), potentialRooms[randomRange].transform.rotation);
+        var newLeftPiece = Instantiate(randomNum, new Vector3(currPiecePos.x - spawnRoomPosIncrement, currPiecePos.y, -1), potentialRooms[randomRange].transform.rotation);
         //currPieceScript.leftExit = false;
         //currPieceScript.numExitsLeft -= 1;
         spawnedRooms.Add(newLeftPiece);
@@ -348,7 +355,7 @@ public class MapGenerator : MonoBehaviour
 
         var randomRange = Random.Range(0, potentialRooms.Count);
         var randomNum = potentialRooms[randomRange];
-        var newRightPiece = Instantiate(randomNum, new Vector3(currPiecePos.x + 2f, currPiecePos.y, -1), potentialRooms[randomRange].transform.rotation);
+        var newRightPiece = Instantiate(randomNum, new Vector3(currPiecePos.x + spawnRoomPosIncrement, currPiecePos.y, -1), potentialRooms[randomRange].transform.rotation);
         //currPieceScript.rightExit = false;
         //currPieceScript.numExitsLeft -= 1;
         spawnedRooms.Add(newRightPiece);
@@ -414,7 +421,7 @@ public class MapGenerator : MonoBehaviour
 
         var randomRange = Random.Range(0, potentialRooms.Count);
         var randomNum = potentialRooms[randomRange];
-        var newTopPiece = Instantiate(randomNum, new Vector3(currPiecePos.x, currPiecePos.y + 2f, -1), potentialRooms[randomRange].transform.rotation);
+        var newTopPiece = Instantiate(randomNum, new Vector3(currPiecePos.x, currPiecePos.y + spawnRoomPosIncrement, -1), potentialRooms[randomRange].transform.rotation);
         //currPieceScript.topExit = false;
         //currPieceScript.numExitsLeft -= 1;
         spawnedRooms.Add(newTopPiece);
@@ -479,7 +486,7 @@ public class MapGenerator : MonoBehaviour
 
         var randomRange = Random.Range(0, potentialRooms.Count);
         var randomNum = potentialRooms[randomRange];
-        var newBottomPiece = Instantiate(randomNum, new Vector3(currPiecePos.x, currPiecePos.y - 2f, -1), potentialRooms[randomRange].transform.rotation);
+        var newBottomPiece = Instantiate(randomNum, new Vector3(currPiecePos.x, currPiecePos.y - spawnRoomPosIncrement, -1), potentialRooms[randomRange].transform.rotation);
         //currPieceScript.bottomExit = false;
         //currPieceScript.numExitsLeft -= 1;
         spawnedRooms.Add(newBottomPiece);
@@ -641,14 +648,18 @@ public class MapGenerator : MonoBehaviour
             }
        }
 
+        generationDone = true;
+
+    }
+
+    private void spawnMapIcons()
+    {
         mapControls.spawnPlayer();
         enemyMapBehavior.spawnStairs();
 
         enemyMapBehavior.spawnEnemies();
         enemyMapBehavior.spawnShop();
         enemyMapBehavior.spawnEvent();
-        generationDone = true;
-
     }
 
     public void deleteMap()

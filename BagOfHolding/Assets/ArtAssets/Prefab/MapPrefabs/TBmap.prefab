@@ -191,6 +191,8 @@ MonoBehaviour:
   xArrayPos: 0
   yArrayPos: 0
   numExitsLeft: 2
+  roomInhabitedBy: 
+  currentInhabitant: {fileID: 0}
 --- !u!1 &8004108012753602544
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,7 +218,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8004108012753602544}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.02, y: -6.61, z: 0.1}
+  m_LocalPosition: {x: 0.04, y: -6.61, z: 0.1}
   m_LocalScale: {x: 0.267, y: 0.355, z: 1}
   m_Children: []
   m_Father: {fileID: 7765611544413646774}

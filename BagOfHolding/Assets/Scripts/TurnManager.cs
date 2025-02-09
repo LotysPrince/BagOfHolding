@@ -420,7 +420,10 @@ public class TurnManager : MonoBehaviour
                 //Debug.Log("This shit is adding: " + Mathf.RoundToInt(damage * currentCritical * damageMult));
                 
                 minDamage = Mathf.RoundToInt((damage * currentCritical * damageMult)/damageDivider);
-
+                Debug.Log("Damage: " + damage);
+                Debug.Log("CurrentCritical: " + currentCritical);
+                Debug.Log("DamageMult: " + damageMult);
+                Debug.Log("minDamage: " + minDamage);
                 if (damage > 0 && minDamage == 0)
                 {
                     minDamage = 1;
@@ -448,7 +451,7 @@ public class TurnManager : MonoBehaviour
         //if doing damage, attack the enemies
         if (damage != 0)
         {
-            Debug.Log("Enemy is taking damage");
+            //Debug.Log("Enemy is taking damage");
             tempList = targettedEnemies;
             foreach (var enemy in targettedEnemies)
             {
@@ -467,10 +470,10 @@ public class TurnManager : MonoBehaviour
                 if (enemy.GetComponent<EnemyManager>().currBleed != 0 || enemy.GetComponent<EnemyManager>().currPoison != 0 || enemy.GetComponent<EnemyManager>().currHemmorhage != 0)
                 {
                     //if hemorrhage is the only status, adds attackFinishedAmount since it doesnt do damage
-                    /*if (enemy.GetComponent<EnemyManager>().currBleed == 0 || enemy.GetComponent<EnemyManager>().currPoison == 0 || enemy.GetComponent<EnemyManager>().currHemmorhage != 0)
+                    if (enemy.GetComponent<EnemyManager>().currBleed == 0 && enemy.GetComponent<EnemyManager>().currPoison == 0 && enemy.GetComponent<EnemyManager>().currHemmorhage != 0)
                     {
-                        attacksFinishedAmount += 1;
-                    }*/
+                        enemiesHaveStatus -= 1;
+                    }
                     enemiesHaveStatus += 1;
                     enemy.GetComponent<EnemyManager>().enemyStatusControl();
 
@@ -478,7 +481,7 @@ public class TurnManager : MonoBehaviour
             }
             if (enemiesHaveStatus == 0)
             {
-                Debug.Log("no enemy statuses");
+                //Debug.Log("no enemy statuses");
                 StartCoroutine(delayEnemyAttack());
             }
         }
@@ -502,11 +505,11 @@ public class TurnManager : MonoBehaviour
             {
                 if (enemy.GetComponent<EnemyManager>().currBleed != 0 || enemy.GetComponent<EnemyManager>().currPoison != 0 || enemy.GetComponent<EnemyManager>().currHemmorhage != 0)
                 {
-                    /*
-                    if (enemy.GetComponent<EnemyManager>().currBleed == 0 || enemy.GetComponent<EnemyManager>().currPoison == 0 || enemy.GetComponent<EnemyManager>().currHemmorhage != 0)
+                    
+                    if (enemy.GetComponent<EnemyManager>().currBleed == 0 && enemy.GetComponent<EnemyManager>().currPoison == 0 && enemy.GetComponent<EnemyManager>().currHemmorhage != 0)
                     {
-                        attacksFinishedAmount += 1;
-                    }*/
+                        enemiesHaveStatus -= 1;
+                    }
                     enemiesHaveStatus += 1;
                     enemy.GetComponent<EnemyManager>().enemyStatusControl();
                 }
@@ -562,13 +565,14 @@ public class TurnManager : MonoBehaviour
             trapDamage = 0;
         }
 
-        if (nextTurnCritical != 1)
+        if (nextTurnCritical > 1)
         {
             currentCritical = nextTurnCritical;
             nextTurnCritical = 1;
             criticalAttacks = currentCritical;
             currentCritical = 2;
         }
+        nextTurnCritical = 1;
         yield return new WaitForSecondsRealtime(.5f);
         initiateEnemyTurn();
     }
