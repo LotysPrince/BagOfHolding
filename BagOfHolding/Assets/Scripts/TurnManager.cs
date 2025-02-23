@@ -12,6 +12,7 @@ public class TurnManager : MonoBehaviour
     public int numAttacks = 1;
     public int inflictBleed = 0;
     public int inflictBleedOnSelf = 0;
+    public int inflictBleedMultiplier = 1;
     public int inflictPoison = 0;
     public int inflictHemmorhage = 0;
 
@@ -268,10 +269,6 @@ public class TurnManager : MonoBehaviour
             damage += 2;
             //inflictBleed += 2;
         }
-        if (card.name == "HealingPotion(Clone)")
-        {
-            healing += 2;
-        }
         if (card.name == "BladedBoots(Clone)")
         {
             numAttacks += 1;
@@ -375,6 +372,41 @@ public class TurnManager : MonoBehaviour
         {
             playerManager.playerArmor += 5;
             inflictPoison += 1;
+        }
+        if (card.name == "SeersJack(Clone)")
+        {
+            deckManager.handSize += 3;
+        }
+        if (card.name == "OwlBearTalons(Clone)")
+        {
+            inflictBleedMultiplier = 2;
+        }
+        if (card.name == "MinorPotion(Clone)")
+        {
+            healing += 2;
+        }
+        if (card.name == "HealingPotion(Clone)")
+        {
+            healing += 5;
+        }
+        if (card.name == "GreaterHealingPotion(Clone)")
+        {
+            healing += 10;
+        }
+        if (card.name == "PoisonDarts(Clone)")
+        {
+            numAttacks += 2;
+            damage += 1;
+            inflictPoison += 2;
+        }
+
+    }
+
+    public void processOnEquip(GameObject card)
+    {
+        if (card.name == "GravediggersGloves(Clone)")
+        {
+            deckManager.drawCardsFromGraveyard(2);
         }
     }
 
@@ -658,6 +690,7 @@ public class TurnManager : MonoBehaviour
         carryingWeightObject.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "5";
 
         deckManager.drawCards();
+        deckManager.handSize = 6;
 
         foreach (var enemy in targettedEnemies)
         {
@@ -679,6 +712,7 @@ public class TurnManager : MonoBehaviour
         spawnedEnemies[0].GetComponent<EnemyManager>().isTargetted = true;
         maxTargets = 1;
         inflictBleed = 0;
+        inflictBleedMultiplier = 1;
         inflictPoison = 0;
         inflictHemmorhage = 0;
         enemiesHaveStatus = 0;

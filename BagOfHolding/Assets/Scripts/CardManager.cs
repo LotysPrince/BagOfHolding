@@ -18,6 +18,7 @@ public class CardManager : MonoBehaviour
     private InventoryManager inventoryManager;
     private DeckManager deckManager;
     private InventoryGridGenerator inventoryGridGenerator;
+    private TurnManager turnManager;
     public LayerMask clickInventory;
     public string itemType;
 
@@ -36,6 +37,11 @@ public class CardManager : MonoBehaviour
 
     public int carryingWeight;
 
+    public bool isSticky;
+
+    public bool abilityOnEquip;
+    private bool abilityOnEquipActivated;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,6 +55,7 @@ public class CardManager : MonoBehaviour
         inventoryManager = GameObject.Find("Scripts").GetComponent<InventoryManager>();
         deckManager = GameObject.Find("Scripts").GetComponent<DeckManager>();
         inventoryGridGenerator = GameObject.Find("Scripts").GetComponent<InventoryGridGenerator>();
+        turnManager = GameObject.Find("Scripts").GetComponent<TurnManager>();
 
         /*slotsToEquip[0, 0] = slotsToEquipStrings[0];
         slotsToEquip[1, 0] = slotsToEquipStrings[1];
@@ -91,6 +98,13 @@ public class CardManager : MonoBehaviour
             transform.position = new Vector3(mousePosition.x, mousePosition.y, -5);
 
 
+        }
+
+
+        if (itemEquipped && abilityOnEquip && !abilityOnEquipActivated)
+        {
+            abilityOnEquipActivated = true;
+            turnManager.processOnEquip(gameObject);
         }
     }
 
@@ -136,7 +150,7 @@ public class CardManager : MonoBehaviour
                 
             }
             //if its currently equipped and youre not carrying another card, will follow the mouse
-            else if (itemEquipped && inventoryManager.carryingCard == null)
+            else if (itemEquipped && inventoryManager.carryingCard == null && !isSticky)
             {
                 cardClicked = true;
                 inventoryManager.carryingCard = gameObject;
@@ -152,7 +166,7 @@ public class CardManager : MonoBehaviour
             }
 
             //if its currently equipped but you're carrying another card, sends this card back to deck and equips the card youre carrying
-            else if (itemEquipped && inventoryManager.carryingCard != null)
+            else if (itemEquipped && inventoryManager.carryingCard != null && !isSticky)
             {
                 
                 //removes item thats equipped, reseting its speed and transparency, returns it to deck

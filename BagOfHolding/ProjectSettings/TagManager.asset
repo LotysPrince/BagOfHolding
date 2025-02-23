@@ -18,6 +18,7 @@ TagManager:
   - ShopIcon
   - EnemyIcon
   - StairsIcon
+  - Gloves
   layers:
   - Default
   - TransparentFX

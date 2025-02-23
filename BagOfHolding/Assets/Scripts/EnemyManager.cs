@@ -328,7 +328,7 @@ public class EnemyManager : MonoBehaviour
             {
                 if (statusesDealt == false && statusDamage == false)
                 {
-                    setBleed(turnManager.inflictBleed);
+                    setBleed(turnManager.inflictBleed * turnManager.inflictBleedMultiplier);
                     setPoison(turnManager.inflictPoison);
                     setHemmorhage(turnManager.inflictHemmorhage);
                 }

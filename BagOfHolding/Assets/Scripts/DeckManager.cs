@@ -83,6 +83,7 @@ public class DeckManager : MonoBehaviour
             if (currentDeck.Count == 0)
             {
                 createDeckFromLibrary();
+                currentGraveyard.Clear();
                 //currentGraveyard.Clear();
             }
             //var cardObject = Instantiate(drawnCard, new Vector3(xCounter, -4.75f, zCounter), Quaternion.identity);
@@ -92,6 +93,25 @@ public class DeckManager : MonoBehaviour
         }
         gridGenerator.currentInventory = currentHand;
         gridGenerator.GenerateInventory();
+    }
+    public void drawCardsFromGraveyard(int drawAmount)
+    {
+        int cardsDrawn = 0;
+        while (cardsDrawn < drawAmount)
+        {
+            if (currentGraveyard.Count != 0)
+            {
+                var drawnCard = currentGraveyard[Random.Range(0, currentGraveyard.Count)];
+                currentGraveyard.Remove(drawnCard);
+                currentHand.Add(drawnCard);
+                gridGenerator.addItemToInventory(drawnCard);
+                cardsDrawn += 1;
+            }
+            else if (currentGraveyard.Count == 0)
+            {
+                break;
+            }
+        }
     }
 
     public void updateHandPosition()
@@ -121,10 +141,13 @@ public class DeckManager : MonoBehaviour
 
     public void emptyHand()
     {
-        foreach (var card in gridGenerator.itemsSpawned)
+        foreach (var card in currentHand)
         {
-            Destroy(card);
             currentGraveyard.Add(card);
+        }
+        foreach (var card in gridGenerator.itemsSpawned)
+        { 
+            Destroy(card);
         }
         currentHand.Clear();
         gridGenerator.itemsSpawned.Clear();

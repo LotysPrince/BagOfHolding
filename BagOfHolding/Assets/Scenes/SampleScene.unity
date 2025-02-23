@@ -1110,7 +1110,7 @@ GameObject:
   - component: {fileID: 180260791}
   m_Layer: 6
   m_Name: Shoulder
-  m_TagString: Shoulder
+  m_TagString: Gloves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3239,6 +3239,13 @@ MonoBehaviour:
   - {fileID: 3746714768115271050, guid: 51bc759c1f006344b8795bda35e191a7, type: 3}
   - {fileID: 1671293708828049754, guid: 041e332352b5555419ecd6903a9bcb66, type: 3}
   - {fileID: 8547136324396610383, guid: 98a33b1837e2de246ae0de5fe3bbf73c, type: 3}
+  - {fileID: 8639537216604659236, guid: d0675b9a451372a408acb3a83ea7d8bd, type: 3}
+  - {fileID: 2045693426534210731, guid: 5a2db60760c444a43b53a73170d3e040, type: 3}
+  - {fileID: 3727902337924535315, guid: 8d3d8c31dca685748aa77b3f94e4d185, type: 3}
+  - {fileID: 284108136414460357, guid: badfe7e21ba5bec44954f08571d7011a, type: 3}
+  - {fileID: 5195805426513996863, guid: 0994a8c7ac95acd498174096714a337a, type: 3}
+  - {fileID: 6724415372925984198, guid: 6e4e04e5ae4f1c249b7e6d4734ad91d8, type: 3}
+  - {fileID: 6291085034039304288, guid: f2e9b229c037c3d46a02a2423b5d5d36, type: 3}
   currentGraveyard: []
   currentHand: []
   handSize: 6
@@ -3314,6 +3321,7 @@ MonoBehaviour:
   numAttacks: 1
   inflictBleed: 0
   inflictBleedOnSelf: 0
+  inflictBleedMultiplier: 1
   inflictPoison: 0
   inflictHemmorhage: 0
   spawnableEnemies:
@@ -8533,8 +8541,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0246, y: -0.3734}
-  m_SizeDelta: {x: 2.4794, y: 0.6202}
+  m_AnchoredPosition: {x: -0.01, y: -0.38}
+  m_SizeDelta: {x: 2.4794, y: 0.6685}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &572387175777577541
 GameObject:
@@ -8615,7 +8623,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Chitinous Cuisse
+  m_text: Poison Tipped Darts
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -8695,7 +8703,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4936872852243789388}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.76, y: 3.57, z: 0}
+  m_LocalPosition: {x: 0, y: 3.59, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 1}
   m_Children: []
   m_Father: {fileID: 4185016354343509588}
@@ -8741,18 +8749,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.16575062, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 11.67, y: 15.04}
+    oldSize: {x: 2.73, y: 13.58}
     newSize: {x: 1.97, y: 2.62}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 11.67, y: 15.04}
+  m_Size: {x: 4.719001, y: 13.58}
   m_EdgeRadius: 0
 --- !u!222 &1413394761937093131
 CanvasRenderer:
@@ -8945,10 +8953,10 @@ MonoBehaviour:
   clickInventory:
     serializedVersion: 2
     m_Bits: 64
-  itemType: Pants
+  itemType: Weapon
   inspectionCardPrefab: {fileID: 6533199990507491304}
   itemEquipped: 0
-  slotsToEquipStrings: 010100010100000000
+  slotsToEquipStrings: 010000010000000000
   equippedSlots:
   - {fileID: 0}
   - {fileID: 0}
@@ -8960,6 +8968,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   carryingWeight: 1
+  isSticky: 0
+  abilityOnEquip: 0
 --- !u!1 &3853017087821303568
 GameObject:
   m_ObjectHideFlags: 0
@@ -8986,8 +8996,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8796153396597897975}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.9623, y: -2.7543, z: 0}
-  m_LocalScale: {x: 0.15728658, y: 0.12952876, z: 1}
+  m_LocalPosition: {x: 0.497, y: -2.737, z: 0}
+  m_LocalScale: {x: 0.17499284, y: 0.13420174, z: 1}
   m_Children:
   - {fileID: 619935361430418429}
   m_Father: {fileID: 0}
@@ -9248,7 +9258,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7e96bd5fa832b6249935b6677a75f3d3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b0efbdb47d556924cbd0923a36fe203d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -9316,9 +9326,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '+5 Armor
-
-    +1 Poison'
+  m_text: 3 attacks, each dealing 2 poison
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -9625,13 +9633,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6533199989882593980}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0549, y: 0.5507, z: 0.01}
-  m_LocalScale: {x: 0.19433813, y: 0.13121866, z: 1}
+  m_LocalRotation: {x: 0.94768494, y: 0.31920743, z: -0, w: 0}
+  m_LocalPosition: {x: -0.28, y: 0.84, z: 0.01}
+  m_LocalScale: {x: 0.19126323, y: 0.17444909, z: 1}
   m_Children: []
   m_Father: {fileID: 6533199990007170486}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 180, y: 0, z: -37.23}
 --- !u!212 &6533199989882593982
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9672,7 +9680,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7e96bd5fa832b6249935b6677a75f3d3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b0efbdb47d556924cbd0923a36fe203d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -9932,7 +9940,7 @@ GameObject:
   - component: {fileID: 6533199990507491301}
   - component: {fileID: 8583031915217751991}
   m_Layer: 3
-  m_Name: ChitinousCuisseCard
+  m_Name: PoisonDartsCard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10031,7 +10039,7 @@ GameObject:
   - component: {fileID: 1074195162925624719}
   - component: {fileID: 3719461398606586040}
   m_Layer: 0
-  m_Name: ChitinousCuisse
+  m_Name: PoisonDarts
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
