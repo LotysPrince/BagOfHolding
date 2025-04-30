@@ -59,6 +59,7 @@ public class TurnManager : MonoBehaviour
 
     //card variables
     private bool AssassinCowlActive;
+    private bool CloakofBloodActive;
     
 
     
@@ -157,7 +158,13 @@ public class TurnManager : MonoBehaviour
                     processCards(item.Value);
                 }
             }
+            foreach (var item in inventoryManager.extraEquippedItems)
+            {
+                processCards(item);
+            }
 
+            playerManager.playerTakesDamage(playerManager.selfBleed);
+            playerManager.playerBleedControl(-1);
             inventoryManager.clearInventory();
             processHealing();
             processDamage();
@@ -170,11 +177,11 @@ public class TurnManager : MonoBehaviour
 
     public void preProcessCards(GameObject card)
     {
-        if (card.name == "SwiftCape(Clone)")
+        if (card.name == "SwiftCape")
         {
             maxTargets += 1;
         }
-        if (card.name == "HelmOfCerberus(Clone)")
+        if (card.name == "HelmOfCerberus")
         {
             inventoryManager.addInventorySlot(2, "Helmet");
             /*if (helm1 == null)
@@ -185,11 +192,15 @@ public class TurnManager : MonoBehaviour
                 inventoryManager.InventoryItems.Add(helm2, null);
             }*/
         }
-        if (card.name == "Spear(Clone)")
+        if (card.name == "GeminiNecklace")
+        {
+            inventoryManager.GeminiNecklaceActivated = true;
+        }
+        if (card.name == "Spear")
         {
             maxTargets += 1;
         }
-        if (card.name == "BriarWhip(Clone)")
+        if (card.name == "BriarWhip")
         {
             foreach (var enemy in spawnedEnemies)
             {
@@ -202,11 +213,15 @@ public class TurnManager : MonoBehaviour
             }
 
         }
+        if (card.name == "SlimeKingsGloves")
+        {
+            inventoryManager.SlimeKingGlovesActivated = true;
+        }
     }
 
     public void preProcessRemove(GameObject card)
     {
-        if (card.name == "SwiftCape(Clone)")
+        if (card.name == "SwiftCape")
         {
             maxTargets -= 1;
             if (targettedEnemies.Count > maxTargets)
@@ -217,7 +232,11 @@ public class TurnManager : MonoBehaviour
                 oldSelected.transform.GetChild(0).gameObject.SetActive(false);
             }
         }
-        if (card.name == "HelmOfCerberus(Clone)")
+        if (card.name == "GeminiNecklace")
+        {
+            inventoryManager.GeminiNecklaceActivated = false;
+        }
+        if (card.name == "HelmOfCerberus")
         {
             inventoryManager.removeInventorySlot(2, "Helmet");
             //unequips slot before deleting it
@@ -239,7 +258,7 @@ public class TurnManager : MonoBehaviour
             //inventoryManager.InventoryItems.Add(helm1, null);
             //inventoryManager.InventoryItems.Add(helm2, null);
         }
-        if (card.name == "Spear(Clone)")
+        if (card.name == "Spear")
         {
             maxTargets -= 1;
             if (targettedEnemies.Count > maxTargets)
@@ -251,7 +270,7 @@ public class TurnManager : MonoBehaviour
             }
         }
 
-        if (card.name == "BriarWhip(Clone)")
+        if (card.name == "BriarWhip")
         {
             maxTargets = 1;
 
@@ -264,56 +283,56 @@ public class TurnManager : MonoBehaviour
     }
     private void processCards(GameObject card)
     {
-        if (card.name == "Saber(Clone)")
+        if (card.name == "Saber")
         {
             damage += 2;
             //inflictBleed += 2;
         }
-        if (card.name == "BladedBoots(Clone)")
+        if (card.name == "BladedBoots")
         {
             numAttacks += 1;
         }
-        if (card.name == "CrimsonLily(Clone)")
+        if (card.name == "CrimsonLily")
         {
             inflictBleed += 2;
         }
-        if (card.name == "CloakOfBlood(Clone)")
+        if (card.name == "CloakOfBlood")
         {
             damageMult += 1;
         }
-        if (card.name == "HelmOfCerberus(Clone)")
+        if (card.name == "HelmOfCerberus")
         {
-            damage += 5;
+            //damage += 5;
         }
-        if (card.name == "RitualDagger(Clone)")
+        if (card.name == "RitualDagger")
         {
             playerManager.playerTakesDamage(5);
             damage += 5;
         }
-        if (card.name == "WingedDaggers(Clone)")
+        if (card.name == "WingedDaggers")
         {
             numAttacks += 4;
             damage += 1;
         }
-        if (card.name == "BirdskullWhistle(Clone)")
+        if (card.name == "BirdskullWhistle")
         {
             postProcessCards(card);
         }
-        if (card.name == "HiddenDagger(Clone)")
+        if (card.name == "HiddenDagger")
         {
             damage += 100;
         }
-        if (card.name == "Spear(Clone)")
+        if (card.name == "Spear")
         {
             damage += 2;
             maxTargets += 1;
         }
-        if (card.name == "BriarWhip(Clone)")
+        if (card.name == "BriarWhip")
         {
             damage += 9;
             damageDivider = spawnedEnemies.Count;
             maxTargets = 3;
-            foreach(var enemy in spawnedEnemies)
+            foreach (var enemy in spawnedEnemies)
             {
                 if (!enemy.GetComponent<EnemyManager>().isTargetted)
                 {
@@ -321,7 +340,7 @@ public class TurnManager : MonoBehaviour
                 }
             }
         }
-        if (card.name == "BasiliskEye(Clone)")
+        if (card.name == "BasiliskEye")
         {
             foreach (var enemy in targettedEnemies)
             {
@@ -329,82 +348,129 @@ public class TurnManager : MonoBehaviour
                 enemy.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
             }
         }
-        if (card.name == "FungusCudgel(Clone)")
+        if (card.name == "FungusCudgel")
         {
             damage += 5;
-            inflictBleed += 2;
-            inflictPoison += 2;
+            foreach (GameObject enemy in spawnedEnemies)
+            {
+                enemy.GetComponent<EnemyManager>().setBleed(2);
+                enemy.GetComponent<EnemyManager>().setPoison(2);
+            }
         }
-        if (card.name == "AssassinsCowl(Clone)")
+        if (card.name == "AssassinCowl")
         {
-
+            AssassinCowlActive = true;
         }
-        if (card.name == "DryadRapier(Clone)")
+        if (card.name == "DryadRapier")
         {
             damage += 4;
             inflictHemmorhage += 3;
         }
-        if (card.name == "MinotaurHelm(Clone)")
+        if (card.name == "MinotaurHelm")
         {
             damage += 3;
             inflictHemmorhage += 1;
         }
-        if (card.name == "Caltrops(Clone)")
+        if (card.name == "Caltrops")
         {
             trapDamage = 1;
             trapDuration = 4;
         }
-        if (card.name == "PenanceCage(Clone)")
+        if (card.name == "PenanceCage")
         {
-            inflictBleedOnSelf += 1;
+            playerManager.playerBleedControl(1);
             inflictBleed += 2;
         }
-        if (card.name == "GuardSaber(Clone)")
+        if (card.name == "GuardSaber")
         {
             damage += 2;
             inflictBleed += 2;
         }
-        if (card.name == "ShortSword(Clone)")
+        if (card.name == "ShortSword")
         {
             damage += 3;
         }
-        if (card.name == "ChitinousCuisse(Clone)")
+        if (card.name == "ChitinousCuisse")
         {
             playerManager.playerArmor += 5;
             inflictPoison += 1;
         }
-        if (card.name == "SeersJack(Clone)")
+        if (card.name == "SeersJack")
         {
             deckManager.handSize += 3;
         }
-        if (card.name == "OwlBearTalons(Clone)")
+        if (card.name == "OwlBearTalons")
         {
             inflictBleedMultiplier = 2;
         }
-        if (card.name == "MinorPotion(Clone)")
+        if (card.name == "MinorPotion")
         {
             healing += 2;
         }
-        if (card.name == "HealingPotion(Clone)")
+        if (card.name == "HealingPotion")
         {
             healing += 5;
         }
-        if (card.name == "GreaterHealingPotion(Clone)")
+        if (card.name == "GreaterHealingPotion")
         {
             healing += 10;
         }
-        if (card.name == "PoisonDarts(Clone)")
+        if (card.name == "PoisonDarts")
         {
             numAttacks += 2;
             damage += 1;
             inflictPoison += 2;
+        }
+        if (card.name == "LeatherTassets")
+        {
+            playerManager.playerArmor += 3;
+            //playerManager.playerPoisonArmor += 3;
+        }
+        if (card.name == "AssassinsPendant")
+        {
+            currentCritical = 3;
+        }
+        if (card.name == "BladedCloak")
+        {
+            numAttacks += 1;
+            damage += 3;
+            playerManager.playerDodge += 1;
+        }
+        if (card.name == "CloakofBlood")
+        {
+            CloakofBloodActive = true;
+        }
+        if (card.name == "MailChausses")
+        {
+            playerManager.playerArmor += 6;
+            //playerManager.playerBleedArmor += 3;
+        }
+        if (card.name == "SelfFlagellantChains")
+        {
+            numAttacks += 1;
+            inflictBleed += 3;
+            playerManager.playerBleedControl(3);
+        }
+        if (card.name == "SlimedBoots")
+        {
+            inflictPoison += 2;
+        }
+        if (card.name == "SwiftBoots")
+        {
+            playerManager.playerDodge += 1;
+            numAttacks += 1;
+        }
+        if (card.name == "SwiftCape")
+        {
+            numAttacks += 2;
+            maxTargets += 1;
         }
 
     }
 
     public void processOnEquip(GameObject card)
     {
-        if (card.name == "GravediggersGloves(Clone)")
+        if (card.name == "GravediggersGloves")
         {
             deckManager.drawCardsFromGraveyard(2);
         }
@@ -413,7 +479,7 @@ public class TurnManager : MonoBehaviour
     //processes card that have an effect during the attack
     private void processBattleCards(GameObject card)
     {
-        if (card.name == "AssassinsCowl(Clone)")
+        if (card.name == "AssassinsCowl")
         {
         }
     }
@@ -421,7 +487,7 @@ public class TurnManager : MonoBehaviour
 
     private void postProcessCards(GameObject card)
     {
-        if (card.name == "BirdskullWhistle(Clone)")
+        if (card.name == "BirdskullWhistle")
         {
             nextTurnCritical = 3;
             //criticalAttacks += 3;
@@ -449,6 +515,31 @@ public class TurnManager : MonoBehaviour
             {
 
                 enemy.GetComponent<EnemyManager>().timesHit = numAttacks;
+
+                if (CloakofBloodActive && enemy.GetComponent<EnemyManager>().currBleed != 0)
+                {
+                    damageMult += 1;
+                    CloakofBloodActive = false;
+                }
+                if (AssassinCowlActive)
+                {
+                    if (enemy.GetComponent<EnemyManager>().currentHealth / enemy.GetComponent<EnemyManager>().maxHealth <= 0.3f)
+                    {
+                        currentCritical = 2;
+                        criticalAttacks += 1;
+                    }
+                    else
+                    {
+                        if (criticalAttacks != 0)
+                        {
+                            criticalAttacks -= 1;
+                        }
+                        else if (criticalAttacks == 0)
+                        {
+                            currentCritical = 1;
+                        }
+                    }
+                }
                 //Debug.Log("This shit is adding: " + Mathf.RoundToInt(damage * currentCritical * damageMult));
                 
                 minDamage = Mathf.RoundToInt((damage * currentCritical * damageMult)/damageDivider);
@@ -479,6 +570,8 @@ public class TurnManager : MonoBehaviour
                     currentCritical = 1;
                 }
             }
+
+            AssassinCowlActive = false;
         }
         //if doing damage, attack the enemies
         if (damage != 0)
@@ -571,6 +664,7 @@ public class TurnManager : MonoBehaviour
             StartCoroutine(delayEnemyAttack());
         }
     }
+
     private IEnumerator delayEnemyAttack()
     {
         foreach (GameObject enemy in spawnedEnemies)
@@ -674,6 +768,7 @@ public class TurnManager : MonoBehaviour
             StopCoroutine(EnemyAttackSequence());
             foreach (var enemy in spawnedEnemies)
             {
+                enemy.GetComponent<EnemyManager>().turnBehavior();
                 enemy.GetComponent<EnemyManager>().attackAnimationDone = false;
             }
             initiatePlayerTurn();

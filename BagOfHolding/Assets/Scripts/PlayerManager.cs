@@ -14,7 +14,11 @@ public class PlayerManager : MonoBehaviour
     private GameObject myCritObject;
     public GameObject CritObject;
 
+    private GameObject myBleedObject;
+    public GameObject bleedObject;
+
     public int playerArmor;
+    public int playerDodge;
 
     public int playerLevel;
     public int playerExp;
@@ -25,6 +29,8 @@ public class PlayerManager : MonoBehaviour
     public GameObject playerLevelUI;
     public GameObject playerExpUI;
     public GameObject playerGoldUI;
+
+    public int selfBleed;
 
     // Start is called before the first frame update
     void Start()
@@ -54,7 +60,12 @@ public class PlayerManager : MonoBehaviour
 
     public void playerTakesDamage(int damage)
     {
-        if (playerArmor != 0)
+        if (playerDodge != 0)
+        {
+            damage = 0;
+            playerDodge -= 1;
+        }
+        else if (playerArmor != 0)
         {
             if (playerArmor >= damage)
             {
@@ -82,6 +93,35 @@ public class PlayerManager : MonoBehaviour
 
         playerHealthBar.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = currentHealth.ToString();
 
+    }
+
+    public void playerBleedControl(int bleedAdd)
+    {
+        if (bleedAdd != 0 && bleedAdd > 0)
+        {
+            if (selfBleed == 0)
+            {
+                GameObject enemyBleedBar = Instantiate(bleedObject, transform.position + new Vector3(-2.5f, 2.5f, -5f), Quaternion.identity, GameObject.FindGameObjectWithTag("WorldCanvas").transform);
+                myBleedObject = enemyBleedBar;
+
+            }
+            selfBleed += bleedAdd;
+            myBleedObject.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = selfBleed.ToString();
+
+            
+        }
+        else if (bleedAdd != 0 && bleedAdd < 0)
+        {
+            if (selfBleed != 0)
+            {
+                selfBleed += bleedAdd;
+                myBleedObject.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = selfBleed.ToString();
+                if (selfBleed <= 0)
+                {
+                    Destroy(myBleedObject);
+                }
+            }
+        }
     }
 
     public void playerGoldChange(int gold)

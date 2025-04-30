@@ -37,6 +37,7 @@ public class InventoryGridGenerator : MonoBehaviour
 
     private GameObject itemToSpawn;
     private GameObject newItem;
+    public InventoryManager inventoryManager;
 
     // Start is called before the first frame update
     void Start()
@@ -79,6 +80,9 @@ public class InventoryGridGenerator : MonoBehaviour
                 bool itemDeleted = false;
                 itemToSpawn = currentInventory[0];
                 newItem = Instantiate(itemToSpawn, new Vector3(-20, -50, 0), Quaternion.identity);
+                newItem.transform.name = itemToSpawn.transform.name;
+                //newItem.name.Replace("(Clone)", "").Trim();
+                //newItem.name.Replace("(Clone)(Clone)", "").Trim();
                 //itemToSpawn = currentInventory[0];
                 //Debug.Log(itemToSpawn.transform.name);
                 //currentInventory.Remove(itemToSpawn);
@@ -90,14 +94,13 @@ public class InventoryGridGenerator : MonoBehaviour
                     //Quaternion.Euler(new Vector3(itemToSpawn.transform.rotation.x, itemToSpawn.transform.rotation.y, itemToSpawn.transform.rotation.z)));
 
                 //moves the item to where the spawn point is, using the offest of where the spawn point originally was
-                var newItemPos = newItem.transform.position;
-                var spawnPointPosOriginal = newItem.transform.GetChild(0).transform.position;
-                var spawnPointPos = newItem.transform.GetChild(0).transform.position = new Vector3(inventorySlot.transform.position.x, inventorySlot.transform.position.y, inventorySlot.transform.position.z - 1f);
+                Vector3 newItemPos = newItem.transform.position;
+                Vector3 spawnPointPosOriginal = newItem.transform.GetChild(0).transform.position;
+                Vector3 spawnPointPos = newItem.transform.GetChild(0).transform.position = new Vector3(inventorySlot.transform.position.x, inventorySlot.transform.position.y, inventorySlot.transform.position.z - 1f);;
                 spawnPointPos = (spawnPointPos - spawnPointPosOriginal);
                 newItem.transform.position = new Vector3(newItemPos.x + spawnPointPos.x, newItemPos.y + spawnPointPos.y, spawnPointPos.z);
                 spawnPointPos = spawnPointPosOriginal;
-
-
+                newItem.transform.GetChild(0).transform.localPosition = newItem.GetComponent<CardManager>().spawnPointOriginalPosition;
                 findInInvArray(inventorySlot);
                 var xCounter = 0;
                 var yCounter = 0;
@@ -192,6 +195,7 @@ public class InventoryGridGenerator : MonoBehaviour
                     itemCantBePlaced = false;
                     currentInventory.Remove(itemToSpawn);
                     itemsSpawned.Add(newItem);
+
                     break;
                 }
 
@@ -220,6 +224,11 @@ public class InventoryGridGenerator : MonoBehaviour
                 bool itemDeleted = false;
                 itemToSpawn = cardToAdd;
                 newItem = Instantiate(itemToSpawn, new Vector3(-20, -50, 0), Quaternion.identity);
+                newItem.transform.name = itemToSpawn.transform.name;
+                //newItem.name.Replace("(Clone)", "").Trim();
+                //newItem.name.Replace("(Clone)(Clone)", "").Trim();
+
+
                 //itemToSpawn = currentInventory[0];
                 //Debug.Log(itemToSpawn.transform.name);
                 //currentInventory.Remove(itemToSpawn);
@@ -231,12 +240,23 @@ public class InventoryGridGenerator : MonoBehaviour
                 //Quaternion.Euler(new Vector3(itemToSpawn.transform.rotation.x, itemToSpawn.transform.rotation.y, itemToSpawn.transform.rotation.z)));
 
                 //moves the item to where the spawn point is, using the offest of where the spawn point originally was
+                /*var newItemPos = newItem.transform.position;
+                var spawnPointPosOriginal = newItem.transform.GetChild(0).transform.position;
+                var spawnPointPos = newItem.transform.GetChild(0).transform.position + new Vector3(inventorySlot.transform.position.x, inventorySlot.transform.position.y, inventorySlot.transform.position.z - 1f);
+                spawnPointPos = (spawnPointPos - spawnPointPosOriginal);
+                newItem.transform.position = new Vector3(newItemPos.x + spawnPointPos.x, newItemPos.y + spawnPointPos.y, spawnPointPos.z);
+                spawnPointPos = spawnPointPosOriginal;
+                newItem.transform.GetChild(0).transform.localPosition = newItem.GetComponent<CardManager>().spawnPointOriginalPosition;*/
+                newItem.transform.position = inventorySlot.transform.position;
                 var newItemPos = newItem.transform.position;
                 var spawnPointPosOriginal = newItem.transform.GetChild(0).transform.position;
                 var spawnPointPos = newItem.transform.GetChild(0).transform.position = new Vector3(inventorySlot.transform.position.x, inventorySlot.transform.position.y, inventorySlot.transform.position.z - 1f);
                 spawnPointPos = (spawnPointPos - spawnPointPosOriginal);
-                newItem.transform.position = new Vector3(newItemPos.x + spawnPointPos.x, newItemPos.y + spawnPointPos.y, spawnPointPos.z);
+                newItem.transform.position = new Vector3(newItemPos.x + spawnPointPos.x, newItemPos.y + spawnPointPos.y, spawnPointPos.z - 5);
+                //item.transform.position = newItemPos;
                 spawnPointPos = spawnPointPosOriginal;
+                newItem.transform.GetChild(0).transform.localPosition = newItem.GetComponent<CardManager>().spawnPointOriginalPosition;
+
 
 
                 findInInvArray(inventorySlot);
@@ -345,6 +365,323 @@ public class InventoryGridGenerator : MonoBehaviour
             //currentInventory.Remove(itemToSpawn);
         }
     }
+
+    public void moveItemInInventory(GameObject item, GameObject inventoryClicked)
+    {
+        bool itemCanBePlaced = true;
+        foreach (var inventorySlot in Inventory)
+        {
+
+            if (inventorySlot.gameObject == inventoryClicked && inventorySlot.GetComponent<InventorySlotManager>().slotIsEquipped == false /*&& currentInventory.Count > 0*/)
+            {
+                findInInvArray(inventorySlot);
+                var xCounter = 0;
+                var yCounter = 0;
+                //sets the inventory slots it needs to based off the array on its card script
+                foreach (var slotToEquip in item.GetComponent<CardManager>().slotsToEquipStrings)
+                {
+                    //if slot is in the grid, and empty
+                    if (slotToEquip == true && arrayXPos + xCounter < 6 && arrayYPos + yCounter < 3 && !Inventory[arrayXPos + xCounter, arrayYPos + yCounter].GetComponent<InventorySlotManager>().slotIsEquipped)
+                    {
+                        //Inventory[arrayXPos + xCounter, arrayYPos + yCounter].GetComponent<InventorySlotManager>().slotIsEquipped = true;
+                        //Inventory[arrayXPos + xCounter, arrayYPos + yCounter].GetComponent<InventorySlotManager>().equippedItem = newItem;
+                        //newItem.GetComponent<CardManager>().equippedSlots.Add(Inventory[arrayXPos + xCounter, arrayYPos + yCounter]);
+                        //itemsSpawned.Add(newItem);
+                        //currentInventory.Remove(itemToSpawn);
+
+                    }
+
+                    //if slot is out of range but doesnt need to be equipped, continue
+                    else if ((arrayXPos + xCounter >= 6 && !slotToEquip)
+                        || (arrayYPos + yCounter >= 3 && !slotToEquip))
+                    {
+                        xCounter += 1;
+
+                        if (xCounter == 3)
+                        {
+                            xCounter = 0;
+                            yCounter += 1;
+                        }
+                        continue;
+                    }
+
+                    // if slot is out of range but needs to be equipped, unequip and delete it
+                    else if ((arrayXPos + xCounter >= 6 && slotToEquip)
+                        || (arrayYPos + yCounter >= 3 && slotToEquip))
+                    {
+                        //unequips all slots already equipped before deleting it if the item cannot fit
+                        foreach (var slotToUnequip in item.GetComponent<CardManager>().equippedSlots)
+                        {
+                            if (slotToUnequip != null)
+                            {
+                                slotToUnequip.GetComponent<InventorySlotManager>().slotIsEquipped = false;
+                                slotToUnequip.GetComponent<InventorySlotManager>().equippedItem = null;
+                            }
+                        }
+                        //itemDeleted = true;
+                        itemCanBePlaced = false;
+                        //Destroy(newItem);
+                        break;
+                    }
+
+                    //if slot is already occupied but item doesnt need it to equip here, continue
+                    else if (Inventory[arrayXPos + xCounter, arrayYPos + yCounter].GetComponent<InventorySlotManager>().slotIsEquipped && !slotToEquip)
+                    {
+                        xCounter += 1;
+
+                        if (xCounter == 3)
+                        {
+                            xCounter = 0;
+                            yCounter += 1;
+                        }
+                        continue;
+                    }
+
+                    // if slot is already occupied and item needs the slot, unequip and delete it
+                    else if (Inventory[arrayXPos + xCounter, arrayYPos + yCounter].GetComponent<InventorySlotManager>().slotIsEquipped && slotToEquip)
+                    {
+                        //unequips all slots already equipped before deleting it if the item cannot fit
+                        foreach (var slotToUnequip in item.GetComponent<CardManager>().equippedSlots)
+                        {
+                            if (slotToUnequip != null)
+                            {
+                                slotToUnequip.GetComponent<InventorySlotManager>().slotIsEquipped = false;
+                                slotToUnequip.GetComponent<InventorySlotManager>().equippedItem = null;
+                            }
+                        }
+                        //itemDeleted = true;
+                        //Destroy(newItem);
+                        itemCanBePlaced = false;
+                        break;
+                    }
+
+                    xCounter += 1;
+
+                    if (xCounter == 3)
+                    {
+                        xCounter = 0;
+                        yCounter += 1;
+                    }
+                }
+            }
+            else if (inventorySlot.gameObject == inventoryClicked && inventorySlot.GetComponent<InventorySlotManager>().slotIsEquipped == true /*&& currentInventory.Count > 0*/)
+            {
+                itemCanBePlaced = false;
+            }
+                //break;
+
+      
+        }
+        if (itemCanBePlaced)
+        {
+            //removes original inventory location slots from being equipped by item
+            foreach (var inventorySlots in Inventory)
+            {
+                if (inventorySlots.GetComponent<InventorySlotManager>().equippedItem == item)
+                {
+                    inventorySlots.GetComponent<InventorySlotManager>().slotIsEquipped = false;
+                    inventorySlots.GetComponent<InventorySlotManager>().equippedItem = null;
+                }
+            }
+            //removes item from equipped item slots
+            foreach (var itemSlot in inventoryManager.InventoryItems)
+            {
+                if (itemSlot.Value != null)
+                {
+                    inventoryManager.equippedSlots.Add(itemSlot.Key);
+                }
+            }
+
+            //uses equipedItems list to find each item and clear it
+            foreach (var slot in inventoryManager.equippedSlots)
+            {
+                inventoryManager.InventoryItems[slot] = null;
+            }
+            inventoryManager.equippedSlots.Clear();
+            findInInvArray(inventoryClicked);
+            var xCounter = 0;
+            var yCounter = 0;
+            foreach (var slotToEquip in item.GetComponent<CardManager>().slotsToEquipStrings)
+            {
+                if (slotToEquip == true && arrayXPos + xCounter < 6 && arrayYPos + yCounter < 3 && !Inventory[arrayXPos + xCounter, arrayYPos + yCounter].GetComponent<InventorySlotManager>().slotIsEquipped)
+                {
+                    Inventory[arrayXPos + xCounter, arrayYPos + yCounter].GetComponent<InventorySlotManager>().slotIsEquipped = true;
+                    Inventory[arrayXPos + xCounter, arrayYPos + yCounter].GetComponent<InventorySlotManager>().equippedItem = item;
+                    item.GetComponent<CardManager>().equippedSlots.Add(Inventory[arrayXPos + xCounter, arrayYPos + yCounter]);
+
+
+                    //itemsSpawned.Add(newItem);
+                    //currentInventory.Remove(itemToSpawn);
+
+                }
+                xCounter += 1;
+
+                if (xCounter == 3)
+                {
+                    xCounter = 0;
+                    yCounter += 1;
+                }
+            }
+            item.transform.position = inventoryClicked.transform.position;
+            var newItemPos = item.transform.position;
+            var spawnPointPosOriginal = item.transform.GetChild(0).transform.position;
+            var spawnPointPos = item.transform.GetChild(0).transform.position = new Vector3(inventoryClicked.transform.position.x, inventoryClicked.transform.position.y, inventoryClicked.transform.position.z - 1f);
+            spawnPointPos = (spawnPointPos - spawnPointPosOriginal);
+            item.transform.position = new Vector3(newItemPos.x + spawnPointPos.x, newItemPos.y + spawnPointPos.y, spawnPointPos.z - 5);
+            //item.transform.position = newItemPos;
+            spawnPointPos = spawnPointPosOriginal;
+            item.transform.GetChild(0).transform.localPosition = item.GetComponent<CardManager>().spawnPointOriginalPosition;
+
+            item.GetComponent<CardManager>().currPos = item.transform.position;
+            item.GetComponent<CardManager>().dnPos = item.transform.position;
+            item.GetComponent<CardManager>().upPos = item.transform.position + new Vector3(0, .1f, 0);
+
+            /*               
+             *  var newItemPos = newItem.transform.position;
+                var spawnPointPosOriginal = newItem.transform.GetChild(0).transform.position;
+                var spawnPointPos = newItem.transform.GetChild(0).transform.position = new Vector3(inventorySlot.transform.position.x, inventorySlot.transform.position.y, inventorySlot.transform.position.z - 1f);
+                spawnPointPos = (spawnPointPos - spawnPointPosOriginal);
+                newItem.transform.position = new Vector3(newItemPos.x + spawnPointPos.x, newItemPos.y + spawnPointPos.y, spawnPointPos.z);
+                spawnPointPos = spawnPointPosOriginal;*/
+        }
+
+
+            /*///////////////////////////////////////////////////////
+
+            Debug.Log("Detects slot");
+            bool itemDeleted = false;
+            itemToSpawn = item;
+            newItem = item;
+            //itemToSpawn = currentInventory[0];
+            //Debug.Log(itemToSpawn.transform.name);
+            //currentInventory.Remove(itemToSpawn);
+
+            //spawns the item
+            //newItem.transform.position = new Vector3(inventorySlot.transform.position.x, inventorySlot.transform.position.y, inventorySlot.transform.position.z - 1f);
+            //newItem.transform.rotation = Quaternion.Euler(new Vector3(itemToSpawn.transform.rotation.x, itemToSpawn.transform.rotation.y, itemToSpawn.transform.rotation.z));
+            //var newItem = Instantiate(itemToSpawn, new Vector3(inventorySlot.transform.position.x, inventorySlot.transform.position.y, inventorySlot.transform.position.z - 1f),
+            //Quaternion.Euler(new Vector3(itemToSpawn.transform.rotation.x, itemToSpawn.transform.rotation.y, itemToSpawn.transform.rotation.z)));
+
+            //moves the item to where the spawn point is, using the offest of where the spawn point originally was
+            var newItemPos = newItem.transform.position;
+            var spawnPointPosOriginal = newItem.transform.GetChild(0).transform.position;
+            var spawnPointPos = newItem.transform.GetChild(0).transform.position = new Vector3(inventorySlot.transform.position.x, inventorySlot.transform.position.y, inventorySlot.transform.position.z - 1f);
+            spawnPointPos = (spawnPointPos - spawnPointPosOriginal);
+            newItem.transform.position = new Vector3(newItemPos.x + spawnPointPos.x, newItemPos.y + spawnPointPos.y, spawnPointPos.z);
+            spawnPointPos = spawnPointPosOriginal;
+
+
+            findInInvArray(inventorySlot);
+            var xCounter = 0;
+            var yCounter = 0;
+            //sets the inventory slots it needs to based off the array on its card script
+            foreach (var slotToEquip in newItem.GetComponent<CardManager>().slotsToEquipStrings)
+            {
+                if (slotToEquip == true && arrayXPos + xCounter < 6 && arrayYPos + yCounter < 3 && !Inventory[arrayXPos + xCounter, arrayYPos + yCounter].GetComponent<InventorySlotManager>().slotIsEquipped)
+                {
+                    Inventory[arrayXPos + xCounter, arrayYPos + yCounter].GetComponent<InventorySlotManager>().slotIsEquipped = true;
+                    Inventory[arrayXPos + xCounter, arrayYPos + yCounter].GetComponent<InventorySlotManager>().equippedItem = newItem;
+                    newItem.GetComponent<CardManager>().equippedSlots.Add(Inventory[arrayXPos + xCounter, arrayYPos + yCounter]);
+                    //itemsSpawned.Add(newItem);
+                    //currentInventory.Remove(itemToSpawn);
+
+                }
+
+                //if slot is out of range but doesnt need to be equipped, continue
+                else if ((arrayXPos + xCounter >= 6 && !slotToEquip)
+                    || (arrayYPos + yCounter >= 3 && !slotToEquip))
+                {
+                    xCounter += 1;
+
+                    if (xCounter == 3)
+                    {
+                        xCounter = 0;
+                        yCounter += 1;
+                    }
+                    continue;
+                }
+
+                // if slot is out of range but needs to be equipped, unequip and delete it
+                else if ((arrayXPos + xCounter >= 6 && slotToEquip)
+                    || (arrayYPos + yCounter >= 3 && slotToEquip))
+                {
+                    //unequips all slots already equipped before deleting it if the item cannot fit
+                    foreach (var slotToUnequip in newItem.GetComponent<CardManager>().equippedSlots)
+                    {
+                        if (slotToUnequip != null)
+                        {
+                            slotToUnequip.GetComponent<InventorySlotManager>().slotIsEquipped = false;
+                            slotToUnequip.GetComponent<InventorySlotManager>().equippedItem = null;
+                        }
+                    }
+                    itemDeleted = true;
+                    Destroy(newItem);
+                    break;
+                }
+
+                //if slot is already occupied but item doesnt need it to equip here, continue
+                else if (Inventory[arrayXPos + xCounter, arrayYPos + yCounter].GetComponent<InventorySlotManager>().slotIsEquipped && !slotToEquip)
+                {
+                    xCounter += 1;
+
+                    if (xCounter == 3)
+                    {
+                        xCounter = 0;
+                        yCounter += 1;
+                    }
+                    continue;
+                }
+
+                // if slot is already occupied and item needs the slot, unequip and delete it
+                else if (Inventory[arrayXPos + xCounter, arrayYPos + yCounter].GetComponent<InventorySlotManager>().slotIsEquipped && slotToEquip)
+                {
+                    //unequips all slots already equipped before deleting it if the item cannot fit
+                    foreach (var slotToUnequip in newItem.GetComponent<CardManager>().equippedSlots)
+                    {
+                        if (slotToUnequip != null)
+                        {
+                            slotToUnequip.GetComponent<InventorySlotManager>().slotIsEquipped = false;
+                            slotToUnequip.GetComponent<InventorySlotManager>().equippedItem = null;
+                        }
+                    }
+                    itemDeleted = true;
+                    Destroy(newItem);
+                    break;
+                }
+
+                xCounter += 1;
+
+                if (xCounter == 3)
+                {
+                    xCounter = 0;
+                    yCounter += 1;
+                }
+
+            }
+            // if the item was placed successfully, removes it from inventory pool and adds to itemSpawns pool
+            if (itemDeleted == false)
+            {
+                //Debug.Log("item placed");
+                itemCantBePlaced = false;
+                //currentInventory.Remove(itemToSpawn);
+                itemsSpawned.Add(newItem);
+                break;
+            }
+
+
+        }
+        else
+        {
+            break;
+        }
+    }
+    //if the item iterated through the entire grid and couldnt be placed, removes it from inventory
+    if (itemCantBePlaced == true)
+    {
+        //currentInventory.Remove(itemToSpawn);
+    }*/
+        }
+
 
     public void clearInventoryGrid()
     {

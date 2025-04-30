@@ -7,14 +7,27 @@ public class ShopGenerator : MonoBehaviour
 
     public GameObject startingSpawnPoint;
     public GameObject gridPrefab;
-    public GameObject[] shopStockPool;
+    public List<GameObject> shopStockPool = new List<GameObject>();
     private GameObject[] currentShopItems;
+    private DeckManager deckManager;
+
+    private GameObject purchaseButton;
+    public GameObject purchasePrefabObject;
 
     private float xCounter;
     private float yCounter;
     // Start is called before the first frame update
     void Start()
     {
+
+        deckManager = GameObject.Find("Scripts").GetComponent<DeckManager>();
+        shopStockPool = deckManager.currentLibrary;
+
+        
+
+
+        /*
+         * 
 
         var itemToSpawn = Instantiate(shopStockPool[Random.Range(0, shopStockPool.Length)], new Vector3(startingSpawnPoint.transform.position.x, startingSpawnPoint.transform.position.y -2.5f, -5), Quaternion.identity);
         var itemInspectionCard = itemToSpawn.GetComponent<CardManager>().inspectionCardPrefab;
@@ -198,5 +211,141 @@ public class ShopGenerator : MonoBehaviour
     void Update()
     {
         
+    }*/
+    }
+
+    public void GenerateShop()
+    {
+        GameObject purchase = Instantiate(purchasePrefabObject, transform.position + new Vector3(-0.5f, 2.5f, 0), Quaternion.Euler(0, 0, 90), GameObject.FindGameObjectWithTag("WorldCanvas").transform);
+        purchaseButton = purchase;
+        purchaseButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "5";
+
+        var itemSpawning = shopStockPool[Random.Range(0, shopStockPool.Count)];
+        itemSpawning.GetComponent<CardManager>().inspectionCardPrefab.SetActive(false);
+        //itemSpawning.GetComponent<CardManager>().inspectionCardPrefab.GetComponent<InspectionCardSpawning>().stopFollowMouse = true;
+        var itemInspectionCard = itemSpawning.GetComponent<CardManager>().inspectionCardPrefab;
+        itemInspectionCard = Instantiate(itemInspectionCard, new Vector3(startingSpawnPoint.transform.position.x, startingSpawnPoint.transform.position.y, -5), Quaternion.identity);
+        itemInspectionCard.GetComponent<InspectionCardSpawning>().stopFollowMouse = true;
+        itemInspectionCard.SetActive(true);
+
+
+        purchaseButton.transform.position = itemInspectionCard.transform.position + new Vector3(0, -2f, 0);
+        purchaseButton.GetComponent<ItemPurchasing>().itemPurchasing = itemSpawning;
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///
+        purchase = Instantiate(purchasePrefabObject, transform.position + new Vector3(-0.5f, 2.5f, 0), Quaternion.Euler(0, 0, 90), GameObject.FindGameObjectWithTag("WorldCanvas").transform);
+        purchaseButton = purchase;
+        purchaseButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "5";
+
+
+        itemSpawning = shopStockPool[Random.Range(0, shopStockPool.Count)];
+        itemSpawning.GetComponent<CardManager>().inspectionCardPrefab.SetActive(false);
+
+        //itemSpawning.GetComponent<CardManager>().inspectionCardPrefab.GetComponent<InspectionCardSpawning>().stopFollowMouse = true;
+
+        itemInspectionCard = itemSpawning.GetComponent<CardManager>().inspectionCardPrefab; itemInspectionCard = Instantiate(itemInspectionCard, new Vector3(startingSpawnPoint.transform.position.x + 4, startingSpawnPoint.transform.position.y, -5), Quaternion.identity);
+        itemInspectionCard.GetComponent<InspectionCardSpawning>().stopFollowMouse = true;
+        itemInspectionCard.SetActive(true);
+
+
+        purchaseButton.transform.position = itemInspectionCard.transform.position + new Vector3(0, -2f, 0);
+        purchaseButton.GetComponent<ItemPurchasing>().itemPurchasing = itemSpawning;
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        purchase = Instantiate(purchasePrefabObject, transform.position + new Vector3(-0.5f, 2.5f, 0), Quaternion.Euler(0, 0, 90), GameObject.FindGameObjectWithTag("WorldCanvas").transform);
+        purchaseButton = purchase;
+        purchaseButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "5";
+
+
+        itemSpawning = shopStockPool[Random.Range(0, shopStockPool.Count)];
+        itemSpawning.GetComponent<CardManager>().inspectionCardPrefab.SetActive(false);
+
+        //itemSpawning.GetComponent<CardManager>().inspectionCardPrefab.GetComponent<InspectionCardSpawning>().stopFollowMouse = true;
+
+        itemInspectionCard = itemSpawning.GetComponent<CardManager>().inspectionCardPrefab; itemInspectionCard = Instantiate(itemInspectionCard, new Vector3(startingSpawnPoint.transform.position.x + 4, startingSpawnPoint.transform.position.y, -5), Quaternion.identity);
+        itemInspectionCard = Instantiate(itemInspectionCard, new Vector3(startingSpawnPoint.transform.position.x + 8, startingSpawnPoint.transform.position.y, -5), Quaternion.identity);
+        itemInspectionCard.GetComponent<InspectionCardSpawning>().stopFollowMouse = true;
+        itemInspectionCard.SetActive(true);
+
+        purchaseButton.transform.position = itemInspectionCard.transform.position + new Vector3(0, -2f, 0);
+        purchaseButton.GetComponent<ItemPurchasing>().itemPurchasing = itemSpawning;
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        purchase = Instantiate(purchasePrefabObject, transform.position + new Vector3(-0.5f, 2.5f, 0), Quaternion.Euler(0, 0, 90), GameObject.FindGameObjectWithTag("WorldCanvas").transform);
+        purchaseButton = purchase;
+        purchaseButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "5";
+
+
+        itemSpawning = shopStockPool[Random.Range(0, shopStockPool.Count)];
+        itemSpawning.GetComponent<CardManager>().inspectionCardPrefab.SetActive(false);
+
+        //itemSpawning.GetComponent<CardManager>().inspectionCardPrefab.GetComponent<InspectionCardSpawning>().stopFollowMouse = true;
+
+        itemInspectionCard = itemSpawning.GetComponent<CardManager>().inspectionCardPrefab; itemInspectionCard = Instantiate(itemInspectionCard, new Vector3(startingSpawnPoint.transform.position.x + 4, startingSpawnPoint.transform.position.y, -5), Quaternion.identity);
+        itemInspectionCard = Instantiate(itemInspectionCard, new Vector3(startingSpawnPoint.transform.position.x, startingSpawnPoint.transform.position.y - 4.5f, -5), Quaternion.identity);
+        itemInspectionCard.GetComponent<InspectionCardSpawning>().stopFollowMouse = true;
+        itemInspectionCard.SetActive(true);
+
+
+        purchaseButton.transform.position = itemInspectionCard.transform.position + new Vector3(0, -2f, 0);
+        purchaseButton.GetComponent<ItemPurchasing>().itemPurchasing = itemSpawning;
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        purchase = Instantiate(purchasePrefabObject, transform.position + new Vector3(-0.5f, 2.5f, 0), Quaternion.Euler(0, 0, 90), GameObject.FindGameObjectWithTag("WorldCanvas").transform);
+        purchaseButton = purchase;
+        purchaseButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "5";
+
+
+        itemSpawning = shopStockPool[Random.Range(0, shopStockPool.Count)];
+        itemSpawning.GetComponent<CardManager>().inspectionCardPrefab.SetActive(false);
+
+        //itemSpawning.GetComponent<CardManager>().inspectionCardPrefab.GetComponent<InspectionCardSpawning>().stopFollowMouse = true;
+
+        itemInspectionCard = itemSpawning.GetComponent<CardManager>().inspectionCardPrefab; itemInspectionCard = Instantiate(itemInspectionCard, new Vector3(startingSpawnPoint.transform.position.x + 4, startingSpawnPoint.transform.position.y, -5), Quaternion.identity);
+        itemInspectionCard = Instantiate(itemInspectionCard, new Vector3(startingSpawnPoint.transform.position.x + 4, startingSpawnPoint.transform.position.y - 4.5f, -5), Quaternion.identity);
+        itemInspectionCard.GetComponent<InspectionCardSpawning>().stopFollowMouse = true;
+        itemInspectionCard.SetActive(true);
+
+
+        purchaseButton.transform.position = itemInspectionCard.transform.position + new Vector3(0, -2f, 0);
+        purchaseButton.GetComponent<ItemPurchasing>().itemPurchasing = itemSpawning;
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        purchase = Instantiate(purchasePrefabObject, transform.position + new Vector3(-0.5f, 2.5f, 0), Quaternion.Euler(0, 0, 90), GameObject.FindGameObjectWithTag("WorldCanvas").transform);
+        purchaseButton = purchase;
+        purchaseButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "5";
+
+
+        itemSpawning = shopStockPool[Random.Range(0, shopStockPool.Count)];
+        itemSpawning.GetComponent<CardManager>().inspectionCardPrefab.SetActive(false);
+
+        //itemSpawning.GetComponent<CardManager>().inspectionCardPrefab.GetComponent<InspectionCardSpawning>().stopFollowMouse = true;
+
+        itemInspectionCard = itemSpawning.GetComponent<CardManager>().inspectionCardPrefab; itemInspectionCard = Instantiate(itemInspectionCard, new Vector3(startingSpawnPoint.transform.position.x + 4, startingSpawnPoint.transform.position.y, -5), Quaternion.identity);
+        itemInspectionCard = Instantiate(itemInspectionCard, new Vector3(startingSpawnPoint.transform.position.x + 8, startingSpawnPoint.transform.position.y - 4.5f, -5), Quaternion.identity);
+        itemInspectionCard.GetComponent<InspectionCardSpawning>().stopFollowMouse = true;
+        itemInspectionCard.SetActive(true);
+
+
+        purchaseButton.transform.position = itemInspectionCard.transform.position + new Vector3(0, -2f, 0);
+        purchaseButton.GetComponent<ItemPurchasing>().itemPurchasing = itemSpawning;
     }
 }

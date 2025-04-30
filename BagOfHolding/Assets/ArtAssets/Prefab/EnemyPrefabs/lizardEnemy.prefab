@@ -164,6 +164,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 10
   currentHealth: 10
+  currentShield: 0
+  minShield: 2
+  maxShield: 5
   minPower: 2
   maxPower: 4
   currPower: 0
@@ -174,6 +177,8 @@ MonoBehaviour:
   damageHits: 
   healthBarObject: {fileID: 1811562856879660120, guid: 5ad949d2fc3eb51428669abd923fb618, type: 3}
   attackBarObject: {fileID: 6442413071662131823, guid: b2668453638f6ae41abfcdb83beaf56d, type: 3}
+  debuffIconObject: {fileID: 3192876298699651482, guid: 37bc9797249bab94887030bc760fe26f, type: 3}
+  shieldIconObject: {fileID: 8002899367578451347, guid: 0489ef989ef8efb4f9ed79409f8b9672, type: 3}
   bleedObject: {fileID: 5100642449393973324, guid: a1c8ff37eeadaef488e38336c60ead55, type: 3}
   myBleedNum: {fileID: 0}
   poisonObject: {fileID: 5744851881668292759, guid: b4afb3e9a54a4e244aba0dbd736330d5, type: 3}
@@ -187,7 +192,19 @@ MonoBehaviour:
   playerClawMarkPNG: {fileID: 999966041617105269, guid: 359824baa9d24764e8e85a3a1eef9b02, type: 3}
   tempPlayerClawPNG: {fileID: 0}
   isStunned: 0
+  damagedByTrap: 0
+  statusDamage: 0
   attackAnimationDone: 0
+  goldDrop: 0
+  goldDropMin: 0
+  goldDropMax: 0
+  expDrop: 0
+  expDropMin: 0
+  expDropMax: 0
+  potentialBehaviors:
+  - Attack
+  - Debuff
+  - Shield
 --- !u!61 &586405918151292691
 BoxCollider2D:
   m_ObjectHideFlags: 0

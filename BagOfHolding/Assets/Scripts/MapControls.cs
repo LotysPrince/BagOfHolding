@@ -8,6 +8,7 @@ public class MapControls : MonoBehaviour
     public MapGenerator mapManager;
     public TurnManager turnManager;
     public DeckManager deckManager;
+    public ShopGenerator shopGenerator;
     public RandomEventManager eventManager;
     public GameObject playerSprite;
     public GameObject currRoom;
@@ -94,6 +95,7 @@ public class MapControls : MonoBehaviour
         }
         else if (currRoom.GetComponent<MapSegmentControl>().roomInhabitedBy == "Shop")
         {
+            shopGenerator.GenerateShop();
             switchScreenScript.currentScreen = "Shop";
             switchScreenScript.changeScreen("Shop");
             Destroy(currRoom.GetComponent<MapSegmentControl>().currentInhabitant);

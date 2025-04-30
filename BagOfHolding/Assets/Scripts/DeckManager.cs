@@ -31,7 +31,7 @@ public class DeckManager : MonoBehaviour
         //handSize = 6;
         addMercenaryStarterCards();
         createDeckFromLibrary();
-        drawCards();
+        //drawCards();
     }
 
     // Update is called once per frame
@@ -89,9 +89,10 @@ public class DeckManager : MonoBehaviour
             //var cardObject = Instantiate(drawnCard, new Vector3(xCounter, -4.75f, zCounter), Quaternion.identity);
             //xCounter += 9.25f / handSize;
             //zCounter -= 0.1f;
+            
             currentHand.Add(drawnCard);
         }
-        gridGenerator.currentInventory = currentHand;
+        gridGenerator.currentInventory = new List<GameObject>(currentHand);
         gridGenerator.GenerateInventory();
     }
     public void drawCardsFromGraveyard(int drawAmount)

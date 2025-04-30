@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5191799799852957684}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.76, y: 3.57, z: 0}
+  m_LocalPosition: {x: -2.42, y: 4.17, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 1}
   m_Children: []
   m_Father: {fileID: 3934910127550175212}
@@ -57,7 +57,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8547136324396610383}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.9623, y: -2.7543, z: 0}
+  m_LocalPosition: {x: 5.2105002, y: -4.2330003, z: -6}
   m_LocalScale: {x: 0.15728658, y: 0.12952876, z: 1}
   m_Children:
   - {fileID: 294354896263330373}
@@ -153,14 +153,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb142226984f98048a351ae61e9f9bfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dnPos: {x: 0, y: 0, z: 0}
-  upPos: {x: 0, y: 0, z: 0}
-  currPos: {x: 0, y: 0, z: 0}
+  dnPos: {x: 2.5833333, y: -4.75, z: -2.1999998}
+  upPos: {x: 2.5833333, y: -2.75, z: -3.1999998}
+  currPos: {x: 2.5833333, y: -4.75, z: -2.1999998}
   cardClicked: 0
   originalCardSize: {x: 0, y: 0, z: 0}
+  spawnPointOriginalPosition: {x: 0, y: 0, z: 0}
   clickInventory:
     serializedVersion: 2
     m_Bits: 64
+  clickDeckSlot:
+    serializedVersion: 2
+    m_Bits: 0
   itemType: Pants
   inspectionCardPrefab: {fileID: 5520501797438012288, guid: e1066d8bfccf1df479af9694bcb57d75, type: 3}
   itemEquipped: 0
@@ -176,3 +180,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   carryingWeight: 1
+  isSticky: 0
+  StickyAmount: 0
+  abilityOnEquip: 0
+  abilityTriggered: 0

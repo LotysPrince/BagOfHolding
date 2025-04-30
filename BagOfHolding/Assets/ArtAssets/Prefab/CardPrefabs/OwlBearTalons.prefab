@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 949509886373632168}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.7, z: 0}
+  m_LocalPosition: {x: 0, y: 5.39, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 1}
   m_Children: []
   m_Father: {fileID: 8339038917682491568}
@@ -57,7 +57,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3727902337924535315}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5218, y: -2.7615, z: 0}
+  m_LocalPosition: {x: 5.2105002, y: -4.2330003, z: -6}
   m_LocalScale: {x: 0.15096822, y: 0.10618671, z: 1}
   m_Children:
   - {fileID: 4698501708144467225}
@@ -153,14 +153,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb142226984f98048a351ae61e9f9bfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dnPos: {x: 0, y: 0, z: 0}
-  upPos: {x: 0, y: 0, z: 0}
-  currPos: {x: 0, y: 0, z: 0}
+  dnPos: {x: 1.0416666, y: -4.75, z: -2.1}
+  upPos: {x: 1.0416666, y: -2.75, z: -3.1}
+  currPos: {x: 1.0416666, y: -4.75, z: -2.1}
   cardClicked: 0
   originalCardSize: {x: 0, y: 0, z: 0}
+  spawnPointOriginalPosition: {x: 0, y: 0, z: 0}
   clickInventory:
     serializedVersion: 2
     m_Bits: 64
+  clickDeckSlot:
+    serializedVersion: 2
+    m_Bits: 0
   itemType: Gloves
   inspectionCardPrefab: {fileID: 2788985038837240980, guid: c85acd2d45e48064b85aacfb617cf8f7, type: 3}
   itemEquipped: 0
@@ -177,4 +181,6 @@ MonoBehaviour:
   - {fileID: 0}
   carryingWeight: 1
   isSticky: 0
+  StickyAmount: 0
   abilityOnEquip: 0
+  abilityTriggered: 0

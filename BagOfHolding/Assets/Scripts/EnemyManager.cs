@@ -7,6 +7,9 @@ public class EnemyManager : MonoBehaviour
 
     public int maxHealth;
     public int currentHealth;
+    public int currentShield;
+    public int minShield;
+    public int maxShield;
     public int minPower;
     public int maxPower;
     public int currPower;
@@ -35,6 +38,12 @@ public class EnemyManager : MonoBehaviour
     private GameObject myAttackBar;
     public GameObject attackBarObject;
 
+    private GameObject myDebuffIcon;
+    public GameObject debuffIconObject;
+
+    private GameObject myShieldIcon;
+    public GameObject shieldIconObject;
+
     public GameObject bleedObject;
     public GameObject myBleedNum;
 
@@ -43,6 +52,8 @@ public class EnemyManager : MonoBehaviour
 
     public GameObject hemmorhageObject;
     public GameObject myHemmorhageNum;
+
+    
 
     private TurnManager turnManager;
     public bool isTargetted = false;
@@ -72,6 +83,10 @@ public class EnemyManager : MonoBehaviour
     public int expDropMin;
     public int expDropMax;
 
+    public List<string> potentialBehaviors = new List<string>();
+    private string currentBehavior;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -92,6 +107,14 @@ public class EnemyManager : MonoBehaviour
         myAttackBar = enemyAttackBar;
         setPower();
 
+        GameObject enemyDebuffIcon = Instantiate(debuffIconObject, transform.position + new Vector3(0.5f, 2.5f, 0), Quaternion.identity, GameObject.FindGameObjectWithTag("WorldCanvas").transform);
+        myDebuffIcon = enemyDebuffIcon;
+        myDebuffIcon.SetActive(false);
+
+        GameObject enemyShieldIcon = Instantiate(shieldIconObject, transform.position + new Vector3(0.5f, 2.5f, 0), Quaternion.identity, GameObject.FindGameObjectWithTag("WorldCanvas").transform);
+        myShieldIcon = enemyShieldIcon;
+        myShieldIcon.SetActive(false);
+
     }
 
     // Update is called once per frame
@@ -100,11 +123,39 @@ public class EnemyManager : MonoBehaviour
         
     }
 
+    public void turnBehavior()
+    {
+        myAttackBar.SetActive(false);
+        myDebuffIcon.SetActive(false);
+        myShieldIcon.SetActive(false);
+
+        currentBehavior = potentialBehaviors[Random.Range(0, potentialBehaviors.Count)];
+        if (currentBehavior == "Attack")
+        {
+            myAttackBar.SetActive(true);
+            setPower();
+        }
+        if (currentBehavior == "Debuff")
+        {
+            myDebuffIcon.SetActive(true);
+        }
+        if (currentBehavior == "Shield")
+        {
+            myShieldIcon.SetActive(true);
+            setShield();
+        }
+    }
+
     public void setPower()
     {
         currPower = Random.Range(minPower, maxPower);
         myAttackBar.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = currPower.ToString();
 
+    }
+    public void setShield()
+    {
+        currentShield = Random.Range(minShield, maxShield);
+        myShieldIcon.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = currentShield.ToString();
     }
 
     public void enemyTakesDamage()
@@ -281,6 +332,7 @@ public class EnemyManager : MonoBehaviour
             turnManager.tempList.Remove(gameObject);
             turnManager.targettedEnemies = turnManager.tempList;
         }
+
         playerManager.playerExpGain(expDrop);
         playerManager.playerGoldChange(goldDrop);
         Destroy(myHealthBar);
@@ -304,6 +356,21 @@ public class EnemyManager : MonoBehaviour
         if (animationDone == true && damageHits.Count != 0)
         {
             //Debug.Log("damage Dealt");
+            if (currentShield != 0)
+            {
+                if (currentShield >= damage)
+                {
+                    currentShield -= damage;
+                    damage = 0;
+                }
+                else if (currentShield < damage)
+                {
+                    damage -= currentShield;
+                    currentShield = 0;
+                    myShieldIcon.SetActive(false);
+                }
+                myShieldIcon.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = currentShield.ToString();
+            }
             currentHealth -= damage;
 
 
@@ -432,7 +499,15 @@ public class EnemyManager : MonoBehaviour
                 {
                     reachedAttackLeftPoint = true;
                     tempPlayerClawPNG = Instantiate(playerClawMarkPNG, new Vector3(-4.11180019f, -0.364600003f, -9), Quaternion.Euler(new Vector3(0, 0, Random.Range(clawMarkPNG.transform.rotation.z - 30f, clawMarkPNG.transform.rotation.z + 30f))));
-                    enemyDealsDamage();
+                    if (currentBehavior == "Attack")
+                    {
+                        enemyDealsDamage();
+                    }
+                    else if (currentBehavior == "Debuff")
+                    {
+                        playerManager.playerBleedControl(2);
+                    }
+                    
                 }
             }
             else if (reachedAttackLeftPoint && !reachedAttackRightPoint)

@@ -14,12 +14,15 @@ public class CardManager : MonoBehaviour
     public bool cardClicked = false;
     public Vector3 originalCardSize;
     private Vector2 mousePosition;
+    public Vector3 spawnPointOriginalPosition;
+    
 
     private InventoryManager inventoryManager;
     private DeckManager deckManager;
     private InventoryGridGenerator inventoryGridGenerator;
     private TurnManager turnManager;
     public LayerMask clickInventory;
+    public LayerMask clickDeckSlot;
     public string itemType;
 
     public GameObject inspectionCardPrefab;
@@ -38,13 +41,19 @@ public class CardManager : MonoBehaviour
     public int carryingWeight;
 
     public bool isSticky;
+    public int StickyAmount;
 
     public bool abilityOnEquip;
     private bool abilityOnEquipActivated;
+    public bool abilityTriggered;
+
+    public GameObject worldCanvas;
 
     // Start is called before the first frame update
     void Start()
     {
+
+
         itemEquipped = false;
         dnPos = transform.position;
         upPos = transform.position + new Vector3(0, upAmount, -1);
@@ -56,6 +65,8 @@ public class CardManager : MonoBehaviour
         deckManager = GameObject.Find("Scripts").GetComponent<DeckManager>();
         inventoryGridGenerator = GameObject.Find("Scripts").GetComponent<InventoryGridGenerator>();
         turnManager = GameObject.Find("Scripts").GetComponent<TurnManager>();
+        worldCanvas = GameObject.Find("WorldCanvas");
+        clickDeckSlot |= 1 << 7;
 
         /*slotsToEquip[0, 0] = slotsToEquipStrings[0];
         slotsToEquip[1, 0] = slotsToEquipStrings[1];
@@ -69,19 +80,25 @@ public class CardManager : MonoBehaviour
 
     }
 
+    private void Awake()
+    {
+        spawnPointOriginalPosition = gameObject.transform.GetChild(0).transform.localPosition;
+
+    }
+
 
     // Update is called once per frame
     void Update()
     {
+
         if (!cardClicked)
         {
-            if (!itemEquipped)
-            {
+
                 //if not clicked, moves to inventory
                 transform.position = Vector3.MoveTowards(transform.position, currPos, speed * Time.deltaTime);
                 if (transform.position == dnPos)
                 {
-                    speed = 10;
+                    speed = 60;
                 }
 
                 //if inspection card is spawned, card follows mouse
@@ -89,7 +106,7 @@ public class CardManager : MonoBehaviour
                 {
                     //inspectionCardInstantiation.transform.position = new Vector3(mousePosition.x, mousePosition.y, -2);
                 }
-            }
+            
         }
         if (cardClicked)
         {
@@ -110,19 +127,47 @@ public class CardManager : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        currPos = upPos;
+        if (!itemEquipped)
+        {
+            currPos = upPos;
+        }
         mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        inspectionCardInstantiation = Instantiate(inspectionCardPrefab, new Vector3(mousePosition.x + 1.5f, mousePosition.y + 1.5f, -5), Quaternion.identity);
+        inspectionCardInstantiation = Instantiate(inspectionCardPrefab, new Vector3(mousePosition.x + 1.5f, mousePosition.y + 1.5f, -5), Quaternion.identity, worldCanvas.transform);
+        
 
 
     }
 
+    private void OnMouseOver()
+    {
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (!itemEquipped)
+            {
+                
+                var targetSlot = GameObject.FindGameObjectWithTag(itemType);
+                inventoryManager.InvManagement(gameObject, targetSlot);
+            }
+            else if (itemEquipped)
+            {
+
+                inventoryManager.unsetInventory(gameObject);
+                currPos = dnPos;
+
+            }
+        }
+    }
+
     private void OnMouseExit()
     {
-        currPos = dnPos;
-
-        Destroy(inspectionCardInstantiation);
-        inspectionCardInstantiation = null;
+        if (!itemEquipped)
+        {
+            currPos = dnPos;
+        }
+            Destroy(inspectionCardInstantiation);
+            inspectionCardInstantiation = null;
+        
     }
 
     private void OnMouseDown()
@@ -145,7 +190,7 @@ public class CardManager : MonoBehaviour
                 //transform.localScale = tempVec;
                 //transform.GetChild(0).gameObject.SetActive(true);
                 //transform.GetChild(1).gameObject.SetActive(false);
-                //cardFrame.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, .5f);
+                //cardFrame.GetComponent<SpriteRenderer>(). = new Color(1, 1, 1, .5f);
                 //cardImage.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, .5f);
                 
             }
@@ -154,7 +199,6 @@ public class CardManager : MonoBehaviour
             {
                 cardClicked = true;
                 inventoryManager.carryingCard = gameObject;
-
 
                 //makes card smaller and transparent while following the mouse
                 //var tempVec = new Vector3((float)originalCardSize.x / 2, (float)originalCardSize.y / 2, (float)originalCardSize.z);
@@ -165,8 +209,8 @@ public class CardManager : MonoBehaviour
                 //cardImage.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, .5f);
             }
 
-            //if its currently equipped but you're carrying another card, sends this card back to deck and equips the card youre carrying
-            else if (itemEquipped && inventoryManager.carryingCard != null && !isSticky)
+            //if its currently equipped but you're carrying another card, sends equipped card back to deck and equips the card youre carrying
+            else if (itemEquipped && inventoryManager.carryingCard != null /*&& !isSticky */)
             {
                 
                 //removes item thats equipped, reseting its speed and transparency, returns it to deck
@@ -200,9 +244,41 @@ public class CardManager : MonoBehaviour
             //cardImage.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
 
             //if clicked on a inventory slot though, it equips it to the slot
-            checkIfSetInInventory(gameObject);
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, 100, clickDeckSlot);
+            RaycastHit2D hit2 = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, 100, clickInventory);
+            if (hit)
+            {
+                checkIfSetInDeckSlot(gameObject, hit.transform.gameObject);
+            }
+            else if (hit2)
+            {
+                checkIfSetInInventory(gameObject);
+            }
+            //checkIfSetInInventory(gameObject);
+            //checkIfSetInDeckSlot(gameObject);
         }
         deckManager.updateHandPosition();
+
+    }
+
+    private void checkIfSetInDeckSlot(GameObject card, GameObject deckSlot)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, 100, clickDeckSlot);
+        //clicked an inventory slot
+        if (hit)
+        {
+            inventoryGridGenerator.moveItemInInventory(card, deckSlot);
+            //inventoryManager.InvManagement(card, hit.collider.gameObject);
+        }
+
+        //didnt click an inventory slot
+        if (!hit)
+        {
+            if (itemEquipped)
+            {
+                //inventoryManager.unsetInventory(gameObject);
+            }
+        }
 
     }
 

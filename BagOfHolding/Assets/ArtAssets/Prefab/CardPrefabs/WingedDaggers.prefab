@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4882315233779221136}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.45, y: -3.11, z: 0}
+  m_LocalPosition: {x: 5.219, y: -2.278, z: -6}
   m_LocalScale: {x: 0.26, y: 0.26, z: 1}
   m_Children:
   - {fileID: 2925994911757729979}
@@ -103,9 +103,13 @@ MonoBehaviour:
   currPos: {x: 0, y: 0, z: 0}
   cardClicked: 0
   originalCardSize: {x: 0, y: 0, z: 0}
+  spawnPointOriginalPosition: {x: 0, y: 0, z: 0}
   clickInventory:
     serializedVersion: 2
     m_Bits: 64
+  clickDeckSlot:
+    serializedVersion: 2
+    m_Bits: 0
   itemType: Weapon
   inspectionCardPrefab: {fileID: 6534211821075888156, guid: 703bf93329076494aa5a0cfee9e41472, type: 3}
   itemEquipped: 0
@@ -121,6 +125,10 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   carryingWeight: 1
+  isSticky: 0
+  StickyAmount: 0
+  abilityOnEquip: 0
+  abilityTriggered: 0
 --- !u!61 &8469562284284141277
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -197,7 +205,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7847557286952366670}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.63, y: 3.14, z: 0}
+  m_LocalPosition: {x: -3.45, y: 3.07, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4882315233779221138}

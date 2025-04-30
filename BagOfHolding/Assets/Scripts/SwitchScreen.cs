@@ -6,6 +6,7 @@ public class SwitchScreen : MonoBehaviour
 {
 
     public string currentScreen;
+    public DeckManager deckManager;
     public Camera cam;
     // Start is called before the first frame update
     void Start()
@@ -21,24 +22,37 @@ public class SwitchScreen : MonoBehaviour
 
     public void changeScreen(string newScreen)
     {
+        foreach (GameObject card in deckManager.currentLibrary)
+        {
+            card.GetComponent<CardManager>().inspectionCardPrefab.SetActive(true);
+            card.GetComponent<CardManager>().inspectionCardPrefab.GetComponent<InspectionCardSpawning>().stopFollowMouse = false;
+
+
+        }
         if (newScreen == "Map")
         {
-            cam.transform.position = new Vector3(0, -17f, -10);
+            foreach (GameObject card in deckManager.currentLibrary)
+            {
+                card.GetComponent<CardManager>().inspectionCardPrefab.SetActive(false);
+                card.GetComponent<CardManager>().inspectionCardPrefab.GetComponent<InspectionCardSpawning>().stopFollowMouse = true;
+
+            }
+            cam.transform.position = new Vector3(0, -17f, -30);
             currentScreen = "Map";
         }
         else if (newScreen == "Battle")
         {
-            cam.transform.position = new Vector3(0, 0f, -10);
+            cam.transform.position = new Vector3(0, 0f, -30);
             currentScreen = "Battle";
         }
         else if (newScreen == "Shop")
         {
-            cam.transform.position = new Vector3(0, -34f, -10);
+            cam.transform.position = new Vector3(0, -34f, -30);
             currentScreen = "Shop";
         }
         else if (newScreen == "Event")
         {
-            cam.transform.position = new Vector3(0, -51f, -10);
+            cam.transform.position = new Vector3(0, -51f, -30);
             currentScreen = "Event";
         }
     }
@@ -47,22 +61,22 @@ public class SwitchScreen : MonoBehaviour
     {
         if (currentScreen == "Map")
         {
-            cam.transform.position = new Vector3(0, 0f, -10);
+            cam.transform.position = new Vector3(0, 0f, -30);
             currentScreen = "Battle";
         }
         else if (currentScreen == "Battle")
         {
-            cam.transform.position = new Vector3(0, -17f, -10);
+            cam.transform.position = new Vector3(0, -17f, -30);
             currentScreen = "Map";
         }
         else if (currentScreen == "Shop")
         {
-            cam.transform.position = new Vector3(0, -17f, -10);
+            cam.transform.position = new Vector3(0, -17f, -30);
             currentScreen = "Map";
         }
         else if (currentScreen == "Event")
         {
-            cam.transform.position = new Vector3(0, -17f, -10);
+            cam.transform.position = new Vector3(0, -17f, -30);
             currentScreen = "Map";
         }
     }
