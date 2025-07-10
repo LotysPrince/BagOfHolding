@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0ca4b76f42573c8439eaab4e967915fb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0fbf519512341f3438ea9dd034734868, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -102,7 +102,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.31, y: 11.89}
+    oldSize: {x: 3.26, y: 11.88}
     newSize: {x: 1.97, y: 2.62}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -154,6 +154,9 @@ MonoBehaviour:
   StickyAmount: 0
   abilityOnEquip: 0
   abilityTriggered: 0
+  worldCanvas: {fileID: 0}
+  rewardScreenExtras: {fileID: 0}
+  isReward: 0
 --- !u!1 &2999641027458371041
 GameObject:
   m_ObjectHideFlags: 0

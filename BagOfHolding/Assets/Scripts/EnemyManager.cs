@@ -17,6 +17,9 @@ public class EnemyManager : MonoBehaviour
     public int currPoison;
     public int currHemmorhage;
 
+    public bool permaArmor;
+    public int startingArmor;
+
     //variables for taking damage over time
     private bool coroutineRunning;
     public int timesHit;
@@ -26,9 +29,9 @@ public class EnemyManager : MonoBehaviour
     //variables for damage animation
     private float originalXPosition;
     private float xMoveSpeed = .1f;
-    private bool reachedLeftPoint;
-    private bool reachedRightPoint;
-    private bool animationDone;
+    public bool reachedLeftPoint;
+    public bool reachedRightPoint;
+    public bool animationDone;
     private bool statusesDealt;
 
 
@@ -41,8 +44,14 @@ public class EnemyManager : MonoBehaviour
     private GameObject myDebuffIcon;
     public GameObject debuffIconObject;
 
+    private GameObject myThiefIcon;
+    public GameObject thiefIconObject;
+
     private GameObject myShieldIcon;
     public GameObject shieldIconObject;
+
+    private GameObject myBiteIcon;
+    public GameObject biteIconObject;
 
     public GameObject bleedObject;
     public GameObject myBleedNum;
@@ -52,6 +61,12 @@ public class EnemyManager : MonoBehaviour
 
     public GameObject hemmorhageObject;
     public GameObject myHemmorhageNum;
+
+    
+
+    public bool bleedTriggered;
+    public bool poisonTriggered;
+    public bool hemmorhageTriggered;
 
     
 
@@ -86,6 +101,14 @@ public class EnemyManager : MonoBehaviour
     public List<string> potentialBehaviors = new List<string>();
     private string currentBehavior;
 
+    public int setAttacksNum;
+    public int numAttacks;
+    private int currAttacksDone;
+
+    public GameObject wolfMinion;
+    public Sprite treantAttackForm;
+    private bool treantTransformed;
+
 
     // Start is called before the first frame update
     void Start()
@@ -105,15 +128,42 @@ public class EnemyManager : MonoBehaviour
 
         GameObject enemyAttackBar = Instantiate(attackBarObject, transform.position + new Vector3(0.5f, 2.5f, 0), Quaternion.identity, GameObject.FindGameObjectWithTag("WorldCanvas").transform);
         myAttackBar = enemyAttackBar;
-        setPower();
 
         GameObject enemyDebuffIcon = Instantiate(debuffIconObject, transform.position + new Vector3(0.5f, 2.5f, 0), Quaternion.identity, GameObject.FindGameObjectWithTag("WorldCanvas").transform);
         myDebuffIcon = enemyDebuffIcon;
         myDebuffIcon.SetActive(false);
 
-        GameObject enemyShieldIcon = Instantiate(shieldIconObject, transform.position + new Vector3(0.5f, 2.5f, 0), Quaternion.identity, GameObject.FindGameObjectWithTag("WorldCanvas").transform);
-        myShieldIcon = enemyShieldIcon;
-        myShieldIcon.SetActive(false);
+        if (!permaArmor)
+        {
+            GameObject enemyShieldIcon = Instantiate(shieldIconObject, transform.position + new Vector3(0.5f, 2.5f, 0), Quaternion.identity, GameObject.FindGameObjectWithTag("WorldCanvas").transform);
+            myShieldIcon = enemyShieldIcon;
+            myShieldIcon.SetActive(false);
+        }
+        else if (permaArmor)
+        {
+            GameObject enemyShieldIcon = Instantiate(shieldIconObject, transform.position + new Vector3(-1f, 2f, 0), Quaternion.identity, GameObject.FindGameObjectWithTag("WorldCanvas").transform);
+            myShieldIcon = enemyShieldIcon;
+            myShieldIcon.SetActive(true);
+            currentShield = startingArmor;
+            myShieldIcon.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = currentShield.ToString();
+
+        }
+
+        GameObject enemyThiefIcon = Instantiate(thiefIconObject, transform.position + new Vector3(0.5f, 2.5f, 0), Quaternion.identity, GameObject.FindGameObjectWithTag("WorldCanvas").transform);
+        myThiefIcon = enemyThiefIcon;
+        myThiefIcon.SetActive(false);
+
+        if (gameObject.name == "wolfEnemy(Clone)" || gameObject.name == "werewolfEnemy(Clone)")
+        {
+            
+            GameObject enemyBiteIcon = Instantiate(biteIconObject, transform.position + new Vector3(0.5f, 2.5f, 0), Quaternion.identity, GameObject.FindGameObjectWithTag("WorldCanvas").transform);
+            myBiteIcon = enemyBiteIcon;
+            myBiteIcon.SetActive(false);
+        }
+
+        setPower();
+        turnBehavior();
+
 
     }
 
@@ -123,33 +173,25 @@ public class EnemyManager : MonoBehaviour
         
     }
 
-    public void turnBehavior()
-    {
-        myAttackBar.SetActive(false);
-        myDebuffIcon.SetActive(false);
-        myShieldIcon.SetActive(false);
 
-        currentBehavior = potentialBehaviors[Random.Range(0, potentialBehaviors.Count)];
-        if (currentBehavior == "Attack")
-        {
-            myAttackBar.SetActive(true);
-            setPower();
-        }
-        if (currentBehavior == "Debuff")
-        {
-            myDebuffIcon.SetActive(true);
-        }
-        if (currentBehavior == "Shield")
-        {
-            myShieldIcon.SetActive(true);
-            setShield();
-        }
-    }
 
     public void setPower()
     {
         currPower = Random.Range(minPower, maxPower);
-        myAttackBar.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = currPower.ToString();
+        if (numAttacks == 1 || numAttacks == 0)
+        {
+            myAttackBar.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = currPower.ToString();
+        }
+        else if (numAttacks > 1)
+        {
+            myAttackBar.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = currPower.ToString() + "x" + numAttacks.ToString();
+        }
+        myThiefIcon.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = currPower.ToString();
+        if(gameObject.name == "wolfEnemy(Clone)")
+        {
+            myBiteIcon.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = currPower.ToString();
+
+        }
 
     }
     public void setShield()
@@ -188,7 +230,7 @@ public class EnemyManager : MonoBehaviour
         //}
     }
 
-    public void enemyStatusControl()
+    /*public void enemyStatusControl()
     {
         damageHits.Clear();
         //reduces bleed amount here instead of taking damage function because that one is only run when theyre targetted
@@ -235,7 +277,7 @@ public class EnemyManager : MonoBehaviour
             {
                 Destroy(myHemmorhageNum);
             }
-            turnManager.trackEnemyAttackFinishes();
+            //turnManager.trackEnemyAttackFinishes();
         }
 
         if (coroutineRunning == false && damageHits.Count != 0 && damageHits[0] != 0)
@@ -250,7 +292,7 @@ public class EnemyManager : MonoBehaviour
             damageHits.Clear();
         }
 
-    }
+    }*/
 
     public void enemyDealsDamage()
     {
@@ -265,9 +307,19 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
+    public void enemyHealsDamage(int healing)
+    {
+        currentHealth += healing;
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+        myHealthBar.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = currentHealth.ToString();
+    }
+
     public void setBleed(int addBleed)
     {
-        if (addBleed != 0)
+        if (addBleed > 0)
         {
             if (currBleed == 0)
             {
@@ -280,13 +332,24 @@ public class EnemyManager : MonoBehaviour
             myBleedNum.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = currBleed.ToString();
             //damageHits.Add(currBleed);
         }
+        else if (addBleed < 0)
+        {
+            currBleed += addBleed;
+            myBleedNum.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = currBleed.ToString();
+
+            if (currBleed == 0)
+            {
+                Destroy(myBleedNum);
+            }
+            
+        }
 
 
     }
 
     public void setPoison(int addPoison)
     {
-        if (addPoison != 0)
+        if (addPoison > 0)
         {
             if (currPoison == 0)
             {
@@ -299,11 +362,23 @@ public class EnemyManager : MonoBehaviour
             //damageHits.Add(currPoison);
         }
 
+        else if (addPoison < 0)
+        {
+            currPoison += addPoison;
+            myPoisonNum.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = currPoison.ToString();
+
+            if (currPoison == 0)
+            {
+                Destroy(myPoisonNum);
+            }
+
+        }
+
 
     }
     public void setHemmorhage(int addHemmorhage)
     {
-        if (addHemmorhage != 0)
+        if (addHemmorhage > 0)
         {
             if (currHemmorhage == 0)
             {
@@ -316,13 +391,26 @@ public class EnemyManager : MonoBehaviour
             //damageHits.Add(currPoison);
         }
 
+        else if (addHemmorhage < 0)
+        {
+            currHemmorhage += addHemmorhage;
+            myHemmorhageNum.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = currHemmorhage.ToString();
+
+            if (currHemmorhage == 0)
+            {
+                Destroy(myHemmorhageNum);
+            }
+
+        }
+
 
     }
 
 
     public void killEnemy()
     {
-        if (turnManager.tempList == turnManager.spawnedEnemies)
+        turnManager.spawnedEnemies.Remove(gameObject);
+        /*if (turnManager.tempList == turnManager.spawnedEnemies)
         {
             turnManager.tempList.Remove(gameObject);
             turnManager.spawnedEnemies = turnManager.tempList;
@@ -331,6 +419,10 @@ public class EnemyManager : MonoBehaviour
         {
             turnManager.tempList.Remove(gameObject);
             turnManager.targettedEnemies = turnManager.tempList;
+        }*/
+        if (turnManager.NecromancerAmuletActive && turnManager.targettedEnemies.Contains(gameObject))
+        {
+            playerManager.currentHealth = playerManager.maxHealth;
         }
 
         playerManager.playerExpGain(expDrop);
@@ -341,6 +433,12 @@ public class EnemyManager : MonoBehaviour
         Destroy(myPoisonNum);
         Destroy(myHemmorhageNum);
         Destroy(gameObject);
+        Destroy(myThiefIcon);
+        Destroy(myDebuffIcon);
+        if(myBiteIcon != null)
+        {
+            Destroy(myBiteIcon);
+        }
 
     }
 
@@ -353,6 +451,7 @@ public class EnemyManager : MonoBehaviour
     {
         //Debug.Log(damage);
         //reduces health
+        //Debug.Log("yeyeyeyeye");
         if (animationDone == true && damageHits.Count != 0)
         {
             //Debug.Log("damage Dealt");
@@ -377,7 +476,7 @@ public class EnemyManager : MonoBehaviour
             myHealthBar.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = currentHealth.ToString();
             damageHits.RemoveAt(0);
 
-            //if trap damage on the field, player takes damage
+            //if caltrop damage on the field, player takes damage
             if (turnManager.trapDamage != 0 && !damagedByTrap)
             {
                 playerManager.playerTakesDamage(turnManager.trapDamage);
@@ -391,6 +490,7 @@ public class EnemyManager : MonoBehaviour
         //moving animation
         else if(!animationDone)
         {
+            //Debug.Log("animation continuing");
             if (tempClawMarkPNG == null)
             {
                 if (statusesDealt == false && statusDamage == false)
@@ -455,7 +555,7 @@ public class EnemyManager : MonoBehaviour
             // if damage isnt caused by a trap like caltrops, end like normal
             if (!damagedByTrap)
             {
-                turnManager.trackEnemyAttackFinishes();
+                //turnManager.trackEnemyAttackFinishes();
             }
 
             else
@@ -465,7 +565,7 @@ public class EnemyManager : MonoBehaviour
 
             if (currentHealth <= 0)
             {
-                turnManager.trackEnemyAttackFinishes();
+                //turnManager.trackEnemyAttackFinishes();
                 StopCoroutine(DamageAnimation(0));
                 killEnemy();
             }
@@ -486,6 +586,185 @@ public class EnemyManager : MonoBehaviour
         
     }
 
+    public void turnBehavior()
+    {
+        myAttackBar.SetActive(false);
+        myDebuffIcon.SetActive(false);
+        currAttacksDone = 0;
+        if (!permaArmor)
+        {
+            myShieldIcon.SetActive(false);
+            numAttacks = 1;
+        }
+        myThiefIcon.SetActive(false);
+        if (gameObject.name == "wolfEnemy(Clone)" || gameObject.name == "werewolfEnemy(Clone)")
+        {
+            myBiteIcon.SetActive(false);
+            numAttacks = 1;
+        }
+
+        currentBehavior = potentialBehaviors[Random.Range(0, potentialBehaviors.Count)];
+        if (currentBehavior == "Attack")
+        {
+            myAttackBar.SetActive(true);
+            numAttacks = setAttacksNum;
+            setPower();
+        }
+        if (currentBehavior == "Ritual")
+        {
+            myDebuffIcon.SetActive(true);
+            setAttacksNum += 1;
+            numAttacks += 1;
+            setPower();
+        }
+        if (currentBehavior == "WildHit")
+        {
+            myAttackBar.SetActive(true);
+            numAttacks = Random.Range(1, 4);
+            setPower();
+        }
+        if (currentBehavior == "HealSpell")
+        {
+            myDebuffIcon.SetActive(true);
+            setPower();
+            numAttacks = 0;
+        }
+        if (currentBehavior == "EmpowerSpell")
+        {
+            myDebuffIcon.SetActive(true);
+            setPower();
+            numAttacks = 0;
+        }
+        if (currentBehavior == "WeakeningSong")
+        {
+            myDebuffIcon.SetActive(true);
+            numAttacks = 0;
+            turnManager.damageDivider = 2;
+        }
+        if (currentBehavior == "Bleed")
+        {
+            myDebuffIcon.SetActive(true);
+            numAttacks = 1;
+        }
+        if (currentBehavior == "Defend")
+        {
+            myShieldIcon.SetActive(true);
+            numAttacks = 1;
+            setShield();
+        }
+        if (currentBehavior == "Poison")
+        {
+            numAttacks = 1;
+            myDebuffIcon.SetActive(true);
+        }
+        if (currentBehavior == "Thief")
+        {
+            myThiefIcon.SetActive(true);
+            numAttacks = 1;
+            setPower();
+        }
+        if (currentBehavior == "Bite")
+        {
+            myBiteIcon.SetActive(true);
+            numAttacks = 1;
+            setPower();
+        }
+        if (currentBehavior == "Charge")
+        {
+            myDebuffIcon.SetActive(true);
+            numAttacks = 1;
+            minPower += Random.Range(1, 3);
+            maxPower += Random.Range(1, 5);
+        }
+        if (currentBehavior == "EliteBite")
+        {
+            myBiteIcon.SetActive(true);
+            numAttacks = 1;
+            setPower();
+        }
+        if (currentBehavior == "Howl")
+        {
+            if(turnManager.spawnedEnemies.Count == 3)
+            {
+                currentBehavior = "Block";
+                myShieldIcon.SetActive(true);
+                numAttacks = 0;
+                setShield();
+            }
+            else if (turnManager.spawnedEnemies.Count != 3)
+            {
+                myDebuffIcon.SetActive(true);
+                numAttacks = 0;
+            }
+        }
+        if (currentBehavior == "multiLimbAttack")
+        {
+            myAttackBar.SetActive(true);
+            numAttacks = Random.Range(3, 7);
+            setPower();
+        }
+        if (currentBehavior == "StrengtheningRest")
+        {
+            myDebuffIcon.SetActive(true);
+            numAttacks = 0;
+            minPower += 1;
+            maxPower += 1;
+            
+        }
+        if (currentBehavior == "PoisonAttack")
+        {
+            myAttackBar.SetActive(true);
+            numAttacks = 1;
+            setPower();
+        }
+        if (currentBehavior == "BleedAttack")
+        {
+            myAttackBar.SetActive(true);
+            numAttacks = Random.Range(1, 3);
+            setPower();
+        }
+        if (currentBehavior == "Rest")
+        {
+            numAttacks = 0;
+            currPower = 0;
+        }
+
+
+
+
+        //special enemy behaviors
+        if (gameObject.transform.name == "fairyEnemy(Clone)")
+        {
+            if (turnManager.spawnedEnemies.Count == 1)
+            {
+                myDebuffIcon.SetActive(false);
+                myAttackBar.SetActive(true);
+                numAttacks = 1;
+                minPower = 1;
+                maxPower = 3;
+                setPower();
+                currentBehavior = "Attack";
+            }
+        }
+        
+        if (gameObject.transform.name == "treantBoss(Clone)")
+        {
+            if(currentShield == 0 && !treantTransformed)
+            {
+                treantTransformed = true;
+                gameObject.GetComponent<SpriteRenderer>().sprite = treantAttackForm;
+                gameObject.transform.localScale = new Vector3(.75f, .75f, 1);
+                currentBehavior = "Rest";
+                numAttacks = 0;
+                currPower = 0;
+                minPower = 2;
+                maxPower = 4;
+                potentialBehaviors[0] = "BleedAttack";
+                potentialBehaviors.RemoveAt(1);
+
+            }
+        }
+    }
 
 
     public IEnumerator AttackAnimation()
@@ -499,15 +778,79 @@ public class EnemyManager : MonoBehaviour
                 {
                     reachedAttackLeftPoint = true;
                     tempPlayerClawPNG = Instantiate(playerClawMarkPNG, new Vector3(-4.11180019f, -0.364600003f, -9), Quaternion.Euler(new Vector3(0, 0, Random.Range(clawMarkPNG.transform.rotation.z - 30f, clawMarkPNG.transform.rotation.z + 30f))));
-                    if (currentBehavior == "Attack")
+                    if (currentBehavior == "Attack" || currentBehavior == "WildHit" || currentBehavior == "multiLimbAttack")
                     {
                         enemyDealsDamage();
                     }
-                    else if (currentBehavior == "Debuff")
+                    else if (currentBehavior == "Bleed")
                     {
                         playerManager.playerBleedControl(2);
                     }
-                    
+                    else if (currentBehavior == "Poison")
+                    {
+                        playerManager.playerPoisonControl(2);
+                    }
+                    else if (currentBehavior == "HealSpell")
+                    {
+                        foreach(var enemy in turnManager.spawnedEnemies)
+                        {
+                            enemy.GetComponent<EnemyManager>().enemyHealsDamage(currPower);
+                        }
+                    }
+                    else if (currentBehavior == "EmpowerSpell")
+                    {
+                        foreach (var enemy in turnManager.spawnedEnemies)
+                        {
+                            enemy.GetComponent<EnemyManager>().minPower += currPower;
+                            enemy.GetComponent<EnemyManager>().maxPower += currPower;
+                        }
+                    }
+                    else if (currentBehavior == "Thief")
+                    {
+                        enemyDealsDamage();
+                        if (playerManager.playerGold >= currPower)
+                        {
+                            goldDrop += currPower;
+                            maxPower += currPower;
+                            minPower += currPower;
+                            playerManager.playerGoldChange(-currPower);
+
+                        }
+                        else if (playerManager.playerGold < currPower)
+                        {
+                            goldDrop += playerManager.playerGold;
+                            maxPower += playerManager.playerGold;
+                            minPower += playerManager.playerGold;
+                            playerManager.playerGoldChange(-playerManager.playerGold);
+
+                        }
+
+                    }
+                    else if (currentBehavior == "Bite")
+                    {
+                        enemyDealsDamage();
+                        enemyHealsDamage(Mathf.FloorToInt(currPower / 2));
+                    }
+                    else if (currentBehavior == "EliteBite")
+                    {
+                        enemyDealsDamage();
+                        enemyHealsDamage(currPower);
+                    }
+                    else if (currentBehavior == "Howl")
+                    {
+                        turnManager.spawnNewEnemy(wolfMinion);
+                    }
+                    else if (currentBehavior == "PoisonAttack")
+                    {
+                        enemyDealsDamage();
+                        playerManager.playerPoisonControl(Random.Range(1,3));
+                    }
+                    else if (currentBehavior == "BleedAttack")
+                    {
+                        enemyDealsDamage();
+                        playerManager.playerBleedControl(1 * numAttacks);
+                    }
+
                 }
             }
             else if (reachedAttackLeftPoint && !reachedAttackRightPoint)
@@ -529,9 +872,22 @@ public class EnemyManager : MonoBehaviour
 
         if (attackAnimationDone)
         {
+            currAttacksDone += 1;
+            if (numAttacks > currAttacksDone)
+            {
+                attackAnimationDone = false;
+                reachedAttackLeftPoint = false;
+                reachedAttackRightPoint = false;
+                
+                StartCoroutine(AttackAnimation());
+            }
+            else if (numAttacks <= currAttacksDone)
+            {
+                turnManager.enemyAttacking = false;
+                StopCoroutine(AttackAnimation());
+            }
 
-            turnManager.enemyAttacking = false;
-            StopCoroutine(AttackAnimation());
+
         }
         else if (!attackAnimationDone)
         {

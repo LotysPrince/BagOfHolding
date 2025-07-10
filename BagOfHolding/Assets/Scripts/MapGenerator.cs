@@ -45,6 +45,9 @@ public class MapGenerator : MonoBehaviour
     public EnemyMapBehavior enemyMapBehavior;
     public MapControls mapControls;
 
+    public int mapNumber = 1;
+    public bool triggerBoss;
+
 
 
 
@@ -146,6 +149,18 @@ public class MapGenerator : MonoBehaviour
         {
             generationDone = false;
             spawnMapIcons();
+            mapNumber += 1;
+            if (mapNumber == 3)
+            {
+                minRoomAmount = 7;
+                maxRoomAmount = 12;
+                triggerBoss = true;
+            }
+            else
+            {
+                minRoomAmount = 15;
+                maxRoomAmount = 20;
+            }
         }
         //if (!createOnce)
         //{
@@ -654,12 +669,22 @@ public class MapGenerator : MonoBehaviour
 
     private void spawnMapIcons()
     {
-        mapControls.spawnPlayer();
-        enemyMapBehavior.spawnStairs();
+        if (!triggerBoss)
+        {
+            mapControls.spawnPlayer();
+            enemyMapBehavior.spawnStairs();
 
-        enemyMapBehavior.spawnEnemies();
-        enemyMapBehavior.spawnShop();
-        enemyMapBehavior.spawnEvent();
+            enemyMapBehavior.spawnEnemies();
+            enemyMapBehavior.spawnShop();
+            enemyMapBehavior.spawnEvent();
+        }
+        else if (triggerBoss)
+        {
+            triggerBoss = false;
+            mapControls.spawnPlayer();
+            enemyMapBehavior.spawnStairs();
+            enemyMapBehavior.spawnBoss();
+        }
     }
 
     public void deleteMap()

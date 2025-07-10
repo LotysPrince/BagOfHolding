@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 524a3493e5733b1408da4426321cb27d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c9bc3f9084b34e540a69927b3679999e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -129,6 +129,9 @@ MonoBehaviour:
   StickyAmount: 0
   abilityOnEquip: 0
   abilityTriggered: 0
+  worldCanvas: {fileID: 0}
+  rewardScreenExtras: {fileID: 0}
+  isReward: 0
 --- !u!61 &8469562284284141277
 BoxCollider2D:
   m_ObjectHideFlags: 0

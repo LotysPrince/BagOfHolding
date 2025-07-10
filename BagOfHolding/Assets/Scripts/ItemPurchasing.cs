@@ -8,6 +8,7 @@ public class ItemPurchasing : MonoBehaviour
     public PlayerManager playerManager;
     public DeckManager deckManager;
     public GameObject itemPurchasing;
+    public GameObject displayCard;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +31,8 @@ public class ItemPurchasing : MonoBehaviour
         {
             playerManager.playerGoldChange(-currentPrice);
             deckManager.addCardToLibrary(itemPurchasing);
+            Destroy(displayCard);
+            Destroy(gameObject);
 
         }
     }

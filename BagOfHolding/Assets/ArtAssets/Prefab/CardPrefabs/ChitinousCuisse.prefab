@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5191799799852957684}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.42, y: 4.17, z: 0}
+  m_LocalPosition: {x: -1.49, y: 1.46, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 1}
   m_Children: []
   m_Father: {fileID: 3934910127550175212}
@@ -58,7 +58,7 @@ Transform:
   m_GameObject: {fileID: 8547136324396610383}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5.2105002, y: -4.2330003, z: -6}
-  m_LocalScale: {x: 0.15728658, y: 0.12952876, z: 1}
+  m_LocalScale: {x: 0.32060757, y: 0.3363604, z: 1}
   m_Children:
   - {fileID: 294354896263330373}
   m_Father: {fileID: 0}
@@ -104,7 +104,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7e96bd5fa832b6249935b6677a75f3d3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a8ac4a6f64b01274d94d59b32f67947b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -132,14 +132,14 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 11.67, y: 15.04}
+    oldSize: {x: 5.75, y: 5.71}
     newSize: {x: 1.97, y: 2.62}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 11.67, y: 15.04}
+  m_Size: {x: 5.75, y: 5.71}
   m_EdgeRadius: 0
 --- !u!114 &4544589101815720192
 MonoBehaviour:
@@ -184,3 +184,6 @@ MonoBehaviour:
   StickyAmount: 0
   abilityOnEquip: 0
   abilityTriggered: 0
+  worldCanvas: {fileID: 0}
+  rewardScreenExtras: {fileID: 0}
+  isReward: 0

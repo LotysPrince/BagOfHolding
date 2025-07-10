@@ -17,6 +17,9 @@ public class PlayerManager : MonoBehaviour
     private GameObject myBleedObject;
     public GameObject bleedObject;
 
+    private GameObject myPoisonObject;
+    public GameObject poisonObject;
+
     public int playerArmor;
     public int playerDodge;
 
@@ -29,8 +32,10 @@ public class PlayerManager : MonoBehaviour
     public GameObject playerLevelUI;
     public GameObject playerExpUI;
     public GameObject playerGoldUI;
+    public bool levelUpTriggered;
 
     public int selfBleed;
+    public int selfPoison;
 
     // Start is called before the first frame update
     void Start()
@@ -124,6 +129,35 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    public void playerPoisonControl(int poisonAdd)
+    {
+        if (poisonAdd != 0 && poisonAdd > 0)
+        {
+            if (selfPoison == 0)
+            {
+                GameObject enemyPoisonBar = Instantiate(poisonObject, transform.position + new Vector3(-2.5f, 2f, -5f), Quaternion.identity, GameObject.FindGameObjectWithTag("WorldCanvas").transform);
+                myPoisonObject = enemyPoisonBar;
+
+            }
+            selfPoison += poisonAdd;
+            myPoisonObject.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = selfPoison.ToString();
+
+
+        }
+        else if (poisonAdd != 0 && poisonAdd < 0)
+        {
+            if (selfPoison != 0)
+            {
+                selfPoison += poisonAdd;
+                myPoisonObject.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = selfPoison.ToString();
+                if (selfPoison <= 0)
+                {
+                    Destroy(myPoisonObject);
+                }
+            }
+        }
+    }
+
     public void playerGoldChange(int gold)
     {
         playerGold += gold;
@@ -138,10 +172,12 @@ public class PlayerManager : MonoBehaviour
         playerExpUI.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = playerExp + "/" + playerMaxExp;
         if (playerExp >= playerMaxExp)
         {
+            levelUpTriggered = true;
             int expOverflow = playerExp - playerMaxExp;
             playerLevel += 1;
             playerExp = expOverflow;
             playerLevelUI.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Lvl " + playerLevel.ToString();
+
 
 
             if (playerLevel == 1)

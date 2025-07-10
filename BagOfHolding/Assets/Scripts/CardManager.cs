@@ -21,6 +21,8 @@ public class CardManager : MonoBehaviour
     private DeckManager deckManager;
     private InventoryGridGenerator inventoryGridGenerator;
     private TurnManager turnManager;
+    private SwitchScreen switchScreen;
+    private MapControls mapControls;
     public LayerMask clickInventory;
     public LayerMask clickDeckSlot;
     public string itemType;
@@ -48,6 +50,9 @@ public class CardManager : MonoBehaviour
     public bool abilityTriggered;
 
     public GameObject worldCanvas;
+    public GameObject rewardScreenExtras;
+
+    public bool isReward;
 
     // Start is called before the first frame update
     void Start()
@@ -65,7 +70,10 @@ public class CardManager : MonoBehaviour
         deckManager = GameObject.Find("Scripts").GetComponent<DeckManager>();
         inventoryGridGenerator = GameObject.Find("Scripts").GetComponent<InventoryGridGenerator>();
         turnManager = GameObject.Find("Scripts").GetComponent<TurnManager>();
+        switchScreen = GameObject.Find("genScripts").GetComponent<SwitchScreen>();
+        mapControls = GameObject.Find("mapScripts").GetComponent<MapControls>();
         worldCanvas = GameObject.Find("WorldCanvas");
+        rewardScreenExtras = GameObject.Find("RewardScreenExtras");
         clickDeckSlot |= 1 << 7;
 
         /*slotsToEquip[0, 0] = slotsToEquipStrings[0];
@@ -90,7 +98,7 @@ public class CardManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        upPos = dnPos + new Vector3(0, .1f, 0);
         if (!cardClicked)
         {
 
@@ -127,12 +135,12 @@ public class CardManager : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        if (!itemEquipped)
+        if (!itemEquipped && !isReward)
         {
             currPos = upPos;
         }
         mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        inspectionCardInstantiation = Instantiate(inspectionCardPrefab, new Vector3(mousePosition.x + 1.5f, mousePosition.y + 1.5f, -5), Quaternion.identity, worldCanvas.transform);
+        inspectionCardInstantiation = Instantiate(inspectionCardPrefab, new Vector3(mousePosition.x + 1.5f, mousePosition.y + 1.5f, -15), Quaternion.identity, worldCanvas.transform);
         
 
 
@@ -153,7 +161,10 @@ public class CardManager : MonoBehaviour
             {
 
                 inventoryManager.unsetInventory(gameObject);
-                currPos = dnPos;
+                if (!isReward)
+                {
+                    currPos = dnPos;
+                }
 
             }
         }
@@ -161,12 +172,14 @@ public class CardManager : MonoBehaviour
 
     private void OnMouseExit()
     {
-        if (!itemEquipped)
+        if (!itemEquipped && !isReward)
         {
             currPos = dnPos;
         }
-            Destroy(inspectionCardInstantiation);
-            inspectionCardInstantiation = null;
+        
+        Destroy(inspectionCardInstantiation);
+        inspectionCardInstantiation = null;
+        
         
     }
 
@@ -174,15 +187,30 @@ public class CardManager : MonoBehaviour
     {
         //var cardFrame = this.gameObject.transform.GetChild(0).gameObject;
         //var cardImage = cardFrame.transform.GetChild(2).gameObject;
-        if (!cardClicked)
+        if (!cardClicked && !isReward && inventoryManager.carryingCard == null)
         {
 
-
+            var inventorySlots = inventoryManager.InventoryItems;
+            foreach (var slot in inventorySlots)
+            {
+                if (slot.Key.transform.tag == itemType)
+                {
+                    slot.Key.GetComponent<SlotHighlighting>().startAnimation();
+                }
+            }
             //when clicked, follows the mouse
             if (!itemEquipped)
             {
                 cardClicked = true;
                 inventoryManager.carryingCard = gameObject;
+                foreach (var inventorySlot in inventoryGridGenerator.Inventory)
+                {
+                    if (inventorySlot.GetComponent<InventorySlotManager>().equippedItem == gameObject)
+                    {
+                        inventorySlot.GetComponent<InventorySlotManager>().slotIsEquipped = false;
+                        inventorySlot.GetComponent<InventorySlotManager>().equippedItem = null;
+                    }
+                }
 
 
                 //makes card smaller and transparent while following the mouse
@@ -231,8 +259,16 @@ public class CardManager : MonoBehaviour
             }
 
         }
-        else if (cardClicked)
+        else if (cardClicked && !isReward)
         {
+            var inventorySlots = inventoryManager.InventoryItems;
+            foreach (var slot in inventorySlots)
+            {
+                if (slot.Key.transform.tag == itemType)
+                {
+                    slot.Key.GetComponent<SlotHighlighting>().StopAnimation();
+                }
+            }
             cardClicked = false;
             speed = 60;
             currPos = dnPos;
@@ -254,10 +290,36 @@ public class CardManager : MonoBehaviour
             {
                 checkIfSetInInventory(gameObject);
             }
+            else
+            {
+                
+                inventoryGridGenerator.MoveBackToInventory(gameObject);
+                inventoryManager.unsetInventory(gameObject);
+            }
             //checkIfSetInInventory(gameObject);
             //checkIfSetInDeckSlot(gameObject);
         }
-        deckManager.updateHandPosition();
+
+        else if (isReward)
+        {
+            isReward = false;
+            foreach (var card in deckManager.obtainableCards)
+            {
+                if(card.transform.name == gameObject.transform.name)
+                {
+                    deckManager.addCardToLibrary(card);
+                }
+            }
+            //deckManager.addCardToLibrary(gameObject);
+            Destroy(inspectionCardInstantiation);
+            rewardScreenExtras.SetActive(false);
+            gameObject.transform.parent.gameObject.SetActive(false);
+
+            switchScreen.currentScreen = "Map";
+            switchScreen.changeScreen("Map");
+            mapControls.inBattle = false;
+        }
+        //deckManager.updateHandPosition();
 
     }
 

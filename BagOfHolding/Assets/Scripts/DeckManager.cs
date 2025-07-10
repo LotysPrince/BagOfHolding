@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class DeckManager : MonoBehaviour
 {
@@ -8,6 +9,10 @@ public class DeckManager : MonoBehaviour
     public List<GameObject> currentLibrary = new List<GameObject>();
     public List<GameObject> currentGraveyard = new List<GameObject>();
     public List<GameObject> currentHand = new List<GameObject>();
+    public List<GameObject> obtainableCards = new List<GameObject>();
+
+    public GameObject pouchIconText;
+    public GameObject graveyardIconText;
 
     public int handSize;
     public InventoryGridGenerator gridGenerator;
@@ -92,8 +97,11 @@ public class DeckManager : MonoBehaviour
             
             currentHand.Add(drawnCard);
         }
+
         gridGenerator.currentInventory = new List<GameObject>(currentHand);
         gridGenerator.GenerateInventory();
+        pouchIconText.GetComponent<TextMeshProUGUI>().text = currentDeck.Count.ToString();
+        graveyardIconText.GetComponent<TextMeshProUGUI>().text = currentGraveyard.Count.ToString();
     }
     public void drawCardsFromGraveyard(int drawAmount)
     {
@@ -105,7 +113,7 @@ public class DeckManager : MonoBehaviour
                 var drawnCard = currentGraveyard[Random.Range(0, currentGraveyard.Count)];
                 currentGraveyard.Remove(drawnCard);
                 currentHand.Add(drawnCard);
-                gridGenerator.addItemToInventory(drawnCard);
+                gridGenerator.addNewItemToInventory(drawnCard);
                 cardsDrawn += 1;
             }
             else if (currentGraveyard.Count == 0)

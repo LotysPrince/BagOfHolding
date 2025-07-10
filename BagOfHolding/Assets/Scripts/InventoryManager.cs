@@ -129,12 +129,15 @@ public class InventoryManager : MonoBehaviour
         //if right inventory type
         if (itemType == slotType || itemType == "Anywhere")
         {
+            Debug.Log("Right inventory slot");
             //if inventory slot is not already occupied
             if (InventoryItems[targetSlot] == null && itemCarryingWeight <= currCarryingCapacity)
             {
+                Debug.Log("Not Occupied");
                 //if not equipped in another slot yet
                 if (!itemEquipped)
                 {
+
                     //currCarryingCapacity -= itemCarryingWeight;
                     setInventory(item, targetSlot);
                     
@@ -150,6 +153,7 @@ public class InventoryManager : MonoBehaviour
             //if inventory slot is already occupied                             checks weight against if the item already equipped is then unequipped, adding its weight to the pool before checking.
             else if (InventoryItems[targetSlot] != null && itemCarryingWeight <= currCarryingCapacity + InventoryItems[targetSlot].GetComponent<CardManager>().carryingWeight)
             {
+                Debug.Log("Slot Occupied");
                 //unequips inventory first
                 //Debug.Log("Help");
                 //Debug.Log(InventoryItems[targetSlot].GetComponent<CardManager>().carryingWeight);
@@ -159,7 +163,7 @@ public class InventoryManager : MonoBehaviour
                 {
                     var oldItem = InventoryItems[targetSlot];
                     unsetInventory(oldItem);
-                    gridGenerator.addItemToInventory(oldItem);
+                    gridGenerator.addNewItemToInventory(oldItem);
                     Destroy(oldItem);
                 }
                 //if not equipped in another slot yet
@@ -190,14 +194,18 @@ public class InventoryManager : MonoBehaviour
                 unsetInventory(item);
             }
 
+            //if trying to put the items on slime kings gloves
             if (itemType == "Weapon" && slotType == "Gloves" && SlimeKingGlovesActivated)
             {
                 extraEquippedItems.Add(item);
                 item.GetComponent<CardManager>().isSticky = true;
+                item.GetComponent<CardManager>().itemEquipped = true;
 
                 //gives the card the same position
                 //item.transform.position = new Vector3(targetSlot.transform.position.x, targetSlot.transform.position.y, targetSlot.transform.position.z - 5f);
                 item.GetComponent<CardManager>().currPos = new Vector3(targetSlot.transform.position.x, targetSlot.transform.position.y, targetSlot.transform.position.z - 5f);
+                item.GetComponent<CardManager>().dnPos = new Vector3(targetSlot.transform.position.x, targetSlot.transform.position.y, targetSlot.transform.position.z - 5f);
+                //item.GetComponent<CardManager>().upPos = new Vector3(targetSlot.transform.position.x, targetSlot.transform.position.y, targetSlot.transform.position.z - 5f);
 
                 //sets card to the size of the slot
                 Vector3 refSize = targetSlot.GetComponent<Renderer>().bounds.size;
@@ -274,6 +282,7 @@ public class InventoryManager : MonoBehaviour
 
     public void setInventory(GameObject item, GameObject targetSlot)
     {
+        Debug.Log("Setting Inventory");
         item.GetComponent<CardManager>().itemEquipped = true;
         InventoryItems[targetSlot] = item;
 
@@ -326,10 +335,12 @@ public class InventoryManager : MonoBehaviour
 
     public void unsetInventory(GameObject item)
     {
+        bool itemWasEquipped = false;
         foreach (var slot in InventoryItems)
         {
             if (slot.Value == item)
             {
+                itemWasEquipped = true;
                 InventoryItems[slot.Key] = null;
                 break;
             }
@@ -340,7 +351,11 @@ public class InventoryManager : MonoBehaviour
         int currCarryingCapacity = int.Parse(carryingCapacityObject.GetComponentInChildren<TMPro.TextMeshProUGUI>().text);
         int itemCarryingWeight = item.GetComponent<CardManager>().carryingWeight;
         currCarryingCapacity += itemCarryingWeight;
-        carryingCapacityObject.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = currCarryingCapacity.ToString();
+
+        if (itemWasEquipped)
+        {
+            carryingCapacityObject.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = currCarryingCapacity.ToString();
+        }
 
 
         item.GetComponent<CardManager>().itemEquipped = false;

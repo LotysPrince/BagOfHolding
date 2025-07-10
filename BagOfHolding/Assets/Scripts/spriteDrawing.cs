@@ -35,7 +35,7 @@ public class spriteDrawing : MonoBehaviour
         drawingDown = true;
         //var newItem = Instantiate(maskPrefab, new Vector3(topLeftMarker.transform.position.x, topLeftMarker.transform.position.y, topLeftMarker.transform.position.z), Quaternion.identity);
         //newItem.transform.SetParent(spriteMasksParent.transform);
-        quillImg = Instantiate(quill, new Vector3(topLeftMarker.transform.position.x, topLeftMarker.transform.position.y, topLeftMarker.transform.position.z), Quaternion.identity);
+        quillImg = Instantiate(quill, new Vector3(topLeftMarker.transform.position.x, topLeftMarker.transform.position.y, topLeftMarker.transform.position.z), quill.transform.rotation);
 
         //StopAllCoroutines();
         StartCoroutine(StartDrawing());
@@ -84,7 +84,7 @@ public class spriteDrawing : MonoBehaviour
             //newInkSplotch.transform.SetParent(spriteMasksParent.transform);
             inkSplotchYPos -= 0.01f;
 
-            quillImg.transform.position = new Vector3(xPos + 2.5f, yPos + 3.5f, -5);
+            quillImg.transform.position = new Vector3(xPos + 5f, yPos + 3.5f, -5);
         }
 
         

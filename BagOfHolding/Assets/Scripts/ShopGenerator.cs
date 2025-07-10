@@ -8,7 +8,8 @@ public class ShopGenerator : MonoBehaviour
     public GameObject startingSpawnPoint;
     public GameObject gridPrefab;
     public List<GameObject> shopStockPool = new List<GameObject>();
-    private GameObject[] currentShopItems;
+    private List<GameObject> currentShopItems = new List<GameObject>();
+    private List<GameObject> currentShopPurchaseButtons = new List<GameObject>();
     private DeckManager deckManager;
 
     private GameObject purchaseButton;
@@ -21,7 +22,7 @@ public class ShopGenerator : MonoBehaviour
     {
 
         deckManager = GameObject.Find("Scripts").GetComponent<DeckManager>();
-        shopStockPool = deckManager.currentLibrary;
+        shopStockPool = deckManager.obtainableCards;
 
         
 
@@ -231,6 +232,9 @@ public class ShopGenerator : MonoBehaviour
 
         purchaseButton.transform.position = itemInspectionCard.transform.position + new Vector3(0, -2f, 0);
         purchaseButton.GetComponent<ItemPurchasing>().itemPurchasing = itemSpawning;
+        purchaseButton.GetComponent<ItemPurchasing>().displayCard = itemInspectionCard;
+        currentShopItems.Add(itemInspectionCard);
+        currentShopPurchaseButtons.Add(purchaseButton);
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -252,6 +256,10 @@ public class ShopGenerator : MonoBehaviour
 
         purchaseButton.transform.position = itemInspectionCard.transform.position + new Vector3(0, -2f, 0);
         purchaseButton.GetComponent<ItemPurchasing>().itemPurchasing = itemSpawning;
+        purchaseButton.GetComponent<ItemPurchasing>().displayCard = itemInspectionCard;
+        currentShopItems.Add(itemInspectionCard);
+        currentShopPurchaseButtons.Add(purchaseButton);
+
 
 
 
@@ -275,6 +283,10 @@ public class ShopGenerator : MonoBehaviour
 
         purchaseButton.transform.position = itemInspectionCard.transform.position + new Vector3(0, -2f, 0);
         purchaseButton.GetComponent<ItemPurchasing>().itemPurchasing = itemSpawning;
+        purchaseButton.GetComponent<ItemPurchasing>().displayCard = itemInspectionCard;
+        currentShopItems.Add(itemInspectionCard);
+        currentShopPurchaseButtons.Add(purchaseButton);
+
 
 
 
@@ -299,6 +311,10 @@ public class ShopGenerator : MonoBehaviour
 
         purchaseButton.transform.position = itemInspectionCard.transform.position + new Vector3(0, -2f, 0);
         purchaseButton.GetComponent<ItemPurchasing>().itemPurchasing = itemSpawning;
+        purchaseButton.GetComponent<ItemPurchasing>().displayCard = itemInspectionCard;
+        currentShopItems.Add(itemInspectionCard);
+        currentShopPurchaseButtons.Add(purchaseButton);
+
 
 
 
@@ -323,6 +339,10 @@ public class ShopGenerator : MonoBehaviour
 
         purchaseButton.transform.position = itemInspectionCard.transform.position + new Vector3(0, -2f, 0);
         purchaseButton.GetComponent<ItemPurchasing>().itemPurchasing = itemSpawning;
+        purchaseButton.GetComponent<ItemPurchasing>().displayCard = itemInspectionCard;
+        currentShopItems.Add(itemInspectionCard);
+        currentShopPurchaseButtons.Add(purchaseButton);
+
 
 
 
@@ -347,5 +367,23 @@ public class ShopGenerator : MonoBehaviour
 
         purchaseButton.transform.position = itemInspectionCard.transform.position + new Vector3(0, -2f, 0);
         purchaseButton.GetComponent<ItemPurchasing>().itemPurchasing = itemSpawning;
+        purchaseButton.GetComponent<ItemPurchasing>().displayCard = itemInspectionCard;
+        currentShopItems.Add(itemInspectionCard);
+        currentShopPurchaseButtons.Add(purchaseButton);
+
+    }
+
+    public void DeleteShop()
+    {
+        //List<GameObject> tempList = new List<GameObject>();
+        //tempList = currentShopItems;
+        foreach (var item in currentShopItems)
+        {
+            Destroy(item);
+        }
+        foreach (var item in currentShopPurchaseButtons)
+        {
+            Destroy(item);
+        }
     }
 }
