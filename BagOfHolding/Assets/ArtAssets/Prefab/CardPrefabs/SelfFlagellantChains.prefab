@@ -104,7 +104,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 4da09a1ca4be8d341b59c37ef972b90a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c1705750ac25ea6439c47effbae61bb4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -132,14 +132,14 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4.56, y: 11.68}
+    oldSize: {x: 5.16, y: 11.42}
     newSize: {x: 1.97, y: 2.62}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.56, y: 11.68}
+  m_Size: {x: 5.16, y: 11.42}
   m_EdgeRadius: 0
 --- !u!114 &4478608799227641373
 MonoBehaviour:
@@ -158,9 +158,13 @@ MonoBehaviour:
   currPos: {x: 0, y: 0, z: 0}
   cardClicked: 0
   originalCardSize: {x: 0, y: 0, z: 0}
+  spawnPointOriginalPosition: {x: 0, y: 0, z: 0}
   clickInventory:
     serializedVersion: 2
     m_Bits: 64
+  clickDeckSlot:
+    serializedVersion: 2
+    m_Bits: 0
   itemType: Cape
   inspectionCardPrefab: {fileID: 2607701617611634996, guid: 11ef9670cf5ca3941b7b751733120e13, type: 3}
   itemEquipped: 0
@@ -177,5 +181,9 @@ MonoBehaviour:
   - {fileID: 0}
   carryingWeight: 2
   isSticky: 0
+  StickyAmount: 0
   abilityOnEquip: 0
   abilityTriggered: 0
+  worldCanvas: {fileID: 0}
+  rewardScreenExtras: {fileID: 0}
+  isReward: 0

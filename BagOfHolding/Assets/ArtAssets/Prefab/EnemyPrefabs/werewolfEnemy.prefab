@@ -236,10 +236,11 @@ MonoBehaviour:
   potentialBehaviors:
   - EliteBite
   - Howl
-  - Block
+  - Defend
   setAttacksNum: 1
   numAttacks: 0
   wolfMinion: {fileID: 4013227964714580063, guid: d3726917a7461034c96ae233f10fbccb, type: 3}
+  treantAttackForm: {fileID: 0}
 --- !u!61 &2354831684329190357
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -154,6 +154,7 @@ public class TurnManager : MonoBehaviour
             {
                 spawnedEnemy = Instantiate(spawnableBosses[Random.Range(0, spawnableBosses.Count)], new Vector3(4, 1, -1), Quaternion.identity);
                 spawnedEnemies.Add(spawnedEnemy);
+                spawnBoss = false;
                 break;
             }
             spawnedEnemies.Add(spawnedEnemy);
@@ -182,17 +183,18 @@ public class TurnManager : MonoBehaviour
         GameObject spawnedEnemy = null;
         foreach (var enemy in spawnedEnemies)
         {
-            if (enemy.transform.position.x == 1)
+            Debug.Log("enemy name" + enemy.transform.name + " and x pos: " + enemy.transform.localPosition.x);
+            if (enemy.transform.localPosition.x > 0.5f &&  enemy.transform.localPosition.x < 1.5f)
             {
                 position1filled = true;
                 Debug.Log("place 1 filled");
             }
-            if (enemy.transform.position.x == 4)
+            if (enemy.transform.localPosition.x > 3.5f && enemy.transform.localPosition.x < 4.5f)
             {
                 position2filled = true;
                 Debug.Log("place 2 filled");
             }
-            if (enemy.transform.position.x == 7)
+            if (enemy.transform.localPosition.x > 6.5f && enemy.transform.localPosition.x < 7.5f)
             {
                 position3filled = true;
                 Debug.Log("place 3 filled");
@@ -203,6 +205,7 @@ public class TurnManager : MonoBehaviour
         {
             Debug.Log("placing in 1");
             spawnedEnemy = Instantiate(enemyToSpawn, new Vector3(1, 1, -1), Quaternion.identity);
+            spawnedEnemies.Insert(0, spawnedEnemy);
             enemySpawned = true;
         }
         if (!position2filled && !enemySpawned)
@@ -210,6 +213,8 @@ public class TurnManager : MonoBehaviour
             Debug.Log("placing in 2");
 
             spawnedEnemy = Instantiate(enemyToSpawn, new Vector3(4, 0.5f, -1), Quaternion.identity);
+            spawnedEnemies.Insert(1, spawnedEnemy);
+
             enemySpawned = true;
         }
         if (!position3filled && !enemySpawned)
@@ -217,11 +222,9 @@ public class TurnManager : MonoBehaviour
             Debug.Log("placing in 3");
 
             spawnedEnemy = Instantiate(enemyToSpawn, new Vector3(7, 1, -1), Quaternion.identity);
+            spawnedEnemies.Insert(2, spawnedEnemy);
+
             enemySpawned = true;
-        }
-        if (enemySpawned) 
-        {
-            spawnedEnemies.Add(spawnedEnemy);
         }
         
     }
@@ -1090,7 +1093,7 @@ public class TurnManager : MonoBehaviour
                     enemy.GetComponent<EnemyManager>().setBleed(enemy.GetComponent<EnemyManager>().currHemmorhage);
                     enemy.GetComponent<EnemyManager>().setHemmorhage(-1);
                 }*/
-                if (!enemy.GetComponent<EnemyManager>().animationDone && enemy.GetComponent<EnemyManager>().tempClawMarkPNG != null)
+                if (!enemy.GetComponent<EnemyManager>().attackAnimationDone && enemy.GetComponent<EnemyManager>().tempClawMarkPNG != null)
                 {
                     allEnemiesDone = false;
                     continue;

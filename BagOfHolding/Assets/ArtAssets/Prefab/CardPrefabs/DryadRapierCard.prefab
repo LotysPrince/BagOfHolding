@@ -1149,6 +1149,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stopFollowMouse: 0
   isStatDisplay: 0
+  bleedPopup: {fileID: 871906076998827528, guid: f0b184acd612cd341a876da0dea2e21b, type: 3}
+  poisonPopup: {fileID: 8314948679147333316, guid: 449edf6ab2f68d547b3b24c43fab8e54, type: 3}
+  critPopup: {fileID: 4920827976387398185, guid: c359ca386b76ee04385170153a0450b4, type: 3}
+  dodgePopup: {fileID: 6007903440745923174, guid: 638be618318ff8840acc8b0066f51c81, type: 3}
+  hemmorhagePopup: {fileID: 6134448375002155814, guid: 631797798d88a5b4d81fd867694a2ef8, type: 3}
+  rejuvenatePopup: {fileID: 6251451589696490313, guid: 1aeaf12f4bd012a49812b50e5f8be084, type: 3}
+  slickPopup: {fileID: 8721817066263020293, guid: d2e0e36e8a0007f4c9bbc9105a4d63dc, type: 3}
+  stickyPopup: {fileID: 7584848228728515219, guid: 9c83b57e69b691e4ca20e8e3a9dfcf39, type: 3}
+  triggerBleedPopup: 0
+  triggerPoisonPopup: 0
+  triggerCritPopup: 0
+  triggerDodgePopup: 0
+  triggerHemmorhagePopup: 1
+  triggerRejuvenatePopup: 0
+  triggerSlickPopup: 0
+  triggerStickyPopup: 0
 --- !u!1 &4713826567870285426
 GameObject:
   m_ObjectHideFlags: 0

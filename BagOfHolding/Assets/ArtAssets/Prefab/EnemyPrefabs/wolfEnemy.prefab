@@ -255,6 +255,8 @@ MonoBehaviour:
   currBleed: 0
   currPoison: 0
   currHemmorhage: 0
+  permaArmor: 0
+  startingArmor: 0
   timesHit: 0
   damageHits: 
   reachedLeftPoint: 0
@@ -294,6 +296,10 @@ MonoBehaviour:
   potentialBehaviors:
   - Bite
   - Defend
+  setAttacksNum: 1
+  numAttacks: 0
+  wolfMinion: {fileID: 0}
+  treantAttackForm: {fileID: 0}
 --- !u!61 &4147933124546506831
 BoxCollider2D:
   m_ObjectHideFlags: 0

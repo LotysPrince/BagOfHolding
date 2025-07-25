@@ -230,7 +230,7 @@ public class ShopGenerator : MonoBehaviour
         itemInspectionCard.SetActive(true);
 
 
-        purchaseButton.transform.position = itemInspectionCard.transform.position + new Vector3(0, -2f, 0);
+        purchaseButton.transform.position = itemInspectionCard.transform.position + new Vector3(0, -2f, 5);
         purchaseButton.GetComponent<ItemPurchasing>().itemPurchasing = itemSpawning;
         purchaseButton.GetComponent<ItemPurchasing>().displayCard = itemInspectionCard;
         currentShopItems.Add(itemInspectionCard);
@@ -254,7 +254,7 @@ public class ShopGenerator : MonoBehaviour
         itemInspectionCard.SetActive(true);
 
 
-        purchaseButton.transform.position = itemInspectionCard.transform.position + new Vector3(0, -2f, 0);
+        purchaseButton.transform.position = itemInspectionCard.transform.position + new Vector3(0, -2f, 5);
         purchaseButton.GetComponent<ItemPurchasing>().itemPurchasing = itemSpawning;
         purchaseButton.GetComponent<ItemPurchasing>().displayCard = itemInspectionCard;
         currentShopItems.Add(itemInspectionCard);
@@ -281,7 +281,7 @@ public class ShopGenerator : MonoBehaviour
         itemInspectionCard.GetComponent<InspectionCardSpawning>().stopFollowMouse = true;
         itemInspectionCard.SetActive(true);
 
-        purchaseButton.transform.position = itemInspectionCard.transform.position + new Vector3(0, -2f, 0);
+        purchaseButton.transform.position = itemInspectionCard.transform.position + new Vector3(0, -2f, 5);
         purchaseButton.GetComponent<ItemPurchasing>().itemPurchasing = itemSpawning;
         purchaseButton.GetComponent<ItemPurchasing>().displayCard = itemInspectionCard;
         currentShopItems.Add(itemInspectionCard);
@@ -309,7 +309,7 @@ public class ShopGenerator : MonoBehaviour
         itemInspectionCard.SetActive(true);
 
 
-        purchaseButton.transform.position = itemInspectionCard.transform.position + new Vector3(0, -2f, 0);
+        purchaseButton.transform.position = itemInspectionCard.transform.position + new Vector3(0, -2f, 5);
         purchaseButton.GetComponent<ItemPurchasing>().itemPurchasing = itemSpawning;
         purchaseButton.GetComponent<ItemPurchasing>().displayCard = itemInspectionCard;
         currentShopItems.Add(itemInspectionCard);
@@ -337,7 +337,7 @@ public class ShopGenerator : MonoBehaviour
         itemInspectionCard.SetActive(true);
 
 
-        purchaseButton.transform.position = itemInspectionCard.transform.position + new Vector3(0, -2f, 0);
+        purchaseButton.transform.position = itemInspectionCard.transform.position + new Vector3(0, -2f, 5);
         purchaseButton.GetComponent<ItemPurchasing>().itemPurchasing = itemSpawning;
         purchaseButton.GetComponent<ItemPurchasing>().displayCard = itemInspectionCard;
         currentShopItems.Add(itemInspectionCard);
@@ -365,7 +365,7 @@ public class ShopGenerator : MonoBehaviour
         itemInspectionCard.SetActive(true);
 
 
-        purchaseButton.transform.position = itemInspectionCard.transform.position + new Vector3(0, -2f, 0);
+        purchaseButton.transform.position = itemInspectionCard.transform.position + new Vector3(0, -2f, 5);
         purchaseButton.GetComponent<ItemPurchasing>().itemPurchasing = itemSpawning;
         purchaseButton.GetComponent<ItemPurchasing>().displayCard = itemInspectionCard;
         currentShopItems.Add(itemInspectionCard);

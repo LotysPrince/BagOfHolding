@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 967847729699621169}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.43, y: 1.91, z: 0}
+  m_LocalPosition: {x: -2.86, y: 2.75, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 1}
   m_Children: []
   m_Father: {fileID: 8356743437746233641}
@@ -59,7 +59,7 @@ Transform:
   m_GameObject: {fileID: 3746714768115271050}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.9672, y: -2.7513, z: 0}
-  m_LocalScale: {x: 0.35299888, y: 0.2648018, z: 1}
+  m_LocalScale: {x: 0.17382099, y: 0.17618936, z: 1}
   m_Children:
   - {fileID: 4717314173005712512}
   m_Father: {fileID: 0}
@@ -105,7 +105,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: cbbbd617d9d108d45af032024ec8e983, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7b5068e727cf52844a535246ad8f815b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -129,18 +129,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -1.7314252}
+  m_Offset: {x: 0.052986145, y: -2.8291883}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5.15, y: 7.23}
+    oldSize: {x: 10.23, y: 10.81}
     newSize: {x: 1.97, y: 2.62}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5.15, y: 3.7671497}
+  m_Size: {x: 10.766594, y: 5.1262846}
   m_EdgeRadius: 0
 --- !u!61 &2033018519846435687
 BoxCollider2D:
@@ -155,18 +155,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.2476056, y: -0.043184042}
+  m_Offset: {x: 2.7047405, y: 0.00908947}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5.15, y: 7.23}
+    oldSize: {x: 10.23, y: 10.81}
     newSize: {x: 1.97, y: 2.62}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.6547885, y: 7.143632}
+  m_Size: {x: 5.1451645, y: 10.802843}
   m_EdgeRadius: 0
 --- !u!114 &8823424396460924869
 MonoBehaviour:
@@ -185,9 +185,13 @@ MonoBehaviour:
   currPos: {x: 0, y: 0, z: 0}
   cardClicked: 0
   originalCardSize: {x: 0, y: 0, z: 0}
+  spawnPointOriginalPosition: {x: 0, y: 0, z: 0}
   clickInventory:
     serializedVersion: 2
     m_Bits: 64
+  clickDeckSlot:
+    serializedVersion: 2
+    m_Bits: 0
   itemType: Weapon
   inspectionCardPrefab: {fileID: 8801212660512981647, guid: 642f3fc6fc5920d4b8d8a2e36f930e2e, type: 3}
   itemEquipped: 0
@@ -203,3 +207,10 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   carryingWeight: 1
+  isSticky: 0
+  StickyAmount: 0
+  abilityOnEquip: 0
+  abilityTriggered: 0
+  worldCanvas: {fileID: 0}
+  rewardScreenExtras: {fileID: 0}
+  isReward: 0

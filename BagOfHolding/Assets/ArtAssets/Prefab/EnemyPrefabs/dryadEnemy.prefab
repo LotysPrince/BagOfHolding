@@ -296,6 +296,10 @@ MonoBehaviour:
   potentialBehaviors:
   - Attack
   - Bleed
+  setAttacksNum: 1
+  numAttacks: 0
+  wolfMinion: {fileID: 0}
+  treantAttackForm: {fileID: 0}
 --- !u!61 &3867415115914823579
 BoxCollider2D:
   m_ObjectHideFlags: 0

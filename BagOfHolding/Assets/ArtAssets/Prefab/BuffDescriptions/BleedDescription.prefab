@@ -27,7 +27,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 871906076998827528}
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 3}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.15, y: 0.2, z: 1}
   m_Children:
   - {fileID: 932633364265580719}
@@ -132,6 +132,7 @@ MonoBehaviour:
   playerManager: {fileID: 0}
   deckManager: {fileID: 0}
   itemPurchasing: {fileID: 0}
+  displayCard: {fileID: 0}
 --- !u!1 &932869009693276487
 GameObject:
   m_ObjectHideFlags: 0

@@ -107,6 +107,7 @@ public class MapControls : MonoBehaviour
             currRoom.GetComponent<MapSegmentControl>().roomInhabitedBy = "Player";
             deckManager.currentHand.Clear();
             deckManager.currentDeck.Clear();
+            deckManager.currentGraveyard.Clear();
             deckManager.createDeckFromLibrary();
             deckManager.drawCards();
             turnManager.spawnEnemies();
@@ -120,6 +121,8 @@ public class MapControls : MonoBehaviour
             currRoom.GetComponent<MapSegmentControl>().roomInhabitedBy = "Player";
             deckManager.currentHand.Clear();
             deckManager.currentDeck.Clear();
+            deckManager.currentGraveyard.Clear();
+
             deckManager.createDeckFromLibrary();
             deckManager.drawCards();
             turnManager.spawnElites = true;
@@ -134,6 +137,8 @@ public class MapControls : MonoBehaviour
             currRoom.GetComponent<MapSegmentControl>().roomInhabitedBy = "Player";
             deckManager.currentHand.Clear();
             deckManager.currentDeck.Clear();
+            deckManager.currentGraveyard.Clear();
+
             deckManager.createDeckFromLibrary();
             deckManager.drawCards();
             turnManager.spawnBoss = true;

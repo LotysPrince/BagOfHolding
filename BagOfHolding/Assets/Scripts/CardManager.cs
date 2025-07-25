@@ -140,7 +140,7 @@ public class CardManager : MonoBehaviour
             currPos = upPos;
         }
         mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        inspectionCardInstantiation = Instantiate(inspectionCardPrefab, new Vector3(mousePosition.x + 1.5f, mousePosition.y + 1.5f, -15), Quaternion.identity, worldCanvas.transform);
+        inspectionCardInstantiation = Instantiate(inspectionCardPrefab, new Vector3(mousePosition.x + 1.5f, mousePosition.y + 1.5f, -20), Quaternion.identity, worldCanvas.transform);
         
 
 
@@ -151,20 +151,32 @@ public class CardManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1))
         {
-            if (!itemEquipped)
+            if (!itemEquipped && !isReward)
             {
-                
-                var targetSlot = GameObject.FindGameObjectWithTag(itemType);
-                inventoryManager.InvManagement(gameObject, targetSlot);
+
+                if (itemType != "Anywhere")
+                {
+                    var targetSlot = GameObject.FindGameObjectWithTag(itemType);
+                    inventoryManager.InvManagement(gameObject, targetSlot);
+                }
+                else if (itemType == "Anywhere")
+                {
+                    foreach (var slot in inventoryManager.InventoryItems)
+                    {
+                        if (slot.Value == null)
+                        {
+                            inventoryManager.InvManagement(gameObject, slot.Key);
+                            break;
+                        }
+                    }
+                }
             }
-            else if (itemEquipped)
+            else if (itemEquipped && !isReward)
             {
 
                 inventoryManager.unsetInventory(gameObject);
-                if (!isReward)
-                {
-                    currPos = dnPos;
-                }
+                inventoryGridGenerator.MoveBackToInventory(gameObject);
+                
 
             }
         }

@@ -897,6 +897,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stopFollowMouse: 0
   isStatDisplay: 0
+  bleedPopup: {fileID: 0}
+  poisonPopup: {fileID: 0}
+  critPopup: {fileID: 0}
+  dodgePopup: {fileID: 0}
+  hemmorhagePopup: {fileID: 0}
+  rejuvenatePopup: {fileID: 0}
+  slickPopup: {fileID: 0}
+  stickyPopup: {fileID: 0}
+  triggerBleedPopup: 0
+  triggerPoisonPopup: 0
+  triggerCritPopup: 0
+  triggerDodgePopup: 0
+  triggerHemmorhagePopup: 0
+  triggerRejuvenatePopup: 0
+  triggerSlickPopup: 0
+  triggerStickyPopup: 0
 --- !u!1 &3713465211507387057
 GameObject:
   m_ObjectHideFlags: 0
