@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 758d83742eca68c469334927de94bcbd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 37e11a1aa3f0fa244afbe39d82e23275, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -102,7 +102,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5.77, y: 6.02}
+    oldSize: {x: 5.69, y: 6.01}
     newSize: {x: 1.97, y: 2.62}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -128,9 +128,13 @@ MonoBehaviour:
   currPos: {x: 0, y: 0, z: 0}
   cardClicked: 0
   originalCardSize: {x: 0, y: 0, z: 0}
+  spawnPointOriginalPosition: {x: 0, y: 0, z: 0}
   clickInventory:
     serializedVersion: 2
     m_Bits: 64
+  clickDeckSlot:
+    serializedVersion: 2
+    m_Bits: 0
   itemType: Gloves
   inspectionCardPrefab: {fileID: 2220332161043690128, guid: 2ea71c9aa9bc29441984281b38423b00, type: 3}
   itemEquipped: 0
@@ -150,6 +154,9 @@ MonoBehaviour:
   StickyAmount: 0
   abilityOnEquip: 0
   abilityTriggered: 0
+  worldCanvas: {fileID: 0}
+  rewardScreenExtras: {fileID: 0}
+  isReward: 0
 --- !u!1 &3592873658812993192
 GameObject:
   m_ObjectHideFlags: 0

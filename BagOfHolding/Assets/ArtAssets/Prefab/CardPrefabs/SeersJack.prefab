@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5293049018294620831}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.26, y: 2.78, z: 0}
+  m_LocalPosition: {x: 0.02, y: 3.02, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 1}
   m_Children: []
   m_Father: {fileID: 4027292880198744711}
@@ -58,7 +58,7 @@ Transform:
   m_GameObject: {fileID: 8639537216604659236}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.484, y: -2.7538, z: 0}
-  m_LocalScale: {x: 0.16902016, y: 0.17758393, z: 1}
+  m_LocalScale: {x: 0.15093501, y: 0.17628756, z: 1}
   m_Children:
   - {fileID: 391118650845665070}
   m_Father: {fileID: 0}
@@ -104,7 +104,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 4b350dffc55b7a24a83e65efe312e8c2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 845e114b531bcd14f85a14637b76aa7a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -128,18 +128,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.07144117, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5.62, y: 10.98}
+    oldSize: {x: 6.36, y: 11.02}
     newSize: {x: 1.97, y: 2.62}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5.62, y: 10.98}
+  m_Size: {x: 5.762882, y: 10.98}
   m_EdgeRadius: 0
 --- !u!114 &4497360815771731051
 MonoBehaviour:
@@ -158,9 +158,13 @@ MonoBehaviour:
   currPos: {x: 0, y: 0, z: 0}
   cardClicked: 0
   originalCardSize: {x: 0, y: 0, z: 0}
+  spawnPointOriginalPosition: {x: 0, y: 0, z: 0}
   clickInventory:
     serializedVersion: 2
     m_Bits: 64
+  clickDeckSlot:
+    serializedVersion: 2
+    m_Bits: 0
   itemType: Torso
   inspectionCardPrefab: {fileID: 7727744981942290958, guid: 47ccf9ac1542a5d43ba75eab0b4114bc, type: 3}
   itemEquipped: 0
@@ -176,3 +180,10 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   carryingWeight: 1
+  isSticky: 0
+  StickyAmount: 0
+  abilityOnEquip: 0
+  abilityTriggered: 0
+  worldCanvas: {fileID: 0}
+  rewardScreenExtras: {fileID: 0}
+  isReward: 0

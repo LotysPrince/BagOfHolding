@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1363198032291454244}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.88, y: 1.52, z: 0}
+  m_LocalPosition: {x: -4.38, y: 1.82, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 1}
   m_Children: []
   m_Father: {fileID: 7817242779207382332}
@@ -57,7 +57,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3204997477500244383}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.6727, y: 13.8272, z: 10.782727}
   m_LocalScale: {x: 0.20145181, y: 0.28883827, z: 1}
   m_Children:
@@ -105,7 +105,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d159e8457f57b1d4bbc32268422eaf07, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f5dfab1430b354e48822fcf0f3b396d2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -129,18 +129,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -1.7556779, y: 0}
+  m_Offset: {x: -2.0233142, y: -0.04977703}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 11.59, y: 5.69}
+    oldSize: {x: 12, y: 5.53}
     newSize: {x: 1.97, y: 2.62}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 8.078644, y: 5.69}
+  m_Size: {x: 8.6139145, y: 6.237548}
   m_EdgeRadius: 0
 --- !u!61 &4989140129765284234
 BoxCollider2D:
@@ -155,18 +155,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 3.8809736, y: -1.4822983}
+  m_Offset: {x: 3.809604, y: -1.7187388}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 11.59, y: 5.69}
+    oldSize: {x: 12, y: 5.53}
     newSize: {x: 1.97, y: 2.62}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 6.2305646, y: 2.725404}
+  m_Size: {x: 6.0878253, y: 2.999178}
   m_EdgeRadius: 0
 --- !u!114 &7347175015437421520
 MonoBehaviour:
@@ -185,9 +185,13 @@ MonoBehaviour:
   currPos: {x: 0, y: 0, z: 0}
   cardClicked: 0
   originalCardSize: {x: 0, y: 0, z: 0}
+  spawnPointOriginalPosition: {x: 0, y: 0, z: 0}
   clickInventory:
     serializedVersion: 2
     m_Bits: 64
+  clickDeckSlot:
+    serializedVersion: 2
+    m_Bits: 0
   itemType: Cape
   inspectionCardPrefab: {fileID: 2072698941231224068, guid: 58ab5e8c2e94dfc4399f116916a4832d, type: 3}
   itemEquipped: 0
@@ -207,3 +211,6 @@ MonoBehaviour:
   StickyAmount: 0
   abilityOnEquip: 0
   abilityTriggered: 0
+  worldCanvas: {fileID: 0}
+  rewardScreenExtras: {fileID: 0}
+  isReward: 0

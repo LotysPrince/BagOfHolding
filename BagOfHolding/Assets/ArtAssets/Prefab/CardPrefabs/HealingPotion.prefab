@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: fcb3715f63c587b48a00237ad99c4cf9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 41aa552194c710042b33f7a0be50f6eb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -102,7 +102,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4, y: 5.42}
+    oldSize: {x: 4.03, y: 5.48}
     newSize: {x: 1.97, y: 2.62}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -128,9 +128,13 @@ MonoBehaviour:
   currPos: {x: 0, y: 0, z: 0}
   cardClicked: 0
   originalCardSize: {x: 0, y: 0, z: 0}
+  spawnPointOriginalPosition: {x: 0, y: 0, z: 0}
   clickInventory:
     serializedVersion: 2
     m_Bits: 64
+  clickDeckSlot:
+    serializedVersion: 2
+    m_Bits: 0
   itemType: Potion
   inspectionCardPrefab: {fileID: 97283259363347404, guid: d35dda8a039e77c49b70522adc9220d1, type: 3}
   itemEquipped: 0
@@ -147,7 +151,12 @@ MonoBehaviour:
   - {fileID: 0}
   carryingWeight: 1
   isSticky: 0
+  StickyAmount: 0
   abilityOnEquip: 0
+  abilityTriggered: 0
+  worldCanvas: {fileID: 0}
+  rewardScreenExtras: {fileID: 0}
+  isReward: 0
 --- !u!1 &8541719748968931460
 GameObject:
   m_ObjectHideFlags: 0

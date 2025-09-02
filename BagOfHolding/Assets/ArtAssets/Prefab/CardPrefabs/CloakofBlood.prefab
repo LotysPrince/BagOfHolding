@@ -57,7 +57,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3869324699372080574}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.317, y: 13.3028, z: 10.782727}
   m_LocalScale: {x: 0.15211019, y: 0.23401615, z: 1}
   m_Children:
@@ -105,7 +105,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7afa2cfb37288294792c506cd85b6f12, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2dc8431d083013f47b5bd9b2041ffda2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -133,7 +133,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 11.31, y: 11.64}
+    oldSize: {x: 11.83, y: 11.56}
     newSize: {x: 1.97, y: 2.62}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -155,18 +155,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 3.1201868, y: -3.4883626}
+  m_Offset: {x: 3.1201868, y: -3.7317765}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 11.31, y: 11.64}
+    oldSize: {x: 11.83, y: 11.56}
     newSize: {x: 1.97, y: 2.62}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5.069626, y: 4.663276}
+  m_Size: {x: 5.069626, y: 5.150104}
   m_EdgeRadius: 0
 --- !u!114 &8952736965885614065
 MonoBehaviour:
@@ -185,9 +185,13 @@ MonoBehaviour:
   currPos: {x: 0, y: 0, z: 0}
   cardClicked: 0
   originalCardSize: {x: 0, y: 0, z: 0}
+  spawnPointOriginalPosition: {x: 0, y: 0, z: 0}
   clickInventory:
     serializedVersion: 2
     m_Bits: 64
+  clickDeckSlot:
+    serializedVersion: 2
+    m_Bits: 0
   itemType: Cape
   inspectionCardPrefab: {fileID: 3713465211002642668, guid: 3740831e68431aa4a855e039ada2a3b7, type: 3}
   itemEquipped: 0
@@ -204,5 +208,9 @@ MonoBehaviour:
   - {fileID: 0}
   carryingWeight: 1
   isSticky: 0
+  StickyAmount: 0
   abilityOnEquip: 0
   abilityTriggered: 0
+  worldCanvas: {fileID: 0}
+  rewardScreenExtras: {fileID: 0}
+  isReward: 0

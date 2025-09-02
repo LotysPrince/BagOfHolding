@@ -104,7 +104,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 52b6a003f02674847879b7de43cd9524, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ce9b3f0e46c82be4d8944d4d71221c5f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -132,7 +132,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 6, y: 6.4}
+    oldSize: {x: 5.73, y: 5.8}
     newSize: {x: 1.97, y: 2.62}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -158,9 +158,13 @@ MonoBehaviour:
   currPos: {x: 0, y: 0, z: 0}
   cardClicked: 0
   originalCardSize: {x: 0, y: 0, z: 0}
+  spawnPointOriginalPosition: {x: 0, y: 0, z: 0}
   clickInventory:
     serializedVersion: 2
     m_Bits: 64
+  clickDeckSlot:
+    serializedVersion: 2
+    m_Bits: 0
   itemType: Helmet
   inspectionCardPrefab: {fileID: 51198203062769872, guid: fe743c9e39bc3d046b72a16fc2a2b672, type: 3}
   itemEquipped: 0
@@ -176,3 +180,10 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   carryingWeight: 1
+  isSticky: 0
+  StickyAmount: 0
+  abilityOnEquip: 0
+  abilityTriggered: 0
+  worldCanvas: {fileID: 0}
+  rewardScreenExtras: {fileID: 0}
+  isReward: 0

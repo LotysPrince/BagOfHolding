@@ -111,6 +111,9 @@ public class EnemyManager : MonoBehaviour
     public bool attackEffectDone;
 
 
+    public bool spiderShroudEffectActive;
+    public bool mirrorPlateEffectActive;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -306,6 +309,12 @@ public class EnemyManager : MonoBehaviour
             damagedByTrap = true;
             damageHits.Add(turnManager.trapDamage);
             enemyTakesDamage();
+        }
+        if (spiderShroudEffectActive == true)
+        {
+            isStunned = true;
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
+
         }
     }
 
@@ -855,12 +864,26 @@ public class EnemyManager : MonoBehaviour
                     else if (currentBehavior == "Bleed" && !attackEffectDone)
                     {
 
-                        playerManager.playerBleedControl(2);
+                        if (!mirrorPlateEffectActive)
+                        {
+                            playerManager.playerBleedControl(2);
+                        }
+                        else
+                        {
+                            setBleed(2);
+                        }
                     }
                     else if (currentBehavior == "Poison" && !attackEffectDone)
                     {
 
-                        playerManager.playerPoisonControl(2);
+                        if (!mirrorPlateEffectActive)
+                        {
+                            playerManager.playerPoisonControl(2);
+                        }
+                        else
+                        {
+                            setPoison(2);
+                        }
                     }
                     else if (currentBehavior == "Thief" && !attackEffectDone)
                     {
@@ -900,13 +923,27 @@ public class EnemyManager : MonoBehaviour
                     {
 
                         enemyDealsDamage();
-                        playerManager.playerPoisonControl(Random.Range(1, 3));
+                        if (!mirrorPlateEffectActive)
+                        {
+                            playerManager.playerPoisonControl(Random.Range(1, 3));
+                        }
+                        else
+                        {
+                            setPoison(Random.Range(1, 3));
+                        }
                     }
                     else if (currentBehavior == "BleedAttack" && !attackEffectDone)
                     {
 
                         enemyDealsDamage();
-                        playerManager.playerBleedControl(1 * numAttacks);
+                        if (!mirrorPlateEffectActive)
+                        {
+                            playerManager.playerBleedControl(1 * numAttacks);
+                        }
+                        else
+                        {
+                            setBleed(1 * numAttacks);
+                        }
                     }
 
                 }

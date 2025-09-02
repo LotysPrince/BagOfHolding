@@ -667,7 +667,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: fb8fedac9bec9ac46bb38a3ad48d784c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4230308172608394fb673a0dc2c040c8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1501,6 +1501,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stopFollowMouse: 0
   isStatDisplay: 0
+  bleedPopup: {fileID: 0}
+  poisonPopup: {fileID: 0}
+  critPopup: {fileID: 0}
+  dodgePopup: {fileID: 0}
+  hemmorhagePopup: {fileID: 0}
+  rejuvenatePopup: {fileID: 0}
+  slickPopup: {fileID: 0}
+  stickyPopup: {fileID: 0}
+  triggerBleedPopup: 0
+  triggerPoisonPopup: 0
+  triggerCritPopup: 0
+  triggerDodgePopup: 0
+  triggerHemmorhagePopup: 0
+  triggerRejuvenatePopup: 0
+  triggerSlickPopup: 0
+  triggerStickyPopup: 0
 --- !u!1 &6909824082283628338
 GameObject:
   m_ObjectHideFlags: 0

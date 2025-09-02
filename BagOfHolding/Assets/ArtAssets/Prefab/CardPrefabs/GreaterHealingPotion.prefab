@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 6724415372925984198}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.5162, y: -2.7467, z: 0}
-  m_LocalScale: {x: 0.24582516, y: 0.2922452, z: 1}
+  m_LocalScale: {x: 0.2462213, y: 0.2897369, z: 1}
   m_Children:
   - {fileID: 3447972958637561036}
   m_Father: {fileID: 0}
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0ba993cfbca8c3e4f893effa274d40eb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b4884d0e0f767e242a6f5eefd6372412, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -102,7 +102,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.71, y: 6.58}
+    oldSize: {x: 3.68, y: 6.53}
     newSize: {x: 1.97, y: 2.62}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -128,9 +128,13 @@ MonoBehaviour:
   currPos: {x: 0, y: 0, z: 0}
   cardClicked: 0
   originalCardSize: {x: 0, y: 0, z: 0}
+  spawnPointOriginalPosition: {x: 0, y: 0, z: 0}
   clickInventory:
     serializedVersion: 2
     m_Bits: 64
+  clickDeckSlot:
+    serializedVersion: 2
+    m_Bits: 0
   itemType: Potion
   inspectionCardPrefab: {fileID: 3644434706171905492, guid: 3b9347322cfb1cc4d9bd2c099639e80f, type: 3}
   itemEquipped: 0
@@ -147,7 +151,12 @@ MonoBehaviour:
   - {fileID: 0}
   carryingWeight: 1
   isSticky: 0
+  StickyAmount: 0
   abilityOnEquip: 0
+  abilityTriggered: 0
+  worldCanvas: {fileID: 0}
+  rewardScreenExtras: {fileID: 0}
+  isReward: 0
 --- !u!1 &7187904974162973053
 GameObject:
   m_ObjectHideFlags: 0

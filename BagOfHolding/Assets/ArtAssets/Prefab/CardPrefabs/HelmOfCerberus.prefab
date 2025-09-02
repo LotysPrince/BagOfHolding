@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 801973173470531143}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.72, y: 0, z: 0}
+  m_LocalPosition: {x: -5.48, y: 2.9, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 1}
   m_Children: []
   m_Father: {fileID: 8482054748143380063}
@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 1697907970497203179}
   - component: {fileID: 4704620206419858820}
   - component: {fileID: 8952113200432748723}
+  - component: {fileID: 2240570805552950287}
   m_Layer: 0
   m_Name: HelmOfCerberus
   m_TagString: Untagged
@@ -58,7 +59,7 @@ Transform:
   m_GameObject: {fileID: 3868683343625716476}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.5159, y: -4.243, z: 0}
-  m_LocalScale: {x: 0.13089584, y: 0.101763144, z: 1}
+  m_LocalScale: {x: 0.17997058, y: 0.15842949, z: 1}
   m_Children:
   - {fileID: 5131875985156426742}
   m_Father: {fileID: 0}
@@ -104,7 +105,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 8ff97c850fed83044ad40f72971d58df, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 286ace3395a29ef448bfa35782099990, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -128,18 +129,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.13793969, y: 2.6965952}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 14.35, y: 9.48}
+    oldSize: {x: 13.23, y: 11.26}
     newSize: {x: 1.97, y: 2.62}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 14.35, y: 9.48}
+  m_Size: {x: 15.352337, y: 5.9564486}
   m_EdgeRadius: 0
 --- !u!114 &8952113200432748723
 MonoBehaviour:
@@ -158,13 +159,17 @@ MonoBehaviour:
   currPos: {x: 6.4375, y: -4.75, z: -2.2999997}
   cardClicked: 0
   originalCardSize: {x: 0, y: 0, z: 0}
+  spawnPointOriginalPosition: {x: 0, y: 0, z: 0}
   clickInventory:
     serializedVersion: 2
     m_Bits: 64
+  clickDeckSlot:
+    serializedVersion: 2
+    m_Bits: 0
   itemType: Helmet
   inspectionCardPrefab: {fileID: 5585794765664284238, guid: 693459c7a1e8fe64eaad297a694132f9, type: 3}
   itemEquipped: 0
-  slotsToEquipStrings: 010100000000000000
+  slotsToEquipStrings: 010101000100000000
   equippedSlots:
   - {fileID: 0}
   - {fileID: 0}
@@ -176,3 +181,36 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   carryingWeight: 2
+  isSticky: 0
+  StickyAmount: 0
+  abilityOnEquip: 0
+  abilityTriggered: 0
+  worldCanvas: {fileID: 0}
+  rewardScreenExtras: {fileID: 0}
+  isReward: 0
+--- !u!61 &2240570805552950287
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3868683343625716476}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.041465044, y: -2.804461}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 13.23, y: 11.26}
+    newSize: {x: 1.97, y: 2.62}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 4.9315085, y: 7.0350895}
+  m_EdgeRadius: 0

@@ -128,9 +128,13 @@ MonoBehaviour:
   currPos: {x: 0, y: 0, z: 0}
   cardClicked: 0
   originalCardSize: {x: 0, y: 0, z: 0}
+  spawnPointOriginalPosition: {x: 0, y: 0, z: 0}
   clickInventory:
     serializedVersion: 2
     m_Bits: 64
+  clickDeckSlot:
+    serializedVersion: 2
+    m_Bits: 0
   itemType: Weapon
   inspectionCardPrefab: {fileID: 4023087584226542447, guid: 21d8091f6354e1848b75a2e8854874a4, type: 3}
   itemEquipped: 0
@@ -147,7 +151,12 @@ MonoBehaviour:
   - {fileID: 0}
   carryingWeight: 1
   isSticky: 0
+  StickyAmount: 0
   abilityOnEquip: 0
+  abilityTriggered: 0
+  worldCanvas: {fileID: 0}
+  rewardScreenExtras: {fileID: 0}
+  isReward: 0
 --- !u!1 &7628835926367726811
 GameObject:
   m_ObjectHideFlags: 0

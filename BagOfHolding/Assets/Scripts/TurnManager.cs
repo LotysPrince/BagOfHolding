@@ -72,7 +72,8 @@ public class TurnManager : MonoBehaviour
     private bool CloakofBloodActive;
     private bool PinealEyeActive;
     public bool NecromancerAmuletActive;
-    
+    public bool graspingRingActive;
+    public bool jesterTightsActive;
 
     
     // Start is called before the first frame update
@@ -425,7 +426,7 @@ public class TurnManager : MonoBehaviour
         }
         if (card.name == "HiddenDagger")
         {
-            damage += 100;
+            damage += 2;
         }
         if (card.name == "Spear")
         {
@@ -458,8 +459,8 @@ public class TurnManager : MonoBehaviour
             damage += 5;
             foreach (GameObject enemy in spawnedEnemies)
             {
-                enemy.GetComponent<EnemyManager>().setBleed(100);
-                enemy.GetComponent<EnemyManager>().setPoison(100);
+                enemy.GetComponent<EnemyManager>().setBleed(2);
+                enemy.GetComponent<EnemyManager>().setPoison(2);
             }
         }
         if (card.name == "AssassinCowl")
@@ -594,6 +595,59 @@ public class TurnManager : MonoBehaviour
         {
             NecromancerAmuletActive = true;
         }
+        if (card.name == "spiderShroud")
+        {
+            foreach (var enemy in spawnedEnemies)
+            {
+                enemy.GetComponent<EnemyManager>().spiderShroudEffectActive = true;
+            }
+        }
+        if (card.name == "bladedBoots")
+        {
+            numAttacks += 1;
+        }
+        if (card.name == "mirrorPlate")
+        {
+            playerManager.playerArmor += 5;
+            foreach (var enemy in spawnedEnemies)
+            {
+                enemy.GetComponent<EnemyManager>().mirrorPlateEffectActive = true;
+            }
+        }
+        if (card.name == "assassinVambrace")
+        {
+            damage += 2;
+            foreach(var enemy in targettedEnemies)
+            {
+                if (enemy.GetComponent<EnemyManager>().currentHealth == enemy.GetComponent<EnemyManager>().maxHealth)
+                {
+                    currentCritical = 2;
+                    criticalAttacks += 1;
+                }
+            }
+        }
+        if (card.name == "bladedGauntlets")
+        {
+            damage += 2;
+            inflictBleed += 3;
+        }
+        if (card.name == "captainsSallet")
+        {
+            playerManager.playerArmor += 5;
+        }
+        if (card.name == "graspingRing")
+        {
+            graspingRingActive = true;
+        }
+        if (card.name == "birchBracers")
+        {
+            numAttacks += 1;
+            playerManager.playerDodge += 2;
+        }
+        if (card.name == "jesterTights")
+        {
+            jesterTightsActive = true;
+        }
 
     }
 
@@ -602,6 +656,10 @@ public class TurnManager : MonoBehaviour
         if (card.name == "GravediggersGloves")
         {
             deckManager.drawCardsFromGraveyard(2);
+        }
+        if (card.name == "captainsSallet")
+        {
+            deckManager.drawNewCards(2);
         }
     }
 
@@ -672,7 +730,18 @@ public class TurnManager : MonoBehaviour
                         }
                     }
                     //Debug.Log("This shit is adding: " + Mathf.RoundToInt(damage * currentCritical * damageMult));
-
+                    if (jesterTightsActive)
+                    {
+                        var multiplier = Random.Range(0, 2);
+                        if (multiplier == 0)
+                        {
+                            damageMult = 0;
+                        }
+                        else
+                        {
+                            damageMult += 2;
+                        }
+                    }
                     minDamage = Mathf.RoundToInt((damage * currentCritical * damageMult) / damageDivider);
                     Debug.Log("Damage: " + damage);
                     Debug.Log("CurrentCritical: " + currentCritical);
@@ -747,7 +816,18 @@ public class TurnManager : MonoBehaviour
                     currentCritical = 1;
                 }
             }
-
+            if (graspingRingActive)
+            {
+                var vampHealing = 0;
+                foreach (var enemy in targettedEnemies)
+                {
+                    if (enemy.GetComponent<EnemyManager>().currBleed != 0)
+                    {
+                        vampHealing += enemy.GetComponent<EnemyManager>().currBleed;
+                    }
+                }
+                playerManager.playerHealsDamage(vampHealing);
+            }
             AssassinCowlActive = false;
         }
         //if doing damage, attack the enemies
@@ -1093,7 +1173,7 @@ public class TurnManager : MonoBehaviour
                     enemy.GetComponent<EnemyManager>().setBleed(enemy.GetComponent<EnemyManager>().currHemmorhage);
                     enemy.GetComponent<EnemyManager>().setHemmorhage(-1);
                 }*/
-                if (!enemy.GetComponent<EnemyManager>().attackAnimationDone && enemy.GetComponent<EnemyManager>().tempClawMarkPNG != null)
+                if (!enemy.GetComponent<EnemyManager>().attackAnimationDone && enemy.GetComponent<EnemyManager>().tempClawMarkPNG != null )
                 {
                     allEnemiesDone = false;
                     continue;
@@ -1101,10 +1181,14 @@ public class TurnManager : MonoBehaviour
 
                 else if (enemy.GetComponent<EnemyManager>().attackAnimationDone || enemy.GetComponent<EnemyManager>().isStunned == true)
                 {
-                    enemy.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+                    if (enemy.GetComponent<EnemyManager>().spiderShroudEffectActive == false)
+                    {
+
+                        enemy.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+                    }
                     continue;
                 }
-                else
+                else if (enemy.GetComponent<EnemyManager>().isStunned == false)
                 {
                     enemyAttacking = true;
                     allEnemiesDone = false;
@@ -1157,7 +1241,14 @@ public class TurnManager : MonoBehaviour
         }
         foreach (var enemy in spawnedEnemies)
         {
-            enemy.GetComponent<EnemyManager>().isStunned = false;
+            if (enemy.GetComponent<SpriteRenderer>().color == new Color(1, 1, 1, 1))
+            {
+                enemy.GetComponent<EnemyManager>().isStunned = false;
+            }
+            //if (enemy.GetComponent<EnemyManager>().spiderShroudEffectActive)
+            //{
+            //    enemy.GetComponent<EnemyManager>().isStunned = false;
+            //}
         }
 
 
@@ -1171,9 +1262,21 @@ public class TurnManager : MonoBehaviour
         inflictPoison = 0;
         inflictHemmorhage = 0;
         enemiesHaveStatus = 0;
+        playerManager.playerArmor = 0;
+        foreach (var enemy in spawnedEnemies)
+        {
+            if (enemy.GetComponent<EnemyManager>().spiderShroudEffectActive == true)
+            {
+                enemy.GetComponent<EnemyManager>().spiderShroudEffectActive = false;
+
+            }
+            enemy.GetComponent<EnemyManager>().mirrorPlateEffectActive = false;
+        }
 
         PinealEyeActive = false;
         NecromancerAmuletActive = false;
+        graspingRingActive = false;
+        jesterTightsActive = false;
         //initiateEnemyTurnOnce = false;
         //attackIsFinished = false;
         //turnEnded = false;

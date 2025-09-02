@@ -103,6 +103,35 @@ public class DeckManager : MonoBehaviour
         pouchIconText.GetComponent<TextMeshProUGUI>().text = currentDeck.Count.ToString();
         graveyardIconText.GetComponent<TextMeshProUGUI>().text = currentGraveyard.Count.ToString();
     }
+
+    public void drawNewCards(int amount)
+    {
+        int drawnAmount = 0;
+        while (drawnAmount < amount)
+        {
+            var drawnCard = currentDeck[0];
+            currentDeck.Remove(drawnCard);
+            //if last card of deck is drawn, reshuffles a new one
+            if (currentDeck.Count == 0)
+            {
+                createDeckFromLibrary();
+                currentGraveyard.Clear();
+                //currentGraveyard.Clear();
+            }
+            //var cardObject = Instantiate(drawnCard, new Vector3(xCounter, -4.75f, zCounter), Quaternion.identity);
+            //xCounter += 9.25f / handSize;
+            //zCounter -= 0.1f;
+
+            currentHand.Add(drawnCard);
+            gridGenerator.addNewItemToInventory(drawnCard);
+            drawnAmount += 1;
+
+        }
+
+        gridGenerator.currentInventory = new List<GameObject>(currentHand);
+        pouchIconText.GetComponent<TextMeshProUGUI>().text = currentDeck.Count.ToString();
+        graveyardIconText.GetComponent<TextMeshProUGUI>().text = currentGraveyard.Count.ToString();
+    }
     public void drawCardsFromGraveyard(int drawAmount)
     {
         int cardsDrawn = 0;
