@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TreeEditor;
 using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
@@ -61,6 +62,11 @@ public class MapGenerator : MonoBehaviour
     public float spawnRoomPosIncrement;
 
     public GameObject[,] spawnedRoomsArray = new GameObject[9,5];
+
+    public GameObject bushDoorBorderObj;
+    public GameObject bushWallBorderObj;
+    public GameObject bigTreeBorderObj;
+    public GameObject smallTreeBorderObj;
 
     /*GameObject[] list1 = new GameObject[9] { null, null, null, null, null, null, null, null, null};
     GameObject[] list2 = new GameObject[9] { null, null, null, null, null, null, null, null, null};
@@ -148,6 +154,7 @@ public class MapGenerator : MonoBehaviour
         else if (currentRoomAmount >= minRoomAmount && generationDone)
         {
             generationDone = false;
+            spawnTrees();
             spawnMapIcons();
             mapNumber += 1;
             if (mapNumber == 3)
@@ -167,6 +174,70 @@ public class MapGenerator : MonoBehaviour
          //   randomizeMap();
           //  createOnce = true;
         //}
+    }
+
+    private void spawnTrees()
+    {
+        foreach (var room in spawnedRooms)
+        {
+            if (room.GetComponent<MapSegmentControl>().topExit)
+            {
+                GameObject newBorder = Instantiate(bushDoorBorderObj, room.transform.position + new Vector3(0, .5f, -.1f), Quaternion.identity);
+            }
+            else
+            {
+                GameObject newBorder = Instantiate(bushWallBorderObj, room.transform.position + new Vector3(0, .5f, -.1f), Quaternion.Euler(new Vector3(0, 0, -90)));
+            }
+            if (room.GetComponent<MapSegmentControl>().leftExit)
+            {
+                GameObject newBorder = Instantiate(bushDoorBorderObj, room.transform.position + new Vector3(-.5f, 0, -.1f), Quaternion.Euler(new Vector3(0,0,90)));
+            }
+            else
+            {
+                GameObject newBorder = Instantiate(bushWallBorderObj, room.transform.position + new Vector3(-.5f, 0, -.1f), Quaternion.identity);
+            }
+            if (room.GetComponent<MapSegmentControl>().bottomExit)
+            {
+                GameObject newBorder = Instantiate(bushDoorBorderObj, room.transform.position + new Vector3(0, -.5f, -.1f), Quaternion.Euler(new Vector3(0, 0, 180)));
+            }
+            else
+            {
+                GameObject newBorder = Instantiate(bushWallBorderObj, room.transform.position + new Vector3(0, -.5f, -.1f), Quaternion.Euler(new Vector3(0, 0, 90)));
+            }
+            if (room.GetComponent<MapSegmentControl>().rightExit)
+            {
+                GameObject newBorder = Instantiate(bushDoorBorderObj, room.transform.position + new Vector3(.5f, 0, -.1f), Quaternion.Euler(new Vector3(0, 0, -90)));
+            }
+            else
+            {
+                GameObject newBorder = Instantiate(bushWallBorderObj, room.transform.position + new Vector3(.5f, 0, -.1f), Quaternion.Euler(new Vector3(0, 0, 180)));
+            }
+            //creates trees randomly
+            //int treeRandom = 1;
+            
+            int treeRandom = Random.Range(0, 2);
+            if (treeRandom == 1)
+            {
+                GameObject newBorder = Instantiate(bigTreeBorderObj, room.transform.position + new Vector3(.4f, .4f, -.1f), Quaternion.identity);
+
+            }
+            treeRandom = Random.Range(0, 2);
+            if (treeRandom == 1)
+            {
+                GameObject newBorder = Instantiate(bigTreeBorderObj, room.transform.position + new Vector3(-.4f, .4f, -.1f), Quaternion.Euler(new Vector3(0,0, 90)));
+            }
+            treeRandom = Random.Range(0, 2);
+            if (treeRandom == 1)
+            {
+                GameObject newBorder = Instantiate(bigTreeBorderObj, room.transform.position + new Vector3(-.4f, -.4f, -.1f), Quaternion.Euler(new Vector3(0, 0, 180)));
+            }
+            treeRandom = Random.Range(0, 2);
+            if (treeRandom == 1)
+            {
+                GameObject newBorder = Instantiate(bigTreeBorderObj, room.transform.position + new Vector3(.4f, -.4f, -.1f), Quaternion.Euler(new Vector3(0, 0, -90)));
+            }
+
+        }
     }
 
     private void randomizeMap()

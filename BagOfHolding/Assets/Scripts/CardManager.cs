@@ -205,7 +205,7 @@ public class CardManager : MonoBehaviour
             var inventorySlots = inventoryManager.InventoryItems;
             foreach (var slot in inventorySlots)
             {
-                if (slot.Key.transform.tag == itemType)
+                if ((slot.Key != null && slot.Key.transform.tag == itemType) || itemType == "Anywhere")
                 {
                     slot.Key.GetComponent<SlotHighlighting>().startAnimation();
                 }
@@ -276,7 +276,7 @@ public class CardManager : MonoBehaviour
             var inventorySlots = inventoryManager.InventoryItems;
             foreach (var slot in inventorySlots)
             {
-                if (slot.Key.transform.tag == itemType)
+                if ((slot.Key != null && slot.Key.transform.tag == itemType) || itemType == "Anywhere")
                 {
                     slot.Key.GetComponent<SlotHighlighting>().StopAnimation();
                 }

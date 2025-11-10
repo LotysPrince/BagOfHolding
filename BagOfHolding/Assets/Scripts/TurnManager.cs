@@ -175,6 +175,35 @@ public class TurnManager : MonoBehaviour
         spawnedEnemies[0].transform.GetChild(0).gameObject.SetActive(true);
     }
 
+    public void spawnSpecificEnemies(GameObject[] enemiesToSpawn) 
+    {
+        var xCounter = 1f;
+        var yCounter = 2f;
+
+        for (int i = 0; i < enemiesToSpawn.Length; i++)
+        {
+            GameObject spawnedEnemy = null;
+
+            spawnedEnemy = Instantiate(enemiesToSpawn[i], new Vector3(xCounter, yCounter - 1, -1), Quaternion.identity);
+
+            spawnedEnemies.Add(spawnedEnemy);
+            
+            xCounter += 3;
+            if (yCounter == 2f)
+            {
+                yCounter = 1.5f;
+            }
+            else if (yCounter == 1.5f)
+            {
+                yCounter = 2f;
+            }
+        }
+
+        targettedEnemies.Add(spawnedEnemies[0]);
+        spawnedEnemies[0].GetComponent<EnemyManager>().isTargetted = true;
+        spawnedEnemies[0].transform.GetChild(0).gameObject.SetActive(true);
+    }
+
     public void spawnNewEnemy(GameObject enemyToSpawn)
     {
         var position1filled = false;
@@ -284,6 +313,11 @@ public class TurnManager : MonoBehaviour
                 inventoryManager.InventoryItems.Add(helm2, null);
             }*/
         }
+        if (card.name == "HiddenDagger")
+        {
+            inventoryManager.addInventorySlot(1, "Weapon");
+            //removeInventorySlot(1, 
+        }
         if (card.name == "GeminiNecklace")
         {
             inventoryManager.GeminiNecklaceActivated = true;
@@ -357,6 +391,11 @@ public class TurnManager : MonoBehaviour
             //helm2 = Instantiate(inventoryManager.helmPrefab, new Vector3(inventoryManager.Helmet.transform.position.x - 1.5f, inventoryManager.Helmet.transform.position.y, inventoryManager.Helmet.transform.position.z), Quaternion.identity);
             //inventoryManager.InventoryItems.Add(helm1, null);
             //inventoryManager.InventoryItems.Add(helm2, null);
+        }
+        if (card.name == "HiddenDagger")
+        {
+            inventoryManager.removeInventorySlot(1, "Weapon");
+            //removeInventorySlot(1, 
         }
         if (card.name == "Spear")
         {

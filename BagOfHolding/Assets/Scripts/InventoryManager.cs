@@ -29,6 +29,15 @@ public class InventoryManager : MonoBehaviour
     private bool displayingExtraSlots;
     public GameObject InventoryParent;
 
+    public GameObject weaponPrefab;
+    private int weaponSlotAmount = 1;
+    public List<GameObject> weaponSlots = new List<GameObject>();
+
+    public GameObject glovesPrefab;
+    private int glovesSlotAmount = 1;
+    public List<GameObject> gloveSlots = new List<GameObject>();
+  
+
     
     public LayerMask IgnoreCards;
     public LayerMask inventorySlotsMask;
@@ -48,6 +57,7 @@ public class InventoryManager : MonoBehaviour
     public bool SlimeKingGlovesActivated;
 
     public List<GameObject> extraEquippedItems = new List<GameObject>();
+    
 
     // Start is called before the first frame update
     void Start()
@@ -67,6 +77,7 @@ public class InventoryManager : MonoBehaviour
         carryingCapacity = 5;
 
         helmSlots.Add(Helmet);
+        weaponSlots.Add(Weapon);
 
         
     }
@@ -412,6 +423,8 @@ public class InventoryManager : MonoBehaviour
             var oldHelmAmount = helmSlotAmount;
             helmSlotAmount += amount;
             var tempHelmPrefab = helmPrefab;
+            float helmScaleAmt = 1.2f;
+
 
             for (int i = 1; i < helmSlotAmount; i++)
             {
@@ -440,16 +453,101 @@ public class InventoryManager : MonoBehaviour
             }
             if (helmSlotAmount == 2)
             {
-                helmSlots[0].transform.position = new Vector3(-5f, 3.03f, 0);
+                //helmSlots[0].transform.position = new Vector3(-5f, 3.03f, 0);
                 helmSlots[1].transform.position = new Vector3(helmSlots[0].transform.position.x + 1.56f, helmSlots[0].transform.position.y, 0);
             }
             else if (helmSlotAmount == 3)
             {
-                helmSlots[0].transform.position = new Vector3(-4.36f, 3.03f, 0);
-                helmSlots[1].transform.position = new Vector3(-6f, 3.03f, 0);
-                helmSlots[2].transform.position = new Vector3(-2.72f, 3.03f, 0); 
+                //helmSlots[0].transform.position = new Vector3(-4.36f, 3.03f, 0);
+                helmSlots[0].transform.localScale = new Vector3(tempHelmPrefab.transform.localScale.x / helmScaleAmt, tempHelmPrefab.transform.localScale.y / helmScaleAmt, 1);
+
+                helmSlots[1].transform.position = new Vector3(helmSlots[0].transform.position.x - 1f, helmSlots[0].transform.position.y + 1f, helmSlots[0].transform.position.z);
+                helmSlots[1].transform.localScale = new Vector3(tempHelmPrefab.transform.localScale.x / helmScaleAmt, tempHelmPrefab.transform.localScale.y / helmScaleAmt, 1);
+
+                helmSlots[2].transform.position = new Vector3(helmSlots[0].transform.position.x + 1f, helmSlots[0].transform.position.y + 1f, helmSlots[0].transform.position.z);
+                helmSlots[2].transform.localScale = new Vector3(tempHelmPrefab.transform.localScale.x / helmScaleAmt, tempHelmPrefab.transform.localScale.y / helmScaleAmt, 1);
+
             }
-            InventoryItems[helmSlots[0]].GetComponent<CardManager>().currPos = new Vector3(helmSlots[0].transform.position.x, helmSlots[0].transform.position.y, helmSlots[0].transform.position.z - 5f);
+            for (int i = 0; i < helmSlots.Count; i++)
+            {
+                if (InventoryItems[helmSlots[i]] != null)
+                {
+                    InventoryItems[helmSlots[i]].GetComponent<CardManager>().currPos = new Vector3(helmSlots[i].transform.position.x, helmSlots[i].transform.position.y, helmSlots[i].transform.position.z - 5f);
+                }
+            }
+
+            //helmSlots[0]].GetComponent<CardManager>().currPos = new Vector3(helmSlots[0].transform.position.x, helmSlots[0].transform.position.y, helmSlots[0].transform.position.z - 5f);
+
+
+
+
+        }
+        if (slotType == "Weapon" && !dontUnequip)
+        {
+            var oldWeaponAmount = weaponSlotAmount;
+            weaponSlotAmount += amount;
+            var tempWeaponPrefab = weaponPrefab;
+            float weaponScaleAmt = 1.2f;
+
+
+            for (int i = 1; i < weaponSlotAmount; i++)
+            {
+                var newWeaponSlot = Instantiate(tempWeaponPrefab, new Vector3(Weapon.transform.position.x, Weapon.transform.position.y, Weapon.transform.position.z), Quaternion.identity);
+                newWeaponSlot.name = "Weapon";
+                newWeaponSlot.tag = "Weapon";
+                newWeaponSlot.transform.SetParent(InventoryParent.transform);
+                weaponSlots.Add(newWeaponSlot);
+                InventoryItems.Add(newWeaponSlot, null);
+                /*if (i == 2 && i > oldHelmAmount)
+                {
+                    //tempHelmPrefab.transform.GetComponent<SpriteRenderer>().color = new Color(.6f, .6f, .6f, 1);
+                    var newHelmSlot = Instantiate(tempHelmPrefab, new Vector3(Helmet.transform.position.x, Helmet.transform.position.y, Helmet.transform.position.z), Quaternion.identity);
+                    newHelmSlot.name = "Helmet";
+                    helmSlots.Add(newHelmSlot);
+                    InventoryItems.Add(newHelmSlot, null);
+                }
+                if (i >= 3 && i > oldHelmAmount)
+                {
+                    //tempHelmPrefab.transform.GetComponent<SpriteRenderer>().color = new Color(.4f, .4f, .4f, 1);
+                    var newHelmSlot = Instantiate(tempHelmPrefab, new Vector3(Helmet.transform.position.x + .2f, Helmet.transform.position.y - .2f, Helmet.transform.position.z), Quaternion.identity);
+                    newHelmSlot.name = "Helmet";
+                    helmSlots.Add(newHelmSlot);
+                    InventoryItems.Add(newHelmSlot, null);
+                }*/
+            }
+            if (weaponSlotAmount == 2)
+            {
+                weaponScaleAmt = 1.2f;
+                //helmSlots[0].transform.position = new Vector3(-5f, 3.03f, 0);
+                weaponSlots[0].transform.localScale = new Vector3(tempWeaponPrefab.transform.localScale.x / weaponScaleAmt, tempWeaponPrefab.transform.localScale.y / weaponScaleAmt, 1);
+
+                weaponSlots[1].transform.position = new Vector3(weaponSlots[0].transform.position.x + .5f, weaponSlots[0].transform.position.y + .5f, 0);
+                weaponSlots[1].transform.localScale = new Vector3(tempWeaponPrefab.transform.localScale.x / weaponScaleAmt, tempWeaponPrefab.transform.localScale.y / weaponScaleAmt, 1);
+
+            }
+            else if (weaponSlotAmount == 3)
+            {
+                weaponScaleAmt = 1.5f;
+                //helmSlots[0].transform.position = new Vector3(-4.36f, 3.03f, 0);
+                weaponSlots[0].transform.localScale = new Vector3(tempWeaponPrefab.transform.localScale.x / weaponScaleAmt, tempWeaponPrefab.transform.localScale.y / weaponScaleAmt, 1);
+
+                weaponSlots[1].transform.position = new Vector3(weaponSlots[0].transform.position.x + 1f, weaponSlots[0].transform.position.y + 1f, weaponSlots[0].transform.position.z);
+                weaponSlots[1].transform.localScale = new Vector3(tempWeaponPrefab.transform.localScale.x / weaponScaleAmt, tempWeaponPrefab.transform.localScale.y / weaponScaleAmt, 1);
+
+                weaponSlots[2].transform.position = new Vector3(weaponSlots[0].transform.position.x + 1f, weaponSlots[0].transform.position.y - 1f, weaponSlots[0].transform.position.z);
+                weaponSlots[2].transform.localScale = new Vector3(tempWeaponPrefab.transform.localScale.x / weaponScaleAmt, tempWeaponPrefab.transform.localScale.y / weaponScaleAmt, 1);
+
+            }
+            for (int i = 0; i < weaponSlots.Count; i++)
+            {
+                if (InventoryItems[weaponSlots[i]] != null)
+                {
+                    InventoryItems[weaponSlots[i]].GetComponent<CardManager>().currPos = new Vector3(weaponSlots[i].transform.position.x, weaponSlots[i].transform.position.y, weaponSlots[i].transform.position.z - 5f);
+                    InventoryItems[weaponSlots[i]].transform.localScale = new Vector3(InventoryItems[weaponSlots[i]].transform.localScale.x / weaponScaleAmt, InventoryItems[weaponSlots[i]].transform.localScale.y / weaponScaleAmt, 1);
+                }
+            }
+
+            //helmSlots[0]].GetComponent<CardManager>().currPos = new Vector3(helmSlots[0].transform.position.x, helmSlots[0].transform.position.y, helmSlots[0].transform.position.z - 5f);
 
 
 
@@ -485,25 +583,34 @@ public class InventoryManager : MonoBehaviour
 
                 }
             }
-            /*for (int i = 1; i <= helmSlotAmount; i++)
+
+        }
+        if (slotType == "Weapon")
+        {
+            var oldWeaponAmount = weaponSlotAmount;
+            weaponSlotAmount -= amount;
+            //var tempHelmPrefab = helmPrefab;
+
+            //if the slot corresponding to the last helm slot is empty, just removes it and deletes it
+            for (int i = 0; i < amount; i++)
             {
-                if (i == 2 && i > oldHelmAmount)
+                var lastWeaponSlot = weaponSlots[weaponSlots.Count - 1];
+                if (InventoryItems[lastWeaponSlot] == null)
                 {
-                    tempHelmPrefab.transform.GetComponent<SpriteRenderer>().color = new Color(.6f, .6f, .6f, 1);
-                    var newHelmSlot = Instantiate(tempHelmPrefab, new Vector3(Helmet.transform.position.x + .1f, Helmet.transform.position.y - .1f, Helmet.transform.position.z + .1f), Quaternion.identity);
-                    newHelmSlot.name = "Helmet";
-                    helmSlots.Add(newHelmSlot);
-                    InventoryItems.Add(newHelmSlot, null);
+                    InventoryItems.Remove(lastWeaponSlot);
+                    weaponSlots.Remove(lastWeaponSlot);
+                    Destroy(lastWeaponSlot);
                 }
-                if (i >= 3 && i > oldHelmAmount)
+                else if (InventoryItems[lastWeaponSlot] != null)
                 {
-                    tempHelmPrefab.transform.GetComponent<SpriteRenderer>().color = new Color(.4f, .4f, .4f, 1);
-                    var newHelmSlot = Instantiate(tempHelmPrefab, new Vector3(Helmet.transform.position.x + .2f, Helmet.transform.position.y - .2f, Helmet.transform.position.z + .2f), Quaternion.identity);
-                    newHelmSlot.name = "Helmet";
-                    helmSlots.Add(newHelmSlot);
-                    InventoryItems.Add(newHelmSlot, null);
+                    unsetInventory(InventoryItems[lastWeaponSlot]);
+                    InventoryItems.Remove(lastWeaponSlot);
+                    weaponSlots.Remove(lastWeaponSlot);
+                    Destroy(lastWeaponSlot);
+
                 }
-            }*/
+            }
+
         }
     }
     private void displayHelmets()
