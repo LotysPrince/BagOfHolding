@@ -215,11 +215,11 @@ public class ShopGenerator : MonoBehaviour
     }*/
     }
 
-    public void GenerateShop()
+    public void GenerateShop(string price)
     {
         GameObject purchase = Instantiate(purchasePrefabObject, transform.position + new Vector3(-0.5f, 2.5f, 0), Quaternion.Euler(0, 0, 90), GameObject.FindGameObjectWithTag("WorldCanvas").transform);
         purchaseButton = purchase;
-        purchaseButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "5";
+        purchaseButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = price;
 
         var itemSpawning = shopStockPool[Random.Range(0, shopStockPool.Count)];
         itemSpawning.GetComponent<CardManager>().inspectionCardPrefab.SetActive(false);
@@ -241,7 +241,7 @@ public class ShopGenerator : MonoBehaviour
         ///
         purchase = Instantiate(purchasePrefabObject, transform.position + new Vector3(-0.5f, 2.5f, 0), Quaternion.Euler(0, 0, 90), GameObject.FindGameObjectWithTag("WorldCanvas").transform);
         purchaseButton = purchase;
-        purchaseButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "5";
+        purchaseButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = price;
 
 
         itemSpawning = shopStockPool[Random.Range(0, shopStockPool.Count)];
@@ -268,7 +268,7 @@ public class ShopGenerator : MonoBehaviour
 
         purchase = Instantiate(purchasePrefabObject, transform.position + new Vector3(-0.5f, 2.5f, 0), Quaternion.Euler(0, 0, 90), GameObject.FindGameObjectWithTag("WorldCanvas").transform);
         purchaseButton = purchase;
-        purchaseButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "5";
+        purchaseButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = price;
 
 
         itemSpawning = shopStockPool[Random.Range(0, shopStockPool.Count)];
@@ -295,7 +295,7 @@ public class ShopGenerator : MonoBehaviour
 
         purchase = Instantiate(purchasePrefabObject, transform.position + new Vector3(-0.5f, 2.5f, 0), Quaternion.Euler(0, 0, 90), GameObject.FindGameObjectWithTag("WorldCanvas").transform);
         purchaseButton = purchase;
-        purchaseButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "5";
+        purchaseButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = price;
 
 
         itemSpawning = shopStockPool[Random.Range(0, shopStockPool.Count)];
@@ -323,7 +323,7 @@ public class ShopGenerator : MonoBehaviour
 
         purchase = Instantiate(purchasePrefabObject, transform.position + new Vector3(-0.5f, 2.5f, 0), Quaternion.Euler(0, 0, 90), GameObject.FindGameObjectWithTag("WorldCanvas").transform);
         purchaseButton = purchase;
-        purchaseButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "5";
+        purchaseButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = price;
 
 
         itemSpawning = shopStockPool[Random.Range(0, shopStockPool.Count)];
@@ -351,7 +351,7 @@ public class ShopGenerator : MonoBehaviour
 
         purchase = Instantiate(purchasePrefabObject, transform.position + new Vector3(-0.5f, 2.5f, 0), Quaternion.Euler(0, 0, 90), GameObject.FindGameObjectWithTag("WorldCanvas").transform);
         purchaseButton = purchase;
-        purchaseButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "5";
+        purchaseButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = price;
 
 
         itemSpawning = shopStockPool[Random.Range(0, shopStockPool.Count)];

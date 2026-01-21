@@ -82,6 +82,7 @@ public class EnemyManager : MonoBehaviour
     public GameObject playerClawMarkPNG;
     public GameObject tempPlayerClawPNG;
 
+    public int stunnedDuration;
     public bool isStunned;
     public bool damagedByTrap;
     public bool statusDamage;
@@ -431,8 +432,12 @@ public class EnemyManager : MonoBehaviour
             turnManager.tempList.Remove(gameObject);
             turnManager.targettedEnemies = turnManager.tempList;
         }*/
-        if (turnManager.NecromancerAmuletActive && turnManager.targettedEnemies.Contains(gameObject))
+        if (turnManager.NecromancerAmuletActive != 0 && turnManager.targettedEnemies.Contains(gameObject))
         {
+            if (turnManager.NecromancerAmuletActive == 2)
+            {
+                playerManager.maxHealth += 1;
+            }
             playerManager.currentHealth = playerManager.maxHealth;
         }
 

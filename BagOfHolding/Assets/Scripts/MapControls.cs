@@ -146,7 +146,7 @@ public class MapControls : MonoBehaviour
         }
         else if (currRoom.GetComponent<MapSegmentControl>().roomInhabitedBy == "Shop")
         {
-            shopGenerator.GenerateShop();
+            shopGenerator.GenerateShop("5");
             switchScreenScript.currentScreen = "Shop";
             switchScreenScript.changeScreen("Shop");
             Destroy(currRoom.GetComponent<MapSegmentControl>().currentInhabitant);

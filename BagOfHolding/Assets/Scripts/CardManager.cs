@@ -44,6 +44,8 @@ public class CardManager : MonoBehaviour
 
     public bool isSticky;
     public int StickyAmount;
+    public bool baseStickyStatus;
+    public int baseStickyAmount;
 
     public bool abilityOnEquip;
     private bool abilityOnEquipActivated;
@@ -53,6 +55,12 @@ public class CardManager : MonoBehaviour
     public GameObject rewardScreenExtras;
 
     public bool isReward;
+    public bool isUpgraded;
+    public bool curseOfBinding;
+
+    public GameObject bindingCurseIcon;
+
+    
 
     // Start is called before the first frame update
     void Start()
@@ -74,6 +82,7 @@ public class CardManager : MonoBehaviour
         mapControls = GameObject.Find("mapScripts").GetComponent<MapControls>();
         worldCanvas = GameObject.Find("WorldCanvas");
         rewardScreenExtras = GameObject.Find("RewardScreenExtras");
+        bindingCurseIcon = GameObject.Find("curseOfBinding");
         clickDeckSlot |= 1 << 7;
 
         /*slotsToEquip[0, 0] = slotsToEquipStrings[0];
@@ -141,7 +150,33 @@ public class CardManager : MonoBehaviour
         }
         mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         inspectionCardInstantiation = Instantiate(inspectionCardPrefab, new Vector3(mousePosition.x + 1.5f, mousePosition.y + 1.5f, -20), Quaternion.identity, worldCanvas.transform);
-        
+        if (isUpgraded)
+        {
+            var cardSprite = inspectionCardInstantiation.transform.Find("CardFrame");
+            if (cardSprite != null)
+            {
+                cardSprite.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("GoldV1");
+                cardSprite.transform.Find("Card Description").transform.gameObject.SetActive(false);
+                cardSprite.transform.Find("Card Description (1)").transform.gameObject.SetActive(true);
+            }
+            cardSprite = inspectionCardInstantiation.transform.Find("CardFrame (1)");
+            if (cardSprite != null)
+            {
+                cardSprite.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("GoldV1");
+                cardSprite.transform.Find("Card Description").transform.gameObject.SetActive(false);
+                cardSprite.transform.Find("Card Description (1)").transform.gameObject.SetActive(true);
+            }
+
+
+
+        }
+        if (curseOfBinding == true)
+        {
+            var bindingIcon = Instantiate(bindingCurseIcon, new Vector3(0, 5.5f, -1), Quaternion.identity, inspectionCardInstantiation.transform);
+            bindingIcon.transform.localPosition = new Vector3(0, 5.5f, -1);
+            bindingIcon.transform.localScale = new Vector3(0.86f, 0.31f, 1);
+        }
+
 
 
     }

@@ -15,6 +15,7 @@ public class RandomEventManager : MonoBehaviour
     public MapControls mapControls;
     public DeckManager deckManager;
     public TurnManager turnManager;
+    public ShopGenerator shopGenerator;
     public GameObject option1;
     public GameObject option2;
     public GameObject exitButton;
@@ -54,6 +55,8 @@ public class RandomEventManager : MonoBehaviour
 
     public void setOptions()
     {
+        option1.transform.parent.gameObject.SetActive(true);
+        option2.transform.parent.gameObject.SetActive(true);
         if (eventNum == 0)
         {
             option1.GetComponent<TMPro.TextMeshPro>().text = "Run away from the source of the howling";
@@ -73,6 +76,16 @@ public class RandomEventManager : MonoBehaviour
         {
             option1.GetComponent<TMPro.TextMeshPro>().text = "Help it";
             option2.GetComponent<TMPro.TextMeshPro>().text = "Leave it";
+        }
+        if (eventNum == 4)
+        {
+            option1.GetComponent<TMPro.TextMeshPro>().text = "Search the camp";
+            option2.transform.parent.gameObject.SetActive(false);
+        }
+        if (eventNum == 5)
+        {
+            option1.GetComponent<TMPro.TextMeshPro>().text = "Browse his wares";
+            option2.GetComponent<TMPro.TextMeshPro>().text = "No thanks";
         }
     }
 
@@ -208,6 +221,52 @@ public class RandomEventManager : MonoBehaviour
 
 
                 }
+            }
+        }
+        if (eventNum == 4)
+        {
+
+            if (optionClicked == "Confirmation")
+            {
+                eventTextBox.GetComponent<TMPro.TextMeshPro>().text = "You search the camp, finding two sets of equipment which still seem viable to use. You store them in your bag.";
+                optionChosen = "1";
+            }
+            if (optionClicked == "ExitConfirm")
+            {
+                if (optionChosen == "1")
+                {
+                    var randomItem = deckManager.obtainableCards[Random.Range(0, deckManager.obtainableCards.Count)];
+                    deckManager.addCardToLibrary(randomItem);
+                    switchScreenScript.returnToMap();
+                }
+
+            }
+        }
+        if (eventNum == 5)
+        {
+
+            if (optionClicked == "Confirmation")
+            {
+                eventTextBox.GetComponent<TMPro.TextMeshPro>().text = "He chuckles roughly, nearly making you regret your decision";
+                optionChosen = "1";
+            }
+            if (optionClicked == "Confirmation2")
+            {
+                eventTextBox.GetComponent<TMPro.TextMeshPro>().text = "Heheheh. Suit yourself stranger. 'Til we meet again.";
+                optionChosen = "2";
+            }
+            if (optionClicked == "ExitConfirm")
+            {
+                if (optionChosen == "1")
+                {
+                    shopGenerator.GenerateShop("3");
+                    switchScreenScript.changeScreen("Shop");
+                }
+                if (optionChosen == "2")
+                {
+                    switchScreenScript.returnToMap();
+                }
+
             }
         }
 

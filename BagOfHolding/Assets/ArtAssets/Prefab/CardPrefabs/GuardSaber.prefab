@@ -214,3 +214,6 @@ MonoBehaviour:
   worldCanvas: {fileID: 0}
   rewardScreenExtras: {fileID: 0}
   isReward: 0
+  isUpgraded: 0
+  curseOfBinding: 0
+  bindingCurseIcon: {fileID: 0}

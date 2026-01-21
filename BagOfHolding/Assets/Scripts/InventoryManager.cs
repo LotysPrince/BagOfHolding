@@ -24,17 +24,17 @@ public class InventoryManager : MonoBehaviour
 
 
     public GameObject helmPrefab;
-    private int helmSlotAmount = 1;
+    public int helmSlotAmount = 1;
     public List<GameObject> helmSlots = new List<GameObject>();
     private bool displayingExtraSlots;
     public GameObject InventoryParent;
 
     public GameObject weaponPrefab;
-    private int weaponSlotAmount = 1;
+    public int weaponSlotAmount = 1;
     public List<GameObject> weaponSlots = new List<GameObject>();
 
     public GameObject glovesPrefab;
-    private int glovesSlotAmount = 1;
+    public int glovesSlotAmount = 1;
     public List<GameObject> gloveSlots = new List<GameObject>();
   
 
@@ -114,7 +114,14 @@ public class InventoryManager : MonoBehaviour
         //uses equipedItems list to find each item and clear it
         foreach (var slot in equippedSlots)
         {
-            InventoryItems[slot] = null;
+            if ((!InventoryItems[slot].GetComponent<CardManager>().isSticky && !InventoryItems[slot].GetComponent<CardManager>().itemEquipped) || (!InventoryItems[slot].GetComponent<CardManager>().isSticky && InventoryItems[slot].GetComponent<CardManager>().itemEquipped) || (InventoryItems[slot].GetComponent<CardManager>().isSticky && !InventoryItems[slot].GetComponent<CardManager>().itemEquipped))
+            {
+                InventoryItems[slot] = null;
+            }
+            else if (InventoryItems[slot].GetComponent<CardManager>().StickyAmount == 0)
+            {
+                InventoryItems[slot] = null;
+            }
         }
         equippedSlots.Clear();
         extraEquippedItems.Clear();

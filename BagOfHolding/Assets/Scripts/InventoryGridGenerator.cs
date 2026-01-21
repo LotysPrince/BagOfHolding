@@ -31,9 +31,10 @@ public class InventoryGridGenerator : MonoBehaviour
     public int arrayXPos;
     public int arrayYPos;
 
-    public List<GameObject> debugInventory = new List<GameObject>();
     public List<GameObject> currentInventory = new List<GameObject>();
     public List<GameObject> itemsSpawned = new List<GameObject>();
+    public List<GameObject> itemsSpawnedTemp = new List<GameObject>();
+
     public DeckManager deckManager;
 
     private GameObject itemToSpawn;
@@ -75,23 +76,15 @@ public class InventoryGridGenerator : MonoBehaviour
     public void GenerateInventory() {
 
         bool itemCantBePlaced = true;
-        bool debugInventoryDrawn = false;
         foreach (var inventorySlot in Inventory)
         {
             if (inventorySlot.GetComponent<InventorySlotManager>().slotIsEquipped == false && currentInventory.Count > 0 && itemsSpawned.Count < deckManager.handSize)
             {
                 itemCantBePlaced = true;
                 bool itemDeleted = false;
-                if (debugInventory.Count != 0 && debugInventoryDrawn == false)
-                {
-                    debugInventoryDrawn = true;
-                    itemToSpawn = debugInventory[0];
-                }
-                else if (currentInventory.Count != 0)
-                {
 
-                    itemToSpawn = currentInventory[0];
-                }
+                itemToSpawn = currentInventory[0];
+                
                 newItem = Instantiate(itemToSpawn, new Vector3(0, 0, 0), Quaternion.identity);
                 newItem.transform.name = itemToSpawn.transform.name;
                 //newItem.name.Replace("(Clone)", "").Trim();
@@ -874,12 +867,31 @@ public class InventoryGridGenerator : MonoBehaviour
                 inventorySlot.GetComponent<InventorySlotManager>().equippedItem = null;
             }
         }
-        foreach (var itemSpawned in itemsSpawned)
+        //copies all equipped items into seperate list
+        /*foreach (var item in itemsSpawnedTemp)
         {
-            Destroy(itemSpawned);
+            if (item != null)
+            {
+                itemsSpawnedTemp.Add(item);
+            }
+        }*/
+        itemsSpawnedTemp.AddRange(itemsSpawned);
+        foreach (var itemSpawned in itemsSpawnedTemp)
+        {
+            if ((!itemSpawned.GetComponent<CardManager>().isSticky && !itemSpawned.GetComponent<CardManager>().itemEquipped) || (!itemSpawned.GetComponent<CardManager>().isSticky && itemSpawned.GetComponent<CardManager>().itemEquipped) || (itemSpawned.GetComponent<CardManager>().isSticky && !itemSpawned.GetComponent<CardManager>().itemEquipped))
+            {
+                itemsSpawned.Remove(itemSpawned);
+                Destroy(itemSpawned);
+
+            }
+            else if (itemSpawned.GetComponent<CardManager>().StickyAmount == 0)
+            {
+                itemsSpawned.Remove(itemSpawned);
+                Destroy(itemSpawned);
+            }
         }
-        itemsSpawned.Clear();
-        currentInventory.Clear();
+        itemsSpawnedTemp.Clear();
+        //currentInventory.Clear();
     }
 
     public void SetInventorySlot(GameObject slot, GameObject equipment)

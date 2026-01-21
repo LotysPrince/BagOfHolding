@@ -184,10 +184,26 @@ public class DeckManager : MonoBehaviour
             currentGraveyard.Add(card);
         }
         foreach (var card in gridGenerator.itemsSpawned)
-        { 
-            Destroy(card);
+        {
+            if (card != null && (!card.GetComponent<CardManager>().isSticky && !card.GetComponent<CardManager>().itemEquipped) || (!card.GetComponent<CardManager>().isSticky && card.GetComponent<CardManager>().itemEquipped) || (card.GetComponent<CardManager>().isSticky && !card.GetComponent<CardManager>().itemEquipped))
+            {
+                currentHand.Remove(card);
+                //gridGenerator.itemsSpawned.Remove(card);
+                Destroy(card);
+                
+            }
+            else if (card != null && card.GetComponent<CardManager>().isSticky && card.GetComponent<CardManager>().itemEquipped)
+            {
+                card.GetComponent<CardManager>().StickyAmount -= 1;
+                if (card.GetComponent<CardManager>().StickyAmount == 0)
+                {
+                    currentHand.Remove(card);
+                    //gridGenerator.itemsSpawned.Remove(card);
+                    Destroy(card);
+                }
+            }
         }
-        currentHand.Clear();
-        gridGenerator.itemsSpawned.Clear();
+        //currentHand.Clear();
+        //gridGenerator.itemsSpawned.Clear();
     }
 }

@@ -68,12 +68,12 @@ public class TurnManager : MonoBehaviour
 
 
     //card variables
-    private bool AssassinCowlActive;
-    private bool CloakofBloodActive;
-    private bool PinealEyeActive;
-    public bool NecromancerAmuletActive;
-    public bool graspingRingActive;
-    public bool jesterTightsActive;
+    private int AssassinCowlActive;
+    private int CloakofBloodActive;
+    private int PinealEyeActive;
+    public int NecromancerAmuletActive;
+    public int graspingRingActive;
+    public int jesterTightsActive;
 
     
     // Start is called before the first frame update
@@ -81,6 +81,17 @@ public class TurnManager : MonoBehaviour
     {
         //numberEnemies = Random.Range(0, 3);
         numberEnemies = Random.Range(2, 4);
+        foreach (var card in deckManager.obtainableCards)
+        {
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                card.GetComponent<CardManager>().isUpgraded = false;
+            }
+            if (card.GetComponent<CardManager>().curseOfBinding)
+            {
+                card.GetComponent<CardManager>().curseOfBinding = false;
+            }
+        }
         //spawnEnemies();
 
 
@@ -304,7 +315,15 @@ public class TurnManager : MonoBehaviour
         }
         if (card.name == "HelmOfCerberus")
         {
-            inventoryManager.addInventorySlot(2, "Helmet");
+            if (!card.GetComponent<CardManager>().isUpgraded)
+            {
+                inventoryManager.addInventorySlot(2, "Helmet");
+            }
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                inventoryManager.addInventorySlot(3, "Helmet");
+            }
+
             /*if (helm1 == null)
             {
                 helm1 = Instantiate(inventoryManager.helmPrefab, new Vector3(inventoryManager.Helmet.transform.position.x + 1.5f, inventoryManager.Helmet.transform.position.y, inventoryManager.Helmet.transform.position.z), Quaternion.identity);
@@ -313,11 +332,11 @@ public class TurnManager : MonoBehaviour
                 inventoryManager.InventoryItems.Add(helm2, null);
             }*/
         }
-        if (card.name == "HiddenDagger")
+        /*if (card.name == "HiddenDagger")
         {
             inventoryManager.addInventorySlot(1, "Weapon");
             //removeInventorySlot(1, 
-        }
+        }*/
         if (card.name == "GeminiNecklace")
         {
             inventoryManager.GeminiNecklaceActivated = true;
@@ -346,6 +365,10 @@ public class TurnManager : MonoBehaviour
         if (card.name == "ReinforcementRing")
         {
             inventoryManager.carryingCapacity += 3;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                inventoryManager.carryingCapacity += 2;
+            }
             carryingWeightObject.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = inventoryManager.carryingCapacity.ToString();
 
             //inventoryManager.carryingCapacityObject.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = inventoryManager.carryingCapacity.ToString();
@@ -372,7 +395,14 @@ public class TurnManager : MonoBehaviour
         }
         if (card.name == "HelmOfCerberus")
         {
-            inventoryManager.removeInventorySlot(2, "Helmet");
+            if (!card.GetComponent<CardManager>().isUpgraded)
+            {
+                inventoryManager.removeInventorySlot(2, "Helmet");
+            }
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                inventoryManager.removeInventorySlot(3, "Helmet");
+            }
             //unequips slot before deleting it
                /* if (inventoryManager.InventoryItems[helm1] != null)
                 {
@@ -392,11 +422,11 @@ public class TurnManager : MonoBehaviour
             //inventoryManager.InventoryItems.Add(helm1, null);
             //inventoryManager.InventoryItems.Add(helm2, null);
         }
-        if (card.name == "HiddenDagger")
+        /*if (card.name == "HiddenDagger")
         {
             inventoryManager.removeInventorySlot(1, "Weapon");
             //removeInventorySlot(1, 
-        }
+        }*/
         if (card.name == "Spear")
         {
             maxTargets -= 1;
@@ -420,6 +450,10 @@ public class TurnManager : MonoBehaviour
         if (card.name == "ReinforcementRing")
         {
             inventoryManager.carryingCapacity -= 3;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                inventoryManager.carryingCapacity -= 2;
+            }
             carryingWeightObject.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = inventoryManager.carryingCapacity.ToString();
 
         }
@@ -428,22 +462,41 @@ public class TurnManager : MonoBehaviour
     }
     private void processCards(GameObject card)
     {
+        //curses
+
+
         if (card.name == "Saber")
         {
             damage += 2;
             //inflictBleed += 2;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                damage += 2;
+            }
         }
         if (card.name == "BladedBoots")
         {
             numAttacks += 1;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                numAttacks += 1;
+            }
         }
-        if (card.name == "CrimsonLily")
+        /*if (card.name == "CrimsonLily")
         {
             inflictBleed += 2;
-        }
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                inflictBleed += 2;
+            }
+        }*/
         if (card.name == "CloakOfBlood")
         {
             damageMult += 1;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                damageMult += 1;
+            }
         }
         if (card.name == "HelmOfCerberus")
         {
@@ -453,11 +506,19 @@ public class TurnManager : MonoBehaviour
         {
             playerManager.playerTakesDamage(5);
             damage += 5;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                playerManager.playerHealsDamage(3);
+            }
         }
         if (card.name == "WingedDaggers")
         {
             numAttacks += 4;
             damage += 1;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                numAttacks += 2;
+            }
         }
         if (card.name == "BirdskullWhistle")
         {
@@ -466,15 +527,27 @@ public class TurnManager : MonoBehaviour
         if (card.name == "HiddenDagger")
         {
             damage += 2;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                damage += 2;
+            }
         }
         if (card.name == "Spear")
         {
             damage += 2;
-            maxTargets += 1;
+            //maxTargets += 1;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                damage += 2;
+            }
         }
         if (card.name == "BriarWhip")
         {
             damage += 9;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                damage += 3;
+            }
             damageDivider = spawnedEnemies.Count;
             maxTargets = 3;
             foreach (var enemy in spawnedEnemies)
@@ -490,7 +563,13 @@ public class TurnManager : MonoBehaviour
             foreach (var enemy in targettedEnemies)
             {
                 enemy.GetComponent<EnemyManager>().isStunned = true;
+                enemy.GetComponent<EnemyManager>().stunnedDuration += 1;
                 enemy.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
+
+                if (card.GetComponent<CardManager>().isUpgraded)
+                {
+                    enemy.GetComponent<EnemyManager>().stunnedDuration += 1;
+                }
             }
         }
         if (card.name == "FungusCudgel")
@@ -500,115 +579,225 @@ public class TurnManager : MonoBehaviour
             {
                 enemy.GetComponent<EnemyManager>().setBleed(2);
                 enemy.GetComponent<EnemyManager>().setPoison(2);
+                if (card.GetComponent<CardManager>().isUpgraded)
+                {
+                    enemy.GetComponent<EnemyManager>().setBleed(2);
+                    enemy.GetComponent<EnemyManager>().setPoison(2);
+                }
             }
+
         }
         if (card.name == "AssassinCowl")
         {
-            AssassinCowlActive = true;
+            AssassinCowlActive = 1;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                damage += 2;
+            }
         }
         if (card.name == "DryadRapier")
         {
             damage += 4;
             inflictHemmorhage += 3;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                damage += 1;
+                inflictHemmorhage += 1;
+            }
         }
         if (card.name == "MinotaurHelm")
         {
             damage += 3;
             inflictHemmorhage += 1;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                damage += 2;
+                inflictHemmorhage += 1;
+            }
         }
         if (card.name == "Caltrops")
         {
             trapDamage = 1;
             trapDuration = 4;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                trapDamage = 3;
+            }
         }
         if (card.name == "PenanceCage")
         {
-            playerManager.playerBleedControl(1);
+            if (!card.GetComponent<CardManager>().isUpgraded)
+            {            
+                playerManager.playerBleedControl(1);
+
+            }
             inflictBleed += 2;
+
         }
         if (card.name == "GuardSaber")
         {
             damage += 2;
             inflictBleed += 2;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                inflictBleed += 2;
+            }
         }
         if (card.name == "ShortSword")
         {
             damage += 3;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                inflictBleed += 1;
+            }
         }
         if (card.name == "ChitinousCuisse")
         {
             playerManager.playerArmor += 5;
             inflictPoison += 1;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                playerManager.playerArmor += 3;
+                inflictPoison += 1;
+            }
         }
         if (card.name == "SeersJack")
         {
             deckManager.handSize += 3;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                deckManager.handSize += 1;
+            }
         }
         if (card.name == "OwlBearTalons")
         {
             inflictBleedMultiplier = 2;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                inflictBleedMultiplier = 3;
+            }
         }
         if (card.name == "MinorPotion")
         {
             healing += 2;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                healing += 2;
+            }
         }
         if (card.name == "HealingPotion")
         {
             healing += 5;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                healing += 3;
+            }
         }
         if (card.name == "GreaterHealingPotion")
         {
             healing += 10;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                healing += 5;
+            }
         }
         if (card.name == "PoisonDarts")
         {
             numAttacks += 2;
             damage += 1;
             inflictPoison += 2;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                damage += 1;
+                inflictPoison += 1;
+            }
         }
         if (card.name == "LeatherTassets")
         {
             playerManager.playerArmor += 3;
             //playerManager.playerPoisonArmor += 3;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                playerManager.playerArmor += 2;
+            }
+
         }
         if (card.name == "AssassinsPendant")
         {
             currentCritical = 3;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                currentCritical = 4;
+            }
         }
         if (card.name == "BladedCloak")
         {
             numAttacks += 1;
             damage += 3;
             playerManager.playerDodge += 1;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                playerManager.playerDodge += 1;
+                numAttacks += 1;
+            }
         }
         if (card.name == "CloakofBlood")
         {
-            CloakofBloodActive = true;
+            CloakofBloodActive = 1;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                CloakofBloodActive = 2;
+            }
         }
         if (card.name == "MailChausses")
         {
             playerManager.playerArmor += 6;
             //playerManager.playerBleedArmor += 3;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                playerManager.playerArmor += 2;
+            }
         }
         if (card.name == "SelfFlagellantChains")
         {
-            numAttacks += 1;
-            inflictBleed += 3;
-            playerManager.playerBleedControl(3);
+            if (!card.GetComponent<CardManager>().isUpgraded)
+            {
+                numAttacks += 1;
+                inflictBleed += 3;
+                playerManager.playerBleedControl(3);
+            }
+            else if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                numAttacks += 2;
+                inflictBleed += 5;
+                playerManager.playerBleedControl(2);
+            }
         }
         if (card.name == "SlimedBoots")
         {
             inflictPoison += 2;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                inflictPoison += 2;
+            }
         }
         if (card.name == "SwiftBoots")
         {
             playerManager.playerDodge += 1;
             numAttacks += 1;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                numAttacks += 1;
+            }
         }
         if (card.name == "SwiftCape")
         {
             numAttacks += 2;
             maxTargets += 1;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                maxTargets += 1;
+            }
         }
         if (card.name == "CrimsonLily")
         {
@@ -616,23 +805,46 @@ public class TurnManager : MonoBehaviour
             {
                 if (enemy.GetComponent<EnemyManager>().minPower != 0)
                 {
+
                     enemy.GetComponent<EnemyManager>().minPower -= 1;
+                    if (card.GetComponent<CardManager>().isUpgraded)
+                    {
+                        enemy.GetComponent<EnemyManager>().minPower -= 1;
+
+                    }
+
                 }
                 if (enemy.GetComponent<EnemyManager>().maxPower != 0)
                 {
+
                     enemy.GetComponent<EnemyManager>().maxPower -= 1;
+                    if (card.GetComponent<CardManager>().isUpgraded)
+                    {
+                        enemy.GetComponent<EnemyManager>().maxPower -= 1;
+
+                    }
                 }
             }
         }
         if (card.name == "PinealEye")
         {
             damageMult += 2;
-            PinealEyeActive = true;
+            PinealEyeActive = 1;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                PinealEyeActive = 2;
+
+            }
 
         }
         if (card.name == "NecromancerAmulet")
         {
-            NecromancerAmuletActive = true;
+            NecromancerAmuletActive = 1;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                NecromancerAmuletActive = 2;
+
+            }
         }
         if (card.name == "spiderShroud")
         {
@@ -644,6 +856,10 @@ public class TurnManager : MonoBehaviour
         if (card.name == "bladedBoots")
         {
             numAttacks += 1;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                numAttacks += 1;
+            }
         }
         if (card.name == "mirrorPlate")
         {
@@ -651,6 +867,10 @@ public class TurnManager : MonoBehaviour
             foreach (var enemy in spawnedEnemies)
             {
                 enemy.GetComponent<EnemyManager>().mirrorPlateEffectActive = true;
+            }
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                playerManager.playerArmor += 2;
             }
         }
         if (card.name == "assassinVambrace")
@@ -662,6 +882,10 @@ public class TurnManager : MonoBehaviour
                 {
                     currentCritical = 2;
                     criticalAttacks += 1;
+                    if (card.GetComponent<CardManager>().isUpgraded)
+                    {
+                        criticalAttacks += 1;
+                    }
                 }
             }
         }
@@ -669,23 +893,48 @@ public class TurnManager : MonoBehaviour
         {
             damage += 2;
             inflictBleed += 3;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                damage += 2;
+                inflictBleed += 1;
+            }
         }
         if (card.name == "captainsSallet")
         {
             playerManager.playerArmor += 5;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                playerManager.playerArmor += 2;
+            }
+
         }
         if (card.name == "graspingRing")
         {
-            graspingRingActive = true;
+            graspingRingActive = 1;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                graspingRingActive = 2;
+            }
         }
         if (card.name == "birchBracers")
         {
             numAttacks += 1;
             playerManager.playerDodge += 2;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                numAttacks += 1;
+                playerManager.playerDodge += 1;
+            }
+
         }
         if (card.name == "jesterTights")
         {
-            jesterTightsActive = true;
+            jesterTightsActive = 1;
+
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                jesterTightsActive = 2;
+            }
         }
 
     }
@@ -694,11 +943,20 @@ public class TurnManager : MonoBehaviour
     {
         if (card.name == "GravediggersGloves")
         {
-            deckManager.drawCardsFromGraveyard(2);
+            deckManager.drawCardsFromGraveyard(3);
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                deckManager.drawNewCards(1);
+            }
+
         }
         if (card.name == "captainsSallet")
         {
             deckManager.drawNewCards(2);
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                deckManager.drawNewCards(1);
+            }
         }
     }
 
@@ -716,6 +974,10 @@ public class TurnManager : MonoBehaviour
         if (card.name == "BirdskullWhistle")
         {
             nextTurnCritical = 3;
+            if (card.GetComponent<CardManager>().isUpgraded)
+            {
+                nextTurnCritical = 5;
+            }
             //criticalAttacks += 3;
         }
     }
@@ -736,7 +998,7 @@ public class TurnManager : MonoBehaviour
         for (int i = 1; i <= numAttacks; i++)
         {
 
-            if (!PinealEyeActive)
+            if (PinealEyeActive == 0)
             {
                 //if player hits multiple enemies
                 foreach (var enemy in targettedEnemies)
@@ -744,17 +1006,31 @@ public class TurnManager : MonoBehaviour
 
                     enemy.GetComponent<EnemyManager>().timesHit = numAttacks;
 
-                    if (CloakofBloodActive && enemy.GetComponent<EnemyManager>().currBleed != 0)
+                    if (CloakofBloodActive != 0 && enemy.GetComponent<EnemyManager>().currBleed != 0)
                     {
-                        damageMult += 1;
-                        CloakofBloodActive = false;
+                        if (CloakofBloodActive == 1)
+                        {
+                            damageMult += 1;
+                        }
+                        else if (CloakofBloodActive == 2)
+                        {
+                            damageMult += 2;
+                        }
+                        CloakofBloodActive = 0;
                     }
-                    if (AssassinCowlActive)
+                    if (AssassinCowlActive != 0)
                     {
                         if (enemy.GetComponent<EnemyManager>().currentHealth / enemy.GetComponent<EnemyManager>().maxHealth <= 0.3f)
                         {
                             currentCritical = 2;
-                            criticalAttacks += 1;
+                            if (AssassinCowlActive == 1)
+                            {
+                                criticalAttacks += 1;
+                            }
+                            else if (AssassinCowlActive == 2)
+                            {
+                                criticalAttacks += 2;
+                            }
                         }
                         else
                         {
@@ -769,16 +1045,31 @@ public class TurnManager : MonoBehaviour
                         }
                     }
                     //Debug.Log("This shit is adding: " + Mathf.RoundToInt(damage * currentCritical * damageMult));
-                    if (jesterTightsActive)
+                    if (jesterTightsActive != 0)
                     {
-                        var multiplier = Random.Range(0, 2);
-                        if (multiplier == 0)
+                        if (jesterTightsActive == 1)
                         {
-                            damageMult = 0;
+                            var multiplier = Random.Range(0, 2);
+                            if (multiplier == 0)
+                            {
+                                damageMult = 0;
+                            }
+                            else
+                            {
+                                damageMult += 2;
+                            }
                         }
-                        else
+                        else if (jesterTightsActive == 2)
                         {
-                            damageMult += 2;
+                            var multiplier = Random.Range(0, 2);
+                            if (multiplier == 0)
+                            {
+                                damageMult = 0;
+                            }
+                            else
+                            {
+                                damageMult += 3;
+                            }
                         }
                     }
                     minDamage = Mathf.RoundToInt((damage * currentCritical * damageMult) / damageDivider);
@@ -803,22 +1094,49 @@ public class TurnManager : MonoBehaviour
             }
 
             //attacks random enemy if pinealEye is equipped
-            else if (PinealEyeActive)
+            else if (PinealEyeActive != 0)
             {
                 var enemyToAttack = spawnedEnemies[Random.Range(0, spawnedEnemies.Count)];
                 enemyToAttack.GetComponent<EnemyManager>().timesHit = numAttacks;
-
-                if (CloakofBloodActive && enemyToAttack.GetComponent<EnemyManager>().currBleed != 0)
+                if (PinealEyeActive == 2)
                 {
-                    damageMult += 1;
-                    CloakofBloodActive = false;
+                    foreach (var enemy in spawnedEnemies)
+                    {
+                        if (enemy.GetComponent<EnemyManager>().currentHealth < enemyToAttack.GetComponent<EnemyManager>().currentHealth)
+                        {
+                            enemyToAttack.GetComponent<EnemyManager>().timesHit = 0;
+                            enemyToAttack = enemy;
+                            enemyToAttack.GetComponent<EnemyManager>().timesHit = numAttacks;
+                        }
+                    }
                 }
-                if (AssassinCowlActive)
+
+                if (CloakofBloodActive != 0 && enemyToAttack.GetComponent<EnemyManager>().currBleed != 0)
+                {
+                    if (CloakofBloodActive == 1)
+                    {
+                        damageMult += 1;
+                    }
+                    else if (CloakofBloodActive == 2)
+                    {
+                        damageMult += 2;
+                    } 
+                    CloakofBloodActive = 0;
+                }
+                if (AssassinCowlActive != 0)
                 {
                     if (enemyToAttack.GetComponent<EnemyManager>().currentHealth / enemyToAttack.GetComponent<EnemyManager>().maxHealth <= 0.3f)
                     {
                         currentCritical = 2;
-                        criticalAttacks += 1;
+
+                        if (criticalAttacks != 0)
+                        {
+                            criticalAttacks -= 1;
+                        }
+                        else if (criticalAttacks == 0)
+                        {
+                            currentCritical = 1;
+                        }
                     }
                     else
                     {
@@ -855,7 +1173,7 @@ public class TurnManager : MonoBehaviour
                     currentCritical = 1;
                 }
             }
-            if (graspingRingActive)
+            if (graspingRingActive != 0)
             {
                 var vampHealing = 0;
                 foreach (var enemy in targettedEnemies)
@@ -865,9 +1183,18 @@ public class TurnManager : MonoBehaviour
                         vampHealing += enemy.GetComponent<EnemyManager>().currBleed;
                     }
                 }
+                if(graspingRingActive == 2)
+                {
+                    var overhealAmount = (playerManager.currentHealth + vampHealing) - playerManager.maxHealth;
+                    if (overhealAmount > 0)
+                    {
+                        playerManager.playerArmor += overhealAmount;
+                    }
+
+                }
                 playerManager.playerHealsDamage(vampHealing);
             }
-            AssassinCowlActive = false;
+            AssassinCowlActive = 0;
         }
         //if doing damage, attack the enemies
         if (damage != 0)
@@ -1220,12 +1547,12 @@ public class TurnManager : MonoBehaviour
 
                 else if (enemy.GetComponent<EnemyManager>().attackAnimationDone || enemy.GetComponent<EnemyManager>().isStunned == true)
                 {
-                    if (enemy.GetComponent<EnemyManager>().spiderShroudEffectActive == false)
+                    if (enemy.GetComponent<EnemyManager>().spiderShroudEffectActive == false && enemy.GetComponent<EnemyManager>().isStunned == false)
                     {
-
+                        
                         enemy.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
                     }
-                    continue;
+                    
                 }
                 else if (enemy.GetComponent<EnemyManager>().isStunned == false)
                 {
@@ -1278,11 +1605,21 @@ public class TurnManager : MonoBehaviour
                 enemy.GetComponent<EnemyManager>().isTargetted = false;
             }
         }
+        // stunned enemy management
         foreach (var enemy in spawnedEnemies)
         {
-            if (enemy.GetComponent<SpriteRenderer>().color == new Color(1, 1, 1, 1))
+            if (enemy.GetComponent<EnemyManager>().isStunned)
             {
-                enemy.GetComponent<EnemyManager>().isStunned = false;
+                if (enemy.GetComponent<EnemyManager>().stunnedDuration > 0)
+                {
+                    enemy.GetComponent<EnemyManager>().stunnedDuration -= 1;
+                    
+                }
+                if (enemy.GetComponent<EnemyManager>().stunnedDuration == 0)
+                {
+                    enemy.GetComponent<SpriteRenderer>().color = new Color(1,1,1,1);
+                    enemy.GetComponent<EnemyManager>().isStunned = false;
+                }
             }
             //if (enemy.GetComponent<EnemyManager>().spiderShroudEffectActive)
             //{
@@ -1312,14 +1649,31 @@ public class TurnManager : MonoBehaviour
             enemy.GetComponent<EnemyManager>().mirrorPlateEffectActive = false;
         }
 
-        PinealEyeActive = false;
-        NecromancerAmuletActive = false;
-        graspingRingActive = false;
-        jesterTightsActive = false;
+        PinealEyeActive = 0;
+        NecromancerAmuletActive = 0;
+        graspingRingActive = 0;
+        jesterTightsActive = 0;
         //initiateEnemyTurnOnce = false;
         //attackIsFinished = false;
         //turnEnded = false;
         //enemiesWithStatus = 0;
+
+        ///// Removes extra inventory slots
+        if (inventoryManager.helmSlotAmount != 1)
+        {
+            var removeAmount = inventoryManager.helmSlotAmount - 1;
+            inventoryManager.removeInventorySlot(removeAmount, "Helmet");
+        }
+        if (inventoryManager.weaponSlotAmount != 1)
+        {
+            var removeAmount = inventoryManager.weaponSlotAmount - 1;
+            inventoryManager.removeInventorySlot(removeAmount, "Weapon");
+        }
+        if (inventoryManager.glovesSlotAmount != 1)
+        {
+            var removeAmount = inventoryManager.glovesSlotAmount - 1;
+            inventoryManager.removeInventorySlot(removeAmount, "Gloves");
+        }
     }
 
     public void enemySelector(GameObject enemy)

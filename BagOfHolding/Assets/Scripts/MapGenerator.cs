@@ -154,7 +154,7 @@ public class MapGenerator : MonoBehaviour
         else if (currentRoomAmount >= minRoomAmount && generationDone)
         {
             generationDone = false;
-            spawnTrees();
+            //spawnTrees();
             spawnMapIcons();
             mapNumber += 1;
             if (mapNumber == 3)
