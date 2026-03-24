@@ -21,6 +21,8 @@ public class PlayerManager : MonoBehaviour
     public GameObject poisonObject;
 
     public int playerArmor;
+    public int poisonArmor;
+    public int bleedArmor;
     public int playerDodge;
 
     public int playerLevel;
@@ -102,6 +104,10 @@ public class PlayerManager : MonoBehaviour
 
     public void playerBleedControl(int bleedAdd)
     {
+        var temp = bleedAdd;
+        bleedAdd -= bleedArmor;
+        bleedArmor -= temp;
+
         if (bleedAdd != 0 && bleedAdd > 0)
         {
             if (selfBleed == 0)
@@ -131,6 +137,9 @@ public class PlayerManager : MonoBehaviour
 
     public void playerPoisonControl(int poisonAdd)
     {
+        var temp = poisonAdd;
+        poisonAdd -= poisonArmor;
+        poisonArmor -= temp;
         if (poisonAdd != 0 && poisonAdd > 0)
         {
             if (selfPoison == 0)

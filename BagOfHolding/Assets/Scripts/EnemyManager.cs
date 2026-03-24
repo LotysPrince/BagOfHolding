@@ -32,7 +32,7 @@ public class EnemyManager : MonoBehaviour
     public bool reachedLeftPoint;
     public bool reachedRightPoint;
     public bool animationDone;
-    private bool statusesDealt;
+    public bool statusesDealt;
 
 
     private GameObject myHealthBar;
@@ -451,6 +451,7 @@ public class EnemyManager : MonoBehaviour
         Destroy(gameObject);
         Destroy(myThiefIcon);
         Destroy(myDebuffIcon);
+        Destroy(myShieldIcon);
         if(myBiteIcon != null)
         {
             Destroy(myBiteIcon);
@@ -514,6 +515,7 @@ public class EnemyManager : MonoBehaviour
                     setBleed(turnManager.inflictBleed * turnManager.inflictBleedMultiplier);
                     setPoison(turnManager.inflictPoison);
                     setHemmorhage(turnManager.inflictHemmorhage);
+                    statusesDealt = true;
                 }
                 tempClawMarkPNG = Instantiate(clawMarkPNG, gameObject.transform.position, Quaternion.Euler(new Vector3(0, 0, Random.Range(clawMarkPNG.transform.rotation.z - 30f, clawMarkPNG.transform.rotation.z + 30f))));
             }

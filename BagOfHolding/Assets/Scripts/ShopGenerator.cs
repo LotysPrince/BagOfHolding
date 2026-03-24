@@ -379,11 +379,17 @@ public class ShopGenerator : MonoBehaviour
         //tempList = currentShopItems;
         foreach (var item in currentShopItems)
         {
-            Destroy(item);
+            if (item != null)
+            {
+                Destroy(item);
+            }
         }
-        foreach (var item in currentShopPurchaseButtons)
+        /*foreach (var item in currentShopPurchaseButtons)
         {
-            Destroy(item);
-        }
+            if (item != null)
+            {
+                Destroy(item);
+            }
+        }*/
     }
 }

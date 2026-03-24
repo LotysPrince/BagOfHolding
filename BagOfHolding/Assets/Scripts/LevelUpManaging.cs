@@ -23,10 +23,57 @@ public class LevelUpManaging : MonoBehaviour
     {
         if (gameObject.transform.name == "Perk 1-1")
         {
-            turnManager.numAttacksMin += 1;
+            turnManager.baseDamage += 2;
             levelUpScreen.SetActive(false);
         }
         if (gameObject.transform.name == "Perk 1-2")
+        {
+            turnManager.inflictBleedMin += 1;
+            levelUpScreen.SetActive(false);
+        }
+        if (gameObject.transform.name == "Perk 2-1")
+        {
+            turnManager.baseHandSize += 1;
+            levelUpScreen.SetActive(false);
+        }
+        if (gameObject.transform.name == "Perk 2-2")
+        {
+            //WIP
+        }
+        if (gameObject.transform.name == "Perk 3-1")
+        {
+            turnManager.baseDamage += 2;
+            levelUpScreen.SetActive(false);
+
+        }
+        if (gameObject.transform.name == "Perk 3-2")
+        {
+            turnManager.inflictBleedMin += 1;
+            levelUpScreen.SetActive(false);
+        }
+        if (gameObject.transform.name == "Perk 4-1")
+        {
+            turnManager.baseTargetLimit += 1;
+        }
+        if (gameObject.transform.name == "Perk 4-2")
+        {
+            turnManager.numAttacksMin += 1;
+            levelUpScreen.SetActive(false);
+        }
+        if (gameObject.transform.name == "Perk 5-1")
+        {
+            turnManager.baseHandSize += 1;
+            levelUpScreen.SetActive(false);
+        }
+        if (gameObject.transform.name == "Perk 5-2")
+        {
+            //Wip
+        }
+        if (gameObject.transform.name == "Perk 6-1")
+        {
+
+        }
+        if (gameObject.transform.name == "Perk 6-2")
         {
             turnManager.inflictBleedMin += 1;
             levelUpScreen.SetActive(false);

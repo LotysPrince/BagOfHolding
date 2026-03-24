@@ -389,7 +389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccefa015b36cfbb4b9545f774b84d075, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stopFollowMouse: 0
+  stopFollowMouse: 1
   isStatDisplay: 0
   bleedPopup: {fileID: 0}
   poisonPopup: {fileID: 0}

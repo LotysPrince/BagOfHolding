@@ -5,6 +5,7 @@ using UnityEngine;
 public class UpgradeItems : MonoBehaviour
 {
     public DeckManager deckManager;
+    public SwitchScreen switchScreen;
 
 
     // Start is called before the first frame update
@@ -22,6 +23,8 @@ public class UpgradeItems : MonoBehaviour
 
     private void OnMouseDown()
     {
+        switchScreen.changeScreen("UpgradeItems");
+        /*
         if (gameObject.transform.name == "UpgradeItem")
         {
             UpgradeItem();
@@ -29,7 +32,7 @@ public class UpgradeItems : MonoBehaviour
         else if (gameObject.transform.name == "CurseItem")
         {
             CurseItem();
-        }
+        }*/
     }
 
     private void UpgradeItem()

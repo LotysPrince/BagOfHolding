@@ -17,6 +17,9 @@ public class TurnManager : MonoBehaviour
     public int inflictHemmorhage = 0;
     public int numAttacksMin = 1;
     public int inflictBleedMin = 0;
+    public int baseHandSize = 6;
+    public int baseDamage = 0;
+    public int baseTargetLimit = 1;
 
     public List<GameObject> spawnableEnemies = new List<GameObject>();
     public List<GameObject> spawnableElites = new List<GameObject>();
@@ -715,6 +718,7 @@ public class TurnManager : MonoBehaviour
         if (card.name == "LeatherTassets")
         {
             playerManager.playerArmor += 3;
+            playerManager.poisonArmor += 3;
             //playerManager.playerPoisonArmor += 3;
             if (card.GetComponent<CardManager>().isUpgraded)
             {
@@ -752,6 +756,7 @@ public class TurnManager : MonoBehaviour
         if (card.name == "MailChausses")
         {
             playerManager.playerArmor += 6;
+            playerManager.bleedArmor += 3;
             //playerManager.playerBleedArmor += 3;
             if (card.GetComponent<CardManager>().isUpgraded)
             {
@@ -1294,7 +1299,7 @@ public class TurnManager : MonoBehaviour
             enemy.GetComponent<EnemyManager>().statusDamage = false;
         }*/
 
-        damage = 0;
+        damage = baseDamage;
         numAttacks = numAttacksMin;
         //attacksFinishedAmount = 0;
         //enemiesHaveStatus = 0;
@@ -1353,7 +1358,7 @@ public class TurnManager : MonoBehaviour
 
     private IEnumerator statusDamage()
     {
-        bool statusTriggered;
+        //bool statusTriggered;
         foreach (var enemy in spawnedEnemies)
         {
 
@@ -1362,10 +1367,12 @@ public class TurnManager : MonoBehaviour
             {
                 //enemy.GetComponent<EnemyManager>().bleedTriggered = true;
                 //enemy.GetComponent<EnemyManager>().poisonTriggered = true;
-                statusTriggered = true;
+                //statusTriggered = true;
                 enemy.GetComponent<EnemyManager>().damageHits.Clear();
                 enemy.GetComponent<EnemyManager>().damageHits.Add(enemy.GetComponent<EnemyManager>().currBleed + enemy.GetComponent<EnemyManager>().currPoison);
+                enemy.GetComponent<EnemyManager>().statusDamage = true;
                 enemy.GetComponent<EnemyManager>().enemyTakesDamage();
+                enemy.GetComponent<EnemyManager>().statusDamage = false;
 
                 if (enemy.GetComponent<EnemyManager>().currBleed != 0)
                 {
@@ -1399,7 +1406,7 @@ public class TurnManager : MonoBehaviour
     }
     private void initiateEnemyTurn()
     {
-        bool statusTriggered;
+        //bool statusTriggered;
         //initiateEnemyTurnOnce = true;
         if (spawnedEnemies.Count != 0)
         {
@@ -1595,7 +1602,7 @@ public class TurnManager : MonoBehaviour
         carryingWeightObject.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "5";
 
         deckManager.drawCards();
-        deckManager.handSize = 6;
+        deckManager.handSize = baseHandSize;
 
         foreach (var enemy in targettedEnemies)
         {
@@ -1632,13 +1639,15 @@ public class TurnManager : MonoBehaviour
         targettedEnemies.Add(spawnedEnemies[0]);
         spawnedEnemies[0].transform.GetChild(0).gameObject.SetActive(true);
         spawnedEnemies[0].GetComponent<EnemyManager>().isTargetted = true;
-        maxTargets = 1;
+        maxTargets = baseTargetLimit;
         inflictBleed = inflictBleedMin;
         inflictBleedMultiplier = 1;
         inflictPoison = 0;
         inflictHemmorhage = 0;
         enemiesHaveStatus = 0;
         playerManager.playerArmor = 0;
+        playerManager.poisonArmor = 0;
+        playerManager.bleedArmor = 0;
         foreach (var enemy in spawnedEnemies)
         {
             if (enemy.GetComponent<EnemyManager>().spiderShroudEffectActive == true)
@@ -1647,6 +1656,7 @@ public class TurnManager : MonoBehaviour
 
             }
             enemy.GetComponent<EnemyManager>().mirrorPlateEffectActive = false;
+            enemy.GetComponent<EnemyManager>().statusesDealt = false;
         }
 
         PinealEyeActive = 0;

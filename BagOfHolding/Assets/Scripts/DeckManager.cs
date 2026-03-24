@@ -97,7 +97,7 @@ public class DeckManager : MonoBehaviour
             
             currentHand.Add(drawnCard);
         }
-
+        
         gridGenerator.currentInventory = new List<GameObject>(currentHand);
         gridGenerator.GenerateInventory();
         pouchIconText.GetComponent<TextMeshProUGUI>().text = currentDeck.Count.ToString();
@@ -187,12 +187,20 @@ public class DeckManager : MonoBehaviour
         {
             if (card != null && (!card.GetComponent<CardManager>().isSticky && !card.GetComponent<CardManager>().itemEquipped) || (!card.GetComponent<CardManager>().isSticky && card.GetComponent<CardManager>().itemEquipped) || (card.GetComponent<CardManager>().isSticky && !card.GetComponent<CardManager>().itemEquipped))
             {
-                currentHand.Remove(card);
+                foreach (var deckCard in currentHand)
+                {
+                    if (deckCard.transform.name == card.transform.name)
+                    {
+                        currentHand.Remove(deckCard);
+                        break;
+                    }
+                }
+                //currentHand.Remove(card);
                 //gridGenerator.itemsSpawned.Remove(card);
                 Destroy(card);
                 
             }
-            else if (card != null && card.GetComponent<CardManager>().isSticky && card.GetComponent<CardManager>().itemEquipped)
+            else if (card != null && (card.GetComponent<CardManager>().isSticky && card.GetComponent<CardManager>().itemEquipped))
             {
                 card.GetComponent<CardManager>().StickyAmount -= 1;
                 if (card.GetComponent<CardManager>().StickyAmount == 0)
@@ -203,6 +211,7 @@ public class DeckManager : MonoBehaviour
                 }
             }
         }
+        
         //currentHand.Clear();
         //gridGenerator.itemsSpawned.Clear();
     }

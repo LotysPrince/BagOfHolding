@@ -10,6 +10,7 @@ public class SwitchScreen : MonoBehaviour
     public Camera cam;
     public GameObject endTurnButton;
     public GameObject switchScreenButton;
+    public ShopGenerator shopGenerator;
     // Start is called before the first frame update
     void Start()
     {
@@ -61,6 +62,12 @@ public class SwitchScreen : MonoBehaviour
             cam.transform.position = new Vector3(0, -51f, -30);
             currentScreen = "Event";
         }
+        else if (newScreen == "UpgradeItems")
+        {
+            switchScreenButton.SetActive(false);
+            cam.transform.position = new Vector3(-22, -34, -30);
+            currentScreen = "UpgradeItems";
+        }
     }
 
     public void returnToMap()
@@ -80,10 +87,16 @@ public class SwitchScreen : MonoBehaviour
         }
         else if (currentScreen == "Shop")
         {
+            shopGenerator.DeleteShop();
             cam.transform.position = new Vector3(0, -17f, -30);
             currentScreen = "Map";
         }
         else if (currentScreen == "Event")
+        {
+            cam.transform.position = new Vector3(0, -17f, -30);
+            currentScreen = "Map";
+        }
+        else if (currentScreen == "UpgradeItems")
         {
             cam.transform.position = new Vector3(0, -17f, -30);
             currentScreen = "Map";
