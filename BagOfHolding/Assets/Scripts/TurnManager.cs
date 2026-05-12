@@ -1443,6 +1443,8 @@ public class TurnManager : MonoBehaviour
             newRewardObject.transform.localRotation = rewardScreen.transform.GetChild(0).transform.localRotation;
             newRewardObject.transform.SetParent(rewardScreen.transform);
             newRewardObject.GetComponent<CardManager>().isReward = true;
+            //newRewardObject.GetComponent<CardManager>().inspectionCardPrefab.transform.Find("Card Description").transform.gameObject.SetActive(false);
+            //newRewardObject.GetComponent<CardManager>().inspectionCardPrefab.transform.Find("Card Description (1)").transform.gameObject.SetActive(true);
 
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1462,6 +1464,8 @@ public class TurnManager : MonoBehaviour
             newRewardObject.transform.localRotation = rewardScreen.transform.GetChild(1).transform.localRotation;
             newRewardObject.transform.SetParent(rewardScreen.transform);
             newRewardObject.GetComponent<CardManager>().isReward = true;
+            //newRewardObject.GetComponent<CardManager>().inspectionCardPrefab.transform.Find("Card Description").transform.gameObject.SetActive(false);
+            //newRewardObject.GetComponent<CardManager>().inspectionCardPrefab.transform.Find("Card Description (1)").transform.gameObject.SetActive(true);
 
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1482,6 +1486,8 @@ public class TurnManager : MonoBehaviour
             newRewardObject.transform.localRotation = rewardScreen.transform.GetChild(2).transform.localRotation;
             newRewardObject.transform.SetParent(rewardScreen.transform);
             newRewardObject.GetComponent<CardManager>().isReward = true;
+            //newRewardObject.GetComponent<CardManager>().inspectionCardPrefab.transform.Find("Card Description").transform.gameObject.SetActive(false);
+            //newRewardObject.GetComponent<CardManager>().inspectionCardPrefab.transform.Find("Card Description (1)").transform.gameObject.SetActive(true);
 
             Destroy(rewardScreen.transform.GetChild(2).gameObject);
             Destroy(rewardScreen.transform.GetChild(1).gameObject);

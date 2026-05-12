@@ -185,29 +185,32 @@ public class DeckManager : MonoBehaviour
         }
         foreach (var card in gridGenerator.itemsSpawned)
         {
-            if (card != null && (!card.GetComponent<CardManager>().isSticky && !card.GetComponent<CardManager>().itemEquipped) || (!card.GetComponent<CardManager>().isSticky && card.GetComponent<CardManager>().itemEquipped) || (card.GetComponent<CardManager>().isSticky && !card.GetComponent<CardManager>().itemEquipped))
+            if (card != null)
             {
-                foreach (var deckCard in currentHand)
+                if (card != null && (!card.GetComponent<CardManager>().isSticky && !card.GetComponent<CardManager>().itemEquipped) || (!card.GetComponent<CardManager>().isSticky && card.GetComponent<CardManager>().itemEquipped) || (card.GetComponent<CardManager>().isSticky && !card.GetComponent<CardManager>().itemEquipped))
                 {
-                    if (deckCard.transform.name == card.transform.name)
+                    foreach (var deckCard in currentHand)
                     {
-                        currentHand.Remove(deckCard);
-                        break;
+                        if (deckCard.transform.name == card.transform.name)
+                        {
+                            currentHand.Remove(deckCard);
+                            break;
+                        }
                     }
-                }
-                //currentHand.Remove(card);
-                //gridGenerator.itemsSpawned.Remove(card);
-                Destroy(card);
-                
-            }
-            else if (card != null && (card.GetComponent<CardManager>().isSticky && card.GetComponent<CardManager>().itemEquipped))
-            {
-                card.GetComponent<CardManager>().StickyAmount -= 1;
-                if (card.GetComponent<CardManager>().StickyAmount == 0)
-                {
-                    currentHand.Remove(card);
+                    //currentHand.Remove(card);
                     //gridGenerator.itemsSpawned.Remove(card);
                     Destroy(card);
+
+                }
+                else if (card != null && (card.GetComponent<CardManager>().isSticky && card.GetComponent<CardManager>().itemEquipped))
+                {
+                    card.GetComponent<CardManager>().StickyAmount -= 1;
+                    if (card.GetComponent<CardManager>().StickyAmount == 0)
+                    {
+                        currentHand.Remove(card);
+                        //gridGenerator.itemsSpawned.Remove(card);
+                        Destroy(card);
+                    }
                 }
             }
         }

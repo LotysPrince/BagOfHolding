@@ -48,7 +48,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2593543088946053362
 Transform:
   m_ObjectHideFlags: 0
@@ -182,8 +182,13 @@ MonoBehaviour:
   carryingWeight: 2
   isSticky: 0
   StickyAmount: 0
+  baseStickyStatus: 0
+  baseStickyAmount: 0
   abilityOnEquip: 0
   abilityTriggered: 0
   worldCanvas: {fileID: 0}
   rewardScreenExtras: {fileID: 0}
   isReward: 0
+  isUpgraded: 0
+  curseOfBinding: 0
+  bindingCurseIcon: {fileID: 0}

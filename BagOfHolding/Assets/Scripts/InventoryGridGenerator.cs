@@ -878,16 +878,19 @@ public class InventoryGridGenerator : MonoBehaviour
         itemsSpawnedTemp.AddRange(itemsSpawned);
         foreach (var itemSpawned in itemsSpawnedTemp)
         {
-            if ((!itemSpawned.GetComponent<CardManager>().isSticky && !itemSpawned.GetComponent<CardManager>().itemEquipped) || (!itemSpawned.GetComponent<CardManager>().isSticky && itemSpawned.GetComponent<CardManager>().itemEquipped) || (itemSpawned.GetComponent<CardManager>().isSticky && !itemSpawned.GetComponent<CardManager>().itemEquipped))
+            if (itemSpawned != null)
             {
-                itemsSpawned.Remove(itemSpawned);
-                Destroy(itemSpawned);
+                if ((itemSpawned != null && !itemSpawned.GetComponent<CardManager>().isSticky && !itemSpawned.GetComponent<CardManager>().itemEquipped) || (!itemSpawned.GetComponent<CardManager>().isSticky && itemSpawned.GetComponent<CardManager>().itemEquipped) || (itemSpawned.GetComponent<CardManager>().isSticky && !itemSpawned.GetComponent<CardManager>().itemEquipped))
+                {
+                    itemsSpawned.Remove(itemSpawned);
+                    Destroy(itemSpawned);
 
-            }
-            else if (itemSpawned.GetComponent<CardManager>().StickyAmount == 0)
-            {
-                itemsSpawned.Remove(itemSpawned);
-                Destroy(itemSpawned);
+                }
+                else if (itemSpawned != null && itemSpawned.GetComponent<CardManager>().StickyAmount == 0)
+                {
+                    itemsSpawned.Remove(itemSpawned);
+                    Destroy(itemSpawned);
+                }
             }
         }
         itemsSpawnedTemp.Clear();

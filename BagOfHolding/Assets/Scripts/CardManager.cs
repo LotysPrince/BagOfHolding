@@ -150,6 +150,10 @@ public class CardManager : MonoBehaviour
         }
         mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         inspectionCardInstantiation = Instantiate(inspectionCardPrefab, new Vector3(mousePosition.x + 1.5f, mousePosition.y + 1.5f, -20), Quaternion.identity, worldCanvas.transform);
+        if (isReward)
+        {
+            inspectionCardInstantiation.SetActive(true);
+        }
         if (isUpgraded)
         {
             var cardSprite = inspectionCardInstantiation.transform.Find("CardFrame");
@@ -170,6 +174,7 @@ public class CardManager : MonoBehaviour
 
 
         }
+
         if (curseOfBinding == true)
         {
             var bindingIcon = Instantiate(bindingCurseIcon, new Vector3(0, 5.5f, -1), Quaternion.identity, inspectionCardInstantiation.transform);

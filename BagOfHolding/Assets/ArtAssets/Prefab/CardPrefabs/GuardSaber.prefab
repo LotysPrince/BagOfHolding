@@ -49,7 +49,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8356743437746233641
 Transform:
   m_ObjectHideFlags: 0
@@ -209,6 +209,8 @@ MonoBehaviour:
   carryingWeight: 1
   isSticky: 0
   StickyAmount: 0
+  baseStickyStatus: 0
+  baseStickyAmount: 0
   abilityOnEquip: 0
   abilityTriggered: 0
   worldCanvas: {fileID: 0}

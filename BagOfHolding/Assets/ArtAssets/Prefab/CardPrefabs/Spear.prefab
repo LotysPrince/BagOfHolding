@@ -19,7 +19,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6239626039372275700
 Transform:
   m_ObjectHideFlags: 0
@@ -103,15 +103,31 @@ MonoBehaviour:
   currPos: {x: 0, y: 0, z: 0}
   cardClicked: 0
   originalCardSize: {x: 0, y: 0, z: 0}
+  spawnPointOriginalPosition: {x: 0, y: 0, z: 0}
   clickInventory:
     serializedVersion: 2
     m_Bits: 64
+  clickDeckSlot:
+    serializedVersion: 2
+    m_Bits: 0
   itemType: Weapon
   inspectionCardPrefab: {fileID: 5820330856441969053, guid: d8bbff5bd6b20ad489c7128279be26bd, type: 3}
   itemEquipped: 0
   slotsToEquipStrings: 010101000000000000
   equippedSlots: []
   carryingWeight: 1
+  isSticky: 0
+  StickyAmount: 0
+  baseStickyStatus: 0
+  baseStickyAmount: 0
+  abilityOnEquip: 0
+  abilityTriggered: 0
+  worldCanvas: {fileID: 0}
+  rewardScreenExtras: {fileID: 0}
+  isReward: 0
+  isUpgraded: 0
+  curseOfBinding: 0
+  bindingCurseIcon: {fileID: 0}
 --- !u!61 &1355472176
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -31,28 +31,40 @@ public class UpgradeItemScreenGen : MonoBehaviour
         {
             
             var itemSpawning = card;
-            upgradeCardsList.Add(itemSpawning);
-            itemSpawning.GetComponent<CardManager>().inspectionCardPrefab.SetActive(false);
-            //itemSpawning.GetComponent<CardManager>().inspectionCardPrefab.GetComponent<InspectionCardSpawning>().stopFollowMouse = true;
-            var itemInspectionCard = itemSpawning.GetComponent<CardManager>().inspectionCardPrefab;
+            if (itemSpawning.GetComponent<CardManager>().isUpgraded == false)
+            {
+                upgradeCardsList.Add(itemSpawning);
+                itemSpawning.GetComponent<CardManager>().inspectionCardPrefab.SetActive(false);
+                //itemSpawning.GetComponent<CardManager>().inspectionCardPrefab.GetComponent<InspectionCardSpawning>().stopFollowMouse = true;
+                var itemInspectionCard = itemSpawning.GetComponent<CardManager>().inspectionCardPrefab;
 
                 itemInspectionCard = Instantiate(itemInspectionCard, new Vector3(spawnPointObject.transform.position.x + xIncrement, spawnPointObject.transform.position.y + yIncrement, -5), Quaternion.identity);
                 itemInspectionCard.GetComponent<BoxCollider2D>().enabled = true;
-            if (itemInspectionCard.GetComponent<UpgradeItemCardScript>() == null)
-            {
-                itemInspectionCard.AddComponent<UpgradeItemCardScript>();
-                itemInspectionCard.GetComponent<UpgradeItemCardScript>().rootCard = card;
-                itemInspectionCard.GetComponent<UpgradeItemCardScript>().upgradeScreen = upgradeScreen;
-            }
+                if (itemInspectionCard.GetComponent<UpgradeItemCardScript>() == null)
+                {
+                    itemInspectionCard.AddComponent<UpgradeItemCardScript>();
+                    itemInspectionCard.GetComponent<UpgradeItemCardScript>().rootCard = card;
+                    itemInspectionCard.GetComponent<UpgradeItemCardScript>().upgradeScreen = upgradeScreen;
+                }
                 itemInspectionCard.GetComponent<InspectionCardSpawning>().stopFollowMouse = true;
                 itemInspectionCard.SetActive(true);
-            
-            xIncrement += 2.5f;
-            if (xIncrement == 10)
-            {
-                xIncrement = 0;
-                yIncrement += -4f;
+
+                xIncrement += 2.5f;
+                if (xIncrement == 10)
+                {
+                    xIncrement = 0;
+                    yIncrement += -4f;
+                }
             }
         }
+    }
+
+    public void DeleteList()
+    {
+        foreach (var card in upgradeCardsList)
+        {
+            card.SetActive(false);
+        }
+        upgradeCardsList.Clear();
     }
 }

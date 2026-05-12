@@ -11,6 +11,7 @@ public class SwitchScreen : MonoBehaviour
     public GameObject endTurnButton;
     public GameObject switchScreenButton;
     public ShopGenerator shopGenerator;
+    public UpgradeItemScreenGen upgradeItemGen;
     // Start is called before the first frame update
     void Start()
     {
@@ -64,6 +65,8 @@ public class SwitchScreen : MonoBehaviour
         }
         else if (newScreen == "UpgradeItems")
         {
+            upgradeItemGen.DeleteList();
+            upgradeItemGen.GenerateUpgradeList();
             switchScreenButton.SetActive(false);
             cam.transform.position = new Vector3(-22, -34, -30);
             currentScreen = "UpgradeItems";
